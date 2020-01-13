@@ -1,0 +1,7 @@
+*.pyc
+__pycache__
+env/
+geckodriver.log
+.cache/
+.pytest_cache
+.env

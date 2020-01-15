@@ -9586,6 +9586,7 @@ hr.light {
 
 .page-section {
   padding: 8rem 0;
+  min-height: 60vh;
 }
 
 #mainNav {
@@ -9655,7 +9656,7 @@ hr.light {
   }
 }
 
-header.masthead {
+header {
   padding-top: 10rem;
   padding-bottom: calc(10rem - 72px);
   background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%), url("../img/olenka-kotyk-eqsEZNCm4-c-unsplash.jpg");
@@ -9663,6 +9664,15 @@ header.masthead {
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-size: cover;
+}
+
+header.masthead {
+
+}
+
+header.titlepage{
+  height: 30vh;
+  min-height: 15rem;
 }
 
 header.masthead h1 {

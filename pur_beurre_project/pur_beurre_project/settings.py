@@ -78,9 +78,9 @@ WSGI_APPLICATION = 'pur_beurre_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql', # on utilise l'adaptateur postgresql
-        'NAME': 'purbeurre', # le nom de notre base de donnees creee precedemment
-        'USER': 'maylisbaschet', # attention : remplacez par votre nom d'utilisateur
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'purbeurre',
+        'USER': 'maylisbaschet',
         'PASSWORD': '',
         'HOST': '',
         'PORT': '5432',
@@ -127,3 +127,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 INTERNAL_IPS = ['127.0.0.1']
+
+LOGIN_REDIRECT_URL = '/' #à supprimer quand page profile prête

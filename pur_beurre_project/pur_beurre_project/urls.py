@@ -14,16 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf import settings
-from django.conf.urls import include, url
+from django.conf.urls import url
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 from foodSearch import views
 
 urlpatterns = [
-    url(r'^$', views.index),
-    url(r'^foodSearch/', include('foodSearch.urls')),
-    url(r'^admin/', admin.site.urls),        # default : path('admin/', admin.site.urls)
+    path('admin/', admin.site.urls),
+    path('', include('foodSearch.urls')),
+    path('accounts/', include('django.contrib.auth.urls'))
 ]
 
 if settings.DEBUG:

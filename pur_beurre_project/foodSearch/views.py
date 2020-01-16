@@ -3,13 +3,16 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
+from .models import Category, Favorite, Product
+from .forms import RegisterForm, ParagraphErrorList
+
 
 def index(request):
     return render(request, 'foodSearch/index.html')
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = RegisterForm(request.POST, error_class=ParagraphErrorList)
         if form.is_valid():
             form.save()
             username = form.cleaned_data['username']
@@ -18,7 +21,7 @@ def register(request):
             login(request, user)
             return redirect('foodSearch:index')
     else:
-        form = UserCreationForm()
+        form = RegisterForm()
 
     context = {'form' : form}
     return render(request, 'registration/register.html', context)

@@ -29,13 +29,10 @@ class RegisterPageTestCase(TestCase):
     # test that a new register is made
     def test_new_account_is_registered(self):
         old_accounts = User.objects.count()
-        user_id = self.user.id
         username = self.user.username
-        email =  self.user.email
         password = self.user.password
-        response = self.client.post(reverse('foodSearch:register', args=(user_id,)), {
+        response = self.client.post(reverse('login'), {
             'username': username,
-            'email': email,
             'password': password
         })
         new_accounts = User.objects.count()

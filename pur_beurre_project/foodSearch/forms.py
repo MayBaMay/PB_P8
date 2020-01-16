@@ -12,6 +12,7 @@ class ParagraphErrorList(ErrorList):
         return '<div class="errorlist">%s</div>' % ''.join(['<p class="small error">%s</p>' % e for e in self])
 
 class RegisterForm(ModelForm):
+    
     class Meta:
         model = User
         fields = ["username", "email", "password"]

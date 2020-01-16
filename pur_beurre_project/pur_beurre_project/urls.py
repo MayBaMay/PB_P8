@@ -21,7 +21,7 @@ from django.urls import path, include
 from foodSearch import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('gest/', admin.site.urls),
     path('', include('foodSearch.urls')),
     path('accounts/', include('django.contrib.auth.urls'))
 ]

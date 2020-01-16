@@ -44,7 +44,9 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto my-2 my-lg-0">
           <li class="nav-item">
-            {% include 'foodSearch/search_form.html' %}
+            <form action="{% url 'foodSearch:search' %}" method="get" accept-charset="utf-8">
+                  <input id="searchForm" class="form-control" name="query" placeholder="Chercher un produit">
+            </form>
           </li>
           <li class="nav-item">
             {% if user.is_authenticated %}

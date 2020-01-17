@@ -1,17 +1,19 @@
 #! /usr/bin/env python3
 # coding: utf-8
 
-"""
-This module manage insertion database.
-"""
 from django.core.management.base import BaseCommand, CommandError
 from foodSearch.models import Category, Product, Favorite
-from _get_datas_form_OFF import GetDatas
-from _db_fill import DbFill
+
+from foodSearch.get_datas_from_OFF import GetDatas
+from foodSearch.db_init import DbInnit
+
 
 class Command(BaseCommand):
-    """
-    Insert data in PostGreSQL database.
-    """
 
-    pass
+    def handle(self, *args, **options):
+        datas = GetDatas()
+        db = DbInnit()
+        db.insert_categories(datas.categories_list)
+        self.stdout.write(self.style.SUCCESS('Successfully load categories'))
+        db.insert_products(datas.products_list)
+        self.stdout.write(self.style.SUCCESS('Successfully load products'))

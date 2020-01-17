@@ -4,10 +4,11 @@
 """
 This module manage insertion database.
 """
+from django.db import IntegrityError
 from foodSearch.models import Category, Product, Favorite
 
 
-class DbFill:
+class DbInnit:
     """
     Insert data in MySQL database.
     """
@@ -16,12 +17,12 @@ class DbFill:
         self.delete_db()
 
     def delete_db(self):
-    """Function used to clear database
-    Django webSite models used : Product, Category, Favorite
-    """
-    Category.objects.all().delete()
-    Favorite.objects.all().delete()
-    Product.objects.all().delete()
+        """Function used to clear database
+        Django webSite models used : Product, Category, Favorite
+        """
+        Category.objects.all().delete()
+        Favorite.objects.all().delete()
+        Product.objects.all().delete()
 
     def insert_categories(self, categrories):
         """
@@ -41,12 +42,21 @@ class DbFill:
         """
 
         for prod in products:
-            Product.objects.create(
-                reference=prod['id'],
-                name=prod['name'],
-                url=prod['url'],
-                nb_products=prod['products']
-            )
+            try:
+                product = Product.objects.create(
+                    reference=prod['id'],
+                    name=prod['product_name'],
+                    url=prod['url'],
+                    nutrition_grade_fr=prod['nutrition_grade_fr']
+                )
+                for category in prod['categories']:
+                    try:
+                        category_id = Category.objects.get(reference="category")
+                        product.categories.add(category_id)
+                    except Category.DoesNotExist:
+                        pass
+            except IntegrityError:
+                pass
 
 
     def insert_prod_cat(self, data):

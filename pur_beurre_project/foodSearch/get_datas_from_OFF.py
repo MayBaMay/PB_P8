@@ -2,7 +2,9 @@ import os
 import json
 import requests
 
-from _config_datas import NB_CATEGORIES, NB_PAGES, MINPRODINCAT, PRODUCTS_PER_PAGE, NB_PRODUCT
+NB_CATEGORIES = 20
+MINPRODINCAT = 10000
+NB_PRODUCT = 100
 
 class GetDatas:
 
@@ -74,6 +76,7 @@ class GetDatas:
                     urlname, str(NB_PRODUCT))
             data = requests.get(url).json()
 
+
         # Filter Products getting product's datas into lists
             for prod in data["products"]:
                 try:
@@ -81,12 +84,14 @@ class GetDatas:
                         "id" : prod["id"],
                         "product_name" : prod["product_name"],
                         "nutrition_grade_fr" : prod["nutrition_grade_fr"],
-                        "url" : prod["url"]
+                        "url" : prod["url"],
+                        "categories" : prod['categories_tags']
                         })
                     self.categories_id_list.append(prod["categories_hierarchy"])
                 except KeyError:
                     # if product doesn't have a productname, pass
                     pass
+
 
         self.truncate_datas("products")
 
@@ -129,5 +134,4 @@ class GetDatas:
             i += 1
 
 if __name__ == "__main__":
-    datas = GetDatas()
-    print(datas.cat_prod_relation)
+    data = GetDatas()

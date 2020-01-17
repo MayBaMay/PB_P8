@@ -28,17 +28,6 @@ class Product(models.Model):
         def __str__(self):
             return self.name
 
-# class User(models.Model):
-#     name = models.CharField('Nom', max_length=200, unique=True)
-#     email = models.CharField('Nom', max_length=255)
-#     password = models.CharField('Nom', max_length=255)
-#
-#     class Meta:
-#         verbose_name = "utilisateur"
-#
-#         def __str__(self):
-#             return self.name
-
 class Favorite(models.Model):
     created_at = models.DateTimeField("date d'envoi", auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

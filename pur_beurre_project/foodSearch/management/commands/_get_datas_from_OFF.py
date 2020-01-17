@@ -2,14 +2,14 @@ import os
 import json
 import requests
 
-from _config_datas import NB_CATEGORIES, NB_PAGES, MINPRODINCAT, NB_PRODUCT, PRODUCTS_PER_PAGE
+from _config_datas import NB_CATEGORIES, NB_PAGES, MINPRODINCAT, PRODUCTS_PER_PAGE, NB_PRODUCT
 
 class GetDatas:
 
     def __init__(self):
-        self.final_cat = []
-        self.categories_info = {}
-        self.products_infos_list = []
+        self.categories_list = []
+        self.categories_names = {}
+        self.products_list = []
         self.categories_id_list = []
         self.cat_prod_relation = []
         self.get_categories()
@@ -35,7 +35,7 @@ class GetDatas:
             if i < NB_CATEGORIES:
                 # limit the categories to the ones which have a lot of products
                 if cat["products"] > MINPRODINCAT:
-                    self.final_cat.append(cat)
+                    self.categories_list.append(cat)
                     i += 1
 
         self.truncate_datas("categories")
@@ -48,7 +48,7 @@ class GetDatas:
         cat_url_names = []
         cat_names = []
 
-        for category in self.final_cat:
+        for category in self.categories_list:
             # get only names of categories in the url to use it for API search requests
             url = category["url"]
             url = url[39:]
@@ -56,7 +56,7 @@ class GetDatas:
             # get names of categories to name related files
             cat_names.append(category["name"])
             # create a dictionnary for each category with those elements
-            self.categories_info = {x:y for x, y in zip(cat_names, cat_url_names)}
+            self.categories_names = {x:y for x, y in zip(cat_names, cat_url_names)}
 
     def get_products(self):
         """
@@ -66,28 +66,27 @@ class GetDatas:
         such as names (for file's names) and url names (to call urls)
         """
 
-        for name, urlnames in self.categories_info.items():
-            for i in range(1, (NB_PAGES+1)):
-                url = 'https://world.openfoodfacts.org/cgi/search.pl?\
-                    search_tag=categories&search_terms={}&\
-                    purchase_places=France&page_size={}&page={}&json=1'.format(
-                        urlnames, str(PRODUCTS_PER_PAGE), str(i))
-                data = requests.get(url).json()
+        for name, urlname in self.categories_names.items():
+
+            url = 'https://world.openfoodfacts.org/cgi/search.pl?\
+                search_tag=categories&search_terms={}&\
+                purchase_places=France&page_size={}&json=1'.format(
+                    urlname, str(NB_PRODUCT))
+            data = requests.get(url).json()
 
         # Filter Products getting product's datas into lists
-        for name in self.categories_info.keys():
-            for i in range(1, (NB_PAGES + 1)):
-                for prod in data["products"]:
-                    try:
-                        self.products_infos_list.append({
-                            "id" : prod["id"],
-                            "product_name" : prod["product_name"],
-                            "nutrition_grade_fr" : prod["nutrition_grade_fr"],
-                            "url" : prod["url"]
-                            })
-                        self.categories_id_list.append(prod["categories_hierarchy"])
-                    except KeyError:
-                        pass
+            for prod in data["products"]:
+                try:
+                    self.products_list.append({
+                        "id" : prod["id"],
+                        "product_name" : prod["product_name"],
+                        "nutrition_grade_fr" : prod["nutrition_grade_fr"],
+                        "url" : prod["url"]
+                        })
+                    self.categories_id_list.append(prod["categories_hierarchy"])
+                except KeyError:
+                    # if product doesn't have a productname, pass
+                    pass
 
         self.truncate_datas("products")
 
@@ -95,7 +94,7 @@ class GetDatas:
         """ truncate datas to sizes defined for each element in the database"""
 
         if data_type == "categories":
-            for cat in self.final_cat:
+            for cat in self.categories_list:
                 cat["id"] = cat["id"][:80]
                 cat["name"] = cat["name"][:80]
                 cat["url"] = cat["url"][:255]
@@ -103,7 +102,7 @@ class GetDatas:
                     del cat["sameAs"]
 
         elif data_type == "products":
-            for prod in self.products_infos_list:
+            for prod in self.products_list:
                 prod["id"] = prod["id"][:80]
                 prod["product_name"] = prod["product_name"][:80]
                 prod["url"] = prod['url'][:255]
@@ -116,8 +115,8 @@ class GetDatas:
         """
 
         i = 0
-        while i < len(self.products_infos_list)-1:
-            product_id = self.products_infos_list[i]['id']   #get product's id
+        while i < len(self.products_list)-1:
+            product_id = self.products_list[i]['id']   #get product's id
 
             for category_id in self.categories_id_list[i]:  # get category's id
 
@@ -132,4 +131,3 @@ class GetDatas:
 if __name__ == "__main__":
     datas = GetDatas()
     print(datas.cat_prod_relation)
-    # print(datas.categories_id_list)

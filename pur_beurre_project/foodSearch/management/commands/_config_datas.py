@@ -5,8 +5,8 @@
 import math
 
 # Products by categories
-NB_PRODUCT = 10
-PRODUCTS_PER_PAGE = 5
+NB_PRODUCT = 4
+PRODUCTS_PER_PAGE = 2
 NB_PAGES = math.ceil(NB_PRODUCT/PRODUCTS_PER_PAGE)
 
 # Number of categories

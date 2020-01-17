@@ -1,0 +1,25 @@
+
+{% extends 'foodSearch/base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% include 'foodSearch/headerpages.html' with title=title %}
+
+<section style="background-color:#de9440;" class="page-section text-white mb-5 id="history">
+  <div class="col-lg-8 mx-auto">
+    {% if albums|length_is:"0" %}
+      <div class="text-center">
+        Palsambleu ! Nous n'avons trouvé aucun résultat à cette requête. Même pas de quoi se ronger la chique !
+        Partez de nouveau à l'abordage !
+      </div>
+
+    {% else %}
+      {% for product in products %}
+        <p>{{ product.name }}</p>
+      {% endfor %}
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

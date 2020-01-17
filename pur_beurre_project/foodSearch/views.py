@@ -44,14 +44,16 @@ def register(request):
 
 def search(request):
     query = request.GET.get('query')
-    # if not query:
-    #     products = Product.objects.all()
-    # else:
-    #     products = Product.objects.filter(name__icontains=query)
-    # if not products.exists():
-    #     products = Product.objects.filter(categorie__name__icontains=query)
-    # title = "Résultats pour la requête %s"%query
+    title = 'Aliment cherché'
+    if not query:
+        products = Product.objects.all()[:12]
+    else:
+        products = Product.objects.filter(name__icontains=query)
+    if not products.exists():
+        products = Product.objects.filter(categorie__name__icontains=query)
     context = {
-        'query': query,
+        'title':title,
+        'products': products,
+        'query':query
     }
-    return render(request, 'foodSearch/index.html', context)
+    return render(request, 'foodSearch/search.html', context)

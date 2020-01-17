@@ -13,7 +13,7 @@
         </div>
         <div class="col-lg-8 align-self-baseline">
           <h2 class="text-white-75 font-weight-light mb-5">Trouvez un produit de substitution pour ceux que vous consommez tous les jours</h2>
-          <form class="form-row align-items-center" action="{% url 'foodSearch:search' %}" method="post" accept-charset="utf-8">
+          <form class="form-row align-items-center" action="{% url 'foodSearch:search' %}" method="get" accept-charset="utf-8">
             {% csrf_token %}
             <div class="input-group">
               <input id="searchForm" class="form-control mr-2" name="query" placeholder="Chercher un produit">

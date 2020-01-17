@@ -1,0 +1,18 @@
+{% extends 'foodSearch/base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% include 'foodSearch/headerpages.html' with title=title %}
+
+<section class="page-section bg-primary text-white mb-5 id="history">
+  <div class="col-lg-8 mx-auto">
+    <p>Nom utilisateur : {{ username }}</p>
+    <p>Adresse mail : {{ email }}</p>
+    <br>
+    <p><u><a class="text-white" href="{% url 'foodSearch:watchlist' %}">Modifier mon mot de passe</a></u></p>
+    <p><u><a class="text-white" href="{% url 'foodSearch:watchlist' %}">Voir mes Aliments</a></u></p>
+  </div>
+</section>
+
+{% endblock %}

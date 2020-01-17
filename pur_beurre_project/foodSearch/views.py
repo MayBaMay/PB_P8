@@ -10,7 +10,23 @@ from .forms import RegisterForm, ParagraphErrorList
 def index(request):
     return render(request, 'foodSearch/index.html')
 
+def userpage(request):
+    title = 'Mon compte'
+    context = {'title':title}
+    if request.user.is_authenticated:
+        username = request.user.username
+        email = request.user.email
+        context['username'] = username
+        context['email'] = email
+    return render(request, 'foodSearch/userpage.html', context)
+
+def watchlist(request):
+    title = 'Mes aliments'
+    context = {'title':title}
+    return render(request, 'foodSearch/watchlist.html', context)
+
 def register(request):
+    title = 'Créer un compte'
     if request.method == 'POST':
         form = RegisterForm(request.POST, error_class=ParagraphErrorList)
         if form.is_valid():
@@ -20,7 +36,10 @@ def register(request):
     else:
         form = RegisterForm()
 
-    context = {'form' : form}
+    context = {
+        'title': title,
+        'form' : form
+        }
     return render(request, 'registration/register.html', context)
 
 def search(request):

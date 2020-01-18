@@ -4,9 +4,6 @@ from  django.contrib.auth.models import User
 # Create your models here.
 class Category(models.Model):
     reference = models.CharField('Référence', max_length=100, unique=True)
-    name = models.CharField('Nom', max_length=200)
-    url = models.CharField(max_length=255)
-    nb_products = models.IntegerField('Nombre de produits de la catégorie')
 
     class Meta:
         verbose_name = "catégorie"
@@ -18,9 +15,12 @@ class Category(models.Model):
 class Product(models.Model):
     reference = models.CharField('Référence', max_length=100, unique=True)
     name = models.CharField('Nom', max_length=200)
-    url = models.CharField(max_length=255)
+    url = models.URLField(null=True)
+    image_url = models.URLField(null=True)
+    image_small_url = models.URLField(null=True)
     nutrition_grade_fr = models.CharField(max_length=1)
     categories = models.ManyToManyField(Category, related_name='products', blank=True)
+
 
     class Meta:
         verbose_name = "produit"

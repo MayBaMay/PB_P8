@@ -6,20 +6,39 @@
 
 {% include 'foodSearch/headerpages.html' with title=title %}
 
-<section style="background-color:#de9440;" class="page-section text-white mb-5 id="history">
-  <div class="col-lg-8 mx-auto">
-    {% if albums|length_is:"0" %}
+<!-- Services Section -->
+<section style="background-color:#de9440;" class="page-section text-white mb-5" id="services">
+  <div class="container">
+    <h2 class="text-center mt-0">Vous avez recherché des alternatives au produit : <br>{{ query }}</h2>
+    <hr class="divider my-4">
+    {% if products|length_is:"0" %}
       <div class="text-center">
         Palsambleu ! Nous n'avons trouvé aucun résultat à cette requête. Même pas de quoi se ronger la chique !
         Partez de nouveau à l'abordage !
       </div>
-
     {% else %}
+      <div class="row">
       {% for product in products %}
-        <p>{{ product.name }}</p>
+        <div class="col-lg-3 col-md-6 text-center ">
+          <div class="mt-5">
+            <a href="{{ product.url }}"> <img
+              class="image-color-theme" src="{{ product.image_small_url }}"
+              height="200rem" width="100rem"/>
+            <h3 class="h4 mb-2 text-white">{{ product.name }}</h3>
+            </a>
+            {% if user.is_authenticated %}
+            <div class="">
+              <input type="checkbox" id="Sauvegarder" name="Sauvegarder">
+              <label for="Sauvegarder">Sauvegarder</label>
+            </div>
+            {% endif %}
+          </div>
+        </div>
       {% endfor %}
+      </div>
     {% endif %}
   </div>
 </section>
+
 
 {% endblock %}

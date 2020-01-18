@@ -37,23 +37,27 @@ def register(request):
         form = RegisterForm()
 
     context = {
-        'title': title,
-        'form' : form
+        'title':title,
+        'form':form
         }
     return render(request, 'registration/register.html', context)
 
 def search(request):
     query = request.GET.get('query')
     title = 'Aliment cherché'
-    if not query:
+    if query=="":
         products = Product.objects.all()[:12]
     else:
         products = Product.objects.filter(name__icontains=query)
-    if not products.exists():
-        products = Product.objects.filter(categorie__name__icontains=query)
+    # if not products.exists():
+    #     products = Product.objects.filter(categorie__name__icontains=query)
     context = {
         'title':title,
         'products': products,
         'query':query
     }
     return render(request, 'foodSearch/search.html', context)
+
+def checkbox_products(request):
+    product_on_watchlist = request.POST.get('checks')
+    

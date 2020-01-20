@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.db import transaction
 
 from .models import Category, Favorite, Product
 from .forms import RegisterForm, ParagraphErrorList
@@ -46,18 +47,38 @@ def search(request):
     query = request.GET.get('query')
     title = 'Aliment cherché'
     if query=="":
-        products = Product.objects.all()[:12]
+        answer = Product.objects.all()[:12]
     else:
-        products = Product.objects.filter(name__icontains=query)
-    # if not products.exists():
-    #     products = Product.objects.filter(categorie__name__icontains=query)
+
+        # get first category containing the query
+        querycat = Category.objects.filter(reference__icontains=query)
+        if querycat.exists(): # checks if it is a category (ex: query=soda)
+            # get products form this category
+            answer = Product.objects.filter(categories__reference=querycat[0].reference)
+
+        else:   # query should be a product
+
+            # checks first category of the first product containing the query
+            found_product_name = Product.objects.filter(name__icontains=query)[0].name
+            found_category_ref = Category.objects.filter(products__name=found_product_name)[0].reference
+            # find products from same category
+            answer = Product.objects.filter(categories__reference=found_category_ref)
+
+        # in any case order by nutrition_grade
+        answer = answer.order_by('nutrition_grade_fr')
+
+
+        # prod = Category.objects.all()[:12]
+            # if not prod.exists():
+            #     prod = prod[:1]
+
+    #     prod = Product.objects.filter(categorie__name__icontains=query)
     context = {
         'title':title,
-        'products': products,
-        'query':query
+        'answer': answer,
+        'query':query,
     }
     return render(request, 'foodSearch/search.html', context)
 
 def checkbox_products(request):
     product_on_watchlist = request.POST.get('checks')
-    

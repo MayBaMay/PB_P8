@@ -11,20 +11,22 @@
   <div class="container">
     <h2 class="text-center mt-0">Vous avez recherché des alternatives au produit : <br>{{ query }}</h2>
     <hr class="divider my-4">
-    {% if products|length_is:"0" %}
+    {% if answer|length_is:"0" %}
       <div class="text-center">
         Palsambleu ! Nous n'avons trouvé aucun résultat à cette requête. Même pas de quoi se ronger la chique !
         Partez de nouveau à l'abordage !
       </div>
     {% else %}
       <div class="row">
-      {% for product in products %}
+      {% for product in answer %}
         <div class="col-lg-3 col-md-6 text-center ">
           <div class="mt-5">
-            <a href="{{ product.url }}"> <img
+            <a href="{{ product.url }}">
+              <img
               class="image-color-theme" src="{{ product.image_small_url }}"
               height="200rem" width="100rem"/>
-            <h3 class="h4 mb-2 text-white">{{ product.name }}</h3>
+              <h3 class="h4 mb-2 text-white">{{ product.name }}</h3>
+            <h3 class="h4 mb-2 text-white">{{ product.nutrition_grade_fr }}</h3>
             </a>
             {% if user.is_authenticated %}
             <div class="">

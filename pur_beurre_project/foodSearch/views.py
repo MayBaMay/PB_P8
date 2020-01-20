@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db import transaction
+from django.db.models import Q
 
 from .models import Category, Favorite, Product
 from .forms import RegisterForm, ParagraphErrorList
@@ -43,30 +44,76 @@ def register(request):
         }
     return render(request, 'registration/register.html', context)
 
+def fctSortDict(value):
+    # permet de trier la liste contenat les dictionnaire en fonction du nombre trouvé
+    return value['nb']
+
 def search(request):
     query = request.GET.get('query')
     title = 'Aliment cherché'
+
     if query=="":
         answer = Product.objects.all()[:12]
     else:
 
         # get first category containing the query
         querycat = Category.objects.filter(reference__icontains=query)
-        if querycat.exists(): # checks if it is a category (ex: query=soda)
-            # get products form this category
-            answer = Product.objects.filter(categories__reference=querycat[0].reference)
 
-        else:   # query should be a product
+        # checks first category of the first product containing the query
+        found_product = Product.objects.filter(name__icontains=query)
 
-            # checks first category of the first product containing the query
-            found_product_name = Product.objects.filter(name__icontains=query)[0].name
-            found_category_ref = Category.objects.filter(products__name=found_product_name)[0].reference
-            # find products from same category
-            answer = Product.objects.filter(categories__reference=found_category_ref)
+        if found_product.exists():
+            found_product_name = found_product[0].name
+            found_categories = Category.objects.filter(products__name=found_product_name)#[0].reference
+
+            reference_prod_loaded = []
+            results = []
+
+            for nb in range(0,found_categories.count()): #pour chaque category liée au produit recherché$
+                for prod in Product.objects.filter(categories__reference=found_categories[nb].reference):
+                    if prod.reference in reference_prod_loaded:
+                        pass
+                    else:
+                        # print(prod.name, found_categories[nb].reference)
+                        count_same_cat=0 #count nb of categories in common
+                        cats = [] #name of those categories
+                        for cat in Category.objects.filter(products__name=prod.name):
+                            if cat in found_categories:# cat à la fois du produit de base et du produit comparé
+                                if cat not in cats:
+                                    cats.append(cat)
+                                    count_same_cat += 1
+                                    # complète la liste par un dictionnaire comprenant les informations
+                        results.append({'name':prod.name, 'reference':prod.reference, 'nb':count_same_cat, 'cats_list':cats})
+                        reference_prod_loaded.append(prod.reference)
+
+            results = sorted(results, key=fctSortDict, reverse=True)
 
         # in any case order by nutrition_grade
-        answer = answer.order_by('nutrition_grade_fr')
+            answer = Product.objects.filter(Q(reference=results[0]['reference'])|
+                                            Q(reference=results[1]['reference'])|
+                                            Q(reference=results[2]['reference'])|
+                                            Q(reference=results[3]['reference'])|
+                                            Q(reference=results[4]['reference'])|
+                                            Q(reference=results[5]['reference'])|
+                                            Q(reference=results[6]['reference'])|
+                                            Q(reference=results[7]['reference'])|
+                                            Q(reference=results[8]['reference'])|
+                                            Q(reference=results[9]['reference'])|
+                                            Q(reference=results[10]['reference'])|
+                                            Q(reference=results[11]['reference'])|
+                                            Q(reference=results[12]['reference'])|
+                                            Q(reference=results[13]['reference'])|
+                                            Q(reference=results[14]['reference'])|
+                                            Q(reference=results[15]['reference'])|
+                                            Q(reference=results[16]['reference'])|
+                                            Q(reference=results[17]['reference'])|
+                                            Q(reference=results[18]['reference'])|
+                                            Q(reference=results[19]['reference'])|
+                                            Q(reference=results[19]['reference']))
+            answer = answer.order_by('nutrition_grade_fr')
 
+        else :
+            answer = []
 
         # prod = Category.objects.all()[:12]
             # if not prod.exists():

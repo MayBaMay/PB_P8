@@ -55,9 +55,8 @@ def search(request):
     if query=="":
         answer = Product.objects.all()[:12]
     else:
-
         # get first category containing the query
-        querycat = Category.objects.filter(reference__icontains=query)
+        # querycat = Category.objects.filter(reference__icontains=query)
 
         # checks first category of the first product containing the query
         found_product = Product.objects.filter(name__icontains=query)
@@ -74,7 +73,7 @@ def search(request):
                     if prod.reference in reference_prod_loaded:
                         pass
                     else:
-                        count_same_cat=0 #count nb of categories in common
+                        count_same_cat = 0 #count nb of categories in common
                         cats = [] #name of those categories
                         for cat in Category.objects.filter(products__name=prod.name):
                             if cat in found_categories:

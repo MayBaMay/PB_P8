@@ -15,7 +15,7 @@ import openfoodfacts
 class Init_db:
 
     def __init__(self):
-        self.page = 601 # page counter
+        self.page = 1 # page counter
         self.total_pages = 1000 # number of page wanted from the api
         self.tps = []
 
@@ -38,10 +38,37 @@ class Init_db:
             )
 
             for product in page_prods:
+
+                try:
+                    saturated_fat_100g = product['nutriments']['saturated-fat_100g']
+                except KeyError:
+                    saturated_fat_100g = ""
+                try :
+                    carbohydrates_100g = product['nutriments']['carbohydrates_100g']
+                except KeyError:
+                    carbohydrates_100g = ""
+                try:
+                    energy_100g = product['nutriments']['energy_100g']
+                except KeyError:
+                    energy_100g = ""
+                try:
+                    sugars_100g = product['nutriments']['sugars_100g']
+                except KeyError:
+                    sugars_100g = ""
+                try:
+                    sodium_100g = product['nutriments']['sodium_100g']
+                except KeyError:
+                    sodium_100g = ""
+                try:
+                    salt_100g = product['nutriments']['salt_100g']
+                except KeyError:
+                    salt_100g = ""
+
                 try:
                     with transaction.atomic():
                         # insert each product in database
                         categories = product["categories_hierarchy"]
+
                         new_product = Product.objects.create(
                             reference = product["id"],
                             name = product["product_name"],
@@ -49,6 +76,12 @@ class Init_db:
                             url = product["url"],
                             image_url = product["image_url"],
                             image_small_url = product["image_small_url"],
+                            saturated_fat_100g = saturated_fat_100g,
+                            carbohydrates_100g = carbohydrates_100g,
+                            energy_100g = energy_100g,
+                            sugars_100g = sugars_100g,
+                            sodium_100g = sodium_100g,
+                            salt_100g = salt_100g,
                         )
                         # insert each category in database only if products has categories infos(no keyerror in product['categories_hierarchy'])
                         try:
@@ -66,13 +99,7 @@ class Init_db:
                                         # in any case, add a relation between Category and Product
                                         cat.products.add(new_product)
                         ###### only keep cleaned datas #######
-                        except KeyError as e:
-                            pass
-                        except IntegrityError:
-                            pass
-                        except AttributeError:
-                            pass
-                        except JSONDecodeError:
+                        except:
                             pass
                 except:
                     pass
@@ -82,11 +109,15 @@ class Init_db:
             self.tps.append(tps_page)
             self.page += 1
 
+        data = page_prods
+        with open('data.json', 'w') as file:
+            file.write(json.dumps(data, indent=4))
+
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
         db = Init_db()
-        # db.reset_db()
+        db.reset_db()
         db.load_datas()
         self.stdout.write(self.style.SUCCESS("{} products in database".format(Product.objects.count())))
         self.stdout.write(self.style.SUCCESS("{} categories in database".format(Category.objects.count())))

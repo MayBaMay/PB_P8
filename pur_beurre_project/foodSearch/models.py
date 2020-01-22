@@ -9,6 +9,12 @@ class Product(models.Model):
     image_url = models.URLField(null=True)
     image_small_url = models.URLField(null=True)
     nutrition_grade_fr = models.CharField(max_length=1)
+    saturated_fat_100g = models.FloatField(null=True)
+    carbohydrates_100g = models.FloatField(null=True)
+    energy_100g = models.FloatField(null=True)
+    sugars_100g = models.FloatField(null=True)
+    sodium_100g = models.FloatField(null=True)
+    salt_100g = models.FloatField(null=True)
 
     def __str__(self):
         return self.name

@@ -6,7 +6,6 @@
 
 {% include 'foodSearch/headerpages.html' with title=title %}
 
-<!-- Services Section -->
 <section style="background-color:#de9440;" class="page-section text-white mb-5" id="services">
   <div class="container">
     <h2 class="text-center mt-0">Vous avez recherché des alternatives au produit : <br>{{ query }}</h2>
@@ -20,7 +19,7 @@
       <div class="row">
       {% for product in result %}
         <div class="col-md-4 text-center mt-5">
-            <a href="{{ product.url }}">
+            <a href="/detail/{{ product.id }}/">
               <div class="img_prod" style="background-color: #e8a75d">
                 <img
                   class="image-color-theme img-responsive" src="{{ product.image_small_url }}"

@@ -82,10 +82,8 @@ def search(request):
             found_product = Product.objects.filter(name__icontains=query)
             found_product_name = found_product[0].name
             found_categories = Category.objects.filter(products__name=found_product_name)#[0].reference
-
             reference_prod_loaded = []
             results = []
-
             for nb in range(0,found_categories.count()): #pour chaque category liée au produit recherché$
                 for prod in Product.objects.filter(categories__reference=found_categories[nb].reference):
                     if prod.reference in reference_prod_loaded:
@@ -102,7 +100,7 @@ def search(request):
                         results.append({'name':prod.name, 'reference':prod.reference, 'nb':count_same_cat, 'cats_list':cats})
                         reference_prod_loaded.append(prod.reference)
 
-            # get the 20 firsts most relevant products in an ordered queryset
+            # get the 24 firsts most relevant products in an ordered queryset
             results = sorted(results, key=fctSortDict, reverse=True)
             results20 = results[0:24]
             q_objects = Q()
@@ -112,11 +110,8 @@ def search(request):
 
             if result_list.count() != 0:
                 paginate = True
-
-
         else :
             result = []
-
     if paginate:
         paginator = Paginator(result_list, 6)
         page = request.GET.get('page')
@@ -129,6 +124,13 @@ def search(request):
         "paginate":paginate
     }
     return render(request, 'foodSearch/search.html', context)
+
+def detail(request, product_id):
+    product = Product.objects.get(id=product_id)
+    context = {
+        "product":product
+    }
+    return render(request, 'foodSearch/detail.html', context)
 
 def checkbox_products(request):
     product_on_watchlist = request.POST.get('checks')

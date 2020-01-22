@@ -54,9 +54,10 @@ def fctSortDict(value):
 def search(request):
     query = request.GET.get('query')
     title = 'Aliment cherché'
+    paginate = False
 
     if query=="":
-        answer = []
+        result = []
     else:
         # checks first category of the first product containing the query
         # categories references are in english and using app language french => translation
@@ -73,7 +74,9 @@ def search(request):
             q_objects = Q()
             for category in found_category:
                 q_objects.add(Q(categories__reference=category.reference), Q.OR)
-            answer = Product.objects.filter(q_objects).distinct().order_by('nutrition_grade_fr')
+            result_list = Product.objects.filter(q_objects).distinct().order_by('nutrition_grade_fr')
+            if result_list.count() != 0:
+                paginate = True
 
         elif Product.objects.filter(name__icontains=query).exists():
             found_product = Product.objects.filter(name__icontains=query)
@@ -105,14 +108,25 @@ def search(request):
             q_objects = Q()
             for item in results20:
                 q_objects.add(Q(reference=item['reference']), Q.OR)
-            answer = Product.objects.filter(q_objects).order_by('nutrition_grade_fr')
+            result_list = Product.objects.filter(q_objects).order_by('nutrition_grade_fr')
+
+            if result_list.count() != 0:
+                paginate = True
+
+
         else :
-            answer = []
+            result = []
+
+    if paginate:
+        paginator = Paginator(result_list, 8)
+        page = request.GET.get('page')
+        result = paginator.get_page(page)
 
     context = {
         'title':title,
-        'answer': answer,
-        'query':query
+        'result': result,
+        'query':query,
+        "paginate":paginate
     }
     return render(request, 'foodSearch/search.html', context)
 

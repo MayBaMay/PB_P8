@@ -11,14 +11,14 @@
   <div class="container">
     <h2 class="text-center mt-0">Vous avez recherché des alternatives au produit : <br>{{ query }}</h2>
     <hr class="divider my-4">
-    {% if answer|length_is:"0" %}
+    {% if result|length_is:"0" %}
       <div class="text-center">
         Palsambleu ! Nous n'avons trouvé aucun résultat à cette requête. Même pas de quoi se ronger la chique !
         Partez de nouveau à l'abordage !
       </div>
     {% else %}
       <div class="row">
-      {% for product in answer %}
+      {% for product in result %}
         <div class="col-lg-3 col-md-6 text-center ">
           <div class="mt-5">
             <a href="{{ product.url }}">
@@ -39,8 +39,26 @@
       {% endfor %}
       </div>
     {% endif %}
+
   </div>
-  
+  {% if paginate %}
+  <div class="pagination text-center mt-5">
+          {% if result.has_previous %}
+              <a class="btn btn-secondary btn-lg disabled text-white" href="?query={{ query }}&page=1">&laquo; first</a>
+              <a class="btn btn-secondary btn-lg disabled text-white" href="?query={{ query }}&page={{ result.previous_page_number }}">previous</a>
+          {% endif %}
+
+          <span class="current ml-1 mr-1">
+              Page {{ result.number }} of {{ result.paginator.num_pages }}
+          </span>
+
+          {% if result.has_next %}
+              <a class="btn btn-secondary btn-lg disabled text-white" href="?query={{ query }}&page={{ result.next_page_number }}">next</a>
+              <a class="btn btn-secondary btn-lg disabled text-white" href="?query={{ query }}&page={{ result.paginator.num_pages }}">last &raquo;</a>
+          {% endif %}
+  </div>
+  {% endif %}
+
 </section>
 
 

@@ -1,16 +1,17 @@
 <div class="pagination">
-  {% if paginate %}
-    <div class="clearfix"></div>
-    <nav aria-label="">
+    <span class="step-links">
         {% if answer.has_previous %}
-            ><a href="?page={{ answer.previous_page_number }}">Précédent</a>
+            <a href="?query={{ query }}&?page=1">&laquo; first</a>
+            <a href="?query={{ query }}&?page={{ answer.previous_page_number }}">previous</a>
         {% endif %}
+
         <span class="current">
-          Page {{ answer.number }} sur {{ answer.paginator.num_pages }}
+            Page {{ answer.number }} of {{ answer.paginator.num_pages }}.
         </span>
+
         {% if answer.has_next %}
-            <li text-white><a href="?page={{ answer.previous_page_number }}">Suivant</a></li>
+            <a href="?query={{ query }}&?page={{ answer.next_page_number }}">next</a>
+            <a href="?query={{ query }}&?page={{ answer.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
-    </nav>
-{% endif %}
+    </span>
 </div>

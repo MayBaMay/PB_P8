@@ -74,7 +74,7 @@ def search(request):
             q_objects = Q()
             for category in found_category:
                 q_objects.add(Q(categories__reference=category.reference), Q.OR)
-            result_list = Product.objects.filter(q_objects).distinct().order_by('nutrition_grade_fr')
+            result_list = Product.objects.filter(q_objects).distinct().order_by('nutrition_grade_fr')[0:24]
             if result_list.count() != 0:
                 paginate = True
 
@@ -104,7 +104,7 @@ def search(request):
 
             # get the 20 firsts most relevant products in an ordered queryset
             results = sorted(results, key=fctSortDict, reverse=True)
-            results20 = results[0:20]
+            results20 = results[0:24]
             q_objects = Q()
             for item in results20:
                 q_objects.add(Q(reference=item['reference']), Q.OR)
@@ -118,7 +118,7 @@ def search(request):
             result = []
 
     if paginate:
-        paginator = Paginator(result_list, 8)
+        paginator = Paginator(result_list, 6)
         page = request.GET.get('page')
         result = paginator.get_page(page)
 

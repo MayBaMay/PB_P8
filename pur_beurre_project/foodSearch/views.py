@@ -4,6 +4,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db import transaction
 from django.db.models import Q
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+
+from googletrans import Translator
 
 from .models import Category, Favorite, Product
 from .forms import RegisterForm, ParagraphErrorList
@@ -53,15 +56,27 @@ def search(request):
     title = 'Aliment cherché'
 
     if query=="":
-        answer = Product.objects.all()[:12]
+        answer = []
     else:
-        # get first category containing the query
-        # querycat = Category.objects.filter(reference__icontains=query)
-
         # checks first category of the first product containing the query
-        found_product = Product.objects.filter(name__icontains=query)
+        # categories references are in english and using app language french => translation
+        translator = Translator()
+        try:
+            query_translated = translator.translate(query).text
+            found_category = Category.objects.filter(reference__icontains=query_translated)
+        except:
+            found_category = Category.objects.filter(reference__icontains=query)
 
-        if found_product.exists():
+        # or find products with the user query
+        if found_category.exists():
+            # get all products with a category containing the query
+            q_objects = Q()
+            for category in found_category:
+                q_objects.add(Q(categories__reference=category.reference), Q.OR)
+            answer = Product.objects.filter(q_objects).distinct().order_by('nutrition_grade_fr')
+
+        elif Product.objects.filter(name__icontains=query).exists():
+            found_product = Product.objects.filter(name__icontains=query)
             found_product_name = found_product[0].name
             found_categories = Category.objects.filter(products__name=found_product_name)#[0].reference
 
@@ -84,27 +99,20 @@ def search(request):
                         results.append({'name':prod.name, 'reference':prod.reference, 'nb':count_same_cat, 'cats_list':cats})
                         reference_prod_loaded.append(prod.reference)
 
-            # get the 20 firsts most relevant products in an order queryset
+            # get the 20 firsts most relevant products in an ordered queryset
             results = sorted(results, key=fctSortDict, reverse=True)
             results20 = results[0:20]
             q_objects = Q()
             for item in results20:
                 q_objects.add(Q(reference=item['reference']), Q.OR)
-            answer = Product.objects.filter(q_objects)
-            answer = answer.order_by('nutrition_grade_fr')
-
+            answer = Product.objects.filter(q_objects).order_by('nutrition_grade_fr')
         else :
             answer = []
 
-        # prod = Category.objects.all()[:12]
-            # if not prod.exists():
-            #     prod = prod[:1]
-
-    #     prod = Product.objects.filter(categorie__name__icontains=query)
     context = {
         'title':title,
         'answer': answer,
-        'query':query,
+        'query':query
     }
     return render(request, 'foodSearch/search.html', context)
 

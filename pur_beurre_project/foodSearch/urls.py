@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 
 from . import views # import views so we can use them in urls.
 
@@ -8,6 +8,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('register/', views.register, name='register'),
     path('search/', views.search, name='search'),
+    # re_path(r'^search/(?P<page>\d+)$', views.search, name='search'),
     path('userpage/', views.userpage, name='userpage'),
     path('watchlist/', views.watchlist, name='watchlist'),
     path('checkbox_products', views.checkbox_products, name='checkbox_products'),

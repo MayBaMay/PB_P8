@@ -1,0 +1,16 @@
+<div class="pagination">
+  {% if paginate %}
+    <div class="clearfix"></div>
+    <nav aria-label="">
+        {% if answer.has_previous %}
+            ><a href="?page={{ answer.previous_page_number }}">Précédent</a>
+        {% endif %}
+        <span class="current">
+          Page {{ answer.number }} sur {{ answer.paginator.num_pages }}
+        </span>
+        {% if answer.has_next %}
+            <li text-white><a href="?page={{ answer.previous_page_number }}">Suivant</a></li>
+        {% endif %}
+    </nav>
+{% endif %}
+</div>

@@ -16,7 +16,7 @@ class Init_db:
 
     def __init__(self):
         self.page = 1 # page counter
-        self.total_pages = 1000 # number of page wanted from the api
+        self.total_pages = 10 # number of page wanted from the api
         self.tps = []
 
     def reset_db(self):
@@ -108,10 +108,6 @@ class Init_db:
             print("Temps d'execution page: {} secondes ---".format(tps_page))
             self.tps.append(tps_page)
             self.page += 1
-
-        data = page_prods
-        with open('data.json', 'w') as file:
-            file.write(json.dumps(data, indent=4))
 
 class Command(BaseCommand):
 

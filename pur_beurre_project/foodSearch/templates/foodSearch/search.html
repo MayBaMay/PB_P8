@@ -8,9 +8,9 @@
 
 <section style="background-color:#de9440;" class="page-section text-white mb-5" id="services">
   <div class="container">
-    {% if found_products|length_is:"0" %}
       <h2 class="text-center mt-0">Veuillez sélectionner le produit recherché :</h2>
       <hr class="divider my-4">
+      {% if found_products|length_is:"0" %}
       <div class="text-center">
         Palsambleu ! Nous n'avons trouvé aucun résultat à cette requête. Même pas de quoi se ronger la chique !
         Partez de nouveau à l'abordage !
@@ -27,6 +27,8 @@
                 </div>
                 <h3 class="h4 mb-2 text-white">{{ product.name }}</h3>
               </a>
+              <a href="/detail/{{ product.id }}/">En savoir plus sur ce produit</a><br>
+              <a href="/results/{{ product.id }}/">Chercher un substitut</a>
 
               {% if product.nutrition_grade_fr == 'a' %}
                 <span style="background-color: #5bac09;" id="grade">{{ product.nutrition_grade_fr }}</span>

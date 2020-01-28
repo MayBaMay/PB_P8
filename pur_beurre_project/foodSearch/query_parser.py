@@ -39,8 +39,8 @@ class QueryParser:
         products_infos = self.products_infos()
         for key, value in products_infos.items():
             found = 0
-            for word in value:
-                if word in query_list:
+            for word in query_list:
+                if word in value:
                     found += 1
             products_infos[key] = found
         return products_infos

@@ -62,7 +62,7 @@ def search(request):
         parser = QueryParser(query)
 
     context = {
-        'found_products': parser.product_list[0:6],
+        'found_products': parser.product_list[0:12],
     }
     return render(request, 'foodSearch/search.html', context)
 
@@ -70,7 +70,7 @@ def results(request, product_id):
     product = Product.objects.get(id=product_id)
     paginate = True
 
-    found_categories = Category.objects.filter(id=product_id)#[0].reference
+    found_categories = Category.objects.filter(products__id=product_id)#[0].reference
     reference_prod_loaded = []
     results = []
     for nb in range(0,found_categories.count()): #pour chaque category liée au produit recherché$
@@ -87,16 +87,14 @@ def results(request, product_id):
                                 cats.append(cat)
                                 count_same_cat += 1
                     # get informations in dictionnary contained in the list results
-                    results.append({'name':prod.name, 'reference':prod.reference, 'nb':count_same_cat})
+                    results.append({'name':prod.name, 'reference':prod.reference, 'nb':count_same_cat, 'cats_list':cats})
                     reference_prod_loaded.append(prod.reference)
 
-
-    # get the 6 firsts most relevant products in an ordered queryset
+    # get the 24 firsts most relevant products in an ordered queryset
     results = sorted(results, key=fctSortDict, reverse=True)
-
-    results12 = results[0:12]
+    results20 = results[0:24]
     q_objects = Q()
-    for item in results12:
+    for item in results20:
         q_objects.add(Q(reference=item['reference']), Q.OR)
     result_list = Product.objects.filter(q_objects).order_by('nutrition_grade_fr')
 
@@ -109,16 +107,17 @@ def results(request, product_id):
         result = paginator.get_page(page)
 
     context = {
-        'product':product,
         'result': result,
-        'paginate':paginate
+        "paginate":paginate
     }
     return render(request, 'foodSearch/results.html', context)
 
 def detail(request, product_id):
     product = Product.objects.get(id=product_id)
+    found_categories = Category.objects.filter(products__name=product.name)
     context = {
-        'product':product
+        'product':product,
+        'found_categories':found_categories
     }
     return render(request, 'foodSearch/detail.html', context)
 

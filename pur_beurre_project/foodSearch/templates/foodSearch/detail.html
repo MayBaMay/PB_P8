@@ -19,6 +19,14 @@
         sel :{{ product.salt_100g }}<br>
         sodium : {{ product.sodium_100g }}<br>
       </div>
+      {% if found_categories|length_is:"0" %}
+      {% else %}
+        <div class="col-md-4 text-center mt-5">
+          {% for category in found_categories %}
+            {{ category.reference }}<br>
+          {% endfor %}
+      {% endif %}
+      </div>
 
     </div>
   </div>

@@ -5,6 +5,7 @@ from  django.contrib.auth.models import User
 class Product(models.Model):
     reference = models.CharField('Référence', max_length=100, unique=True)
     name = models.CharField('Nom', max_length=200)
+    brands = models.CharField('Marque', max_length=200)
     url = models.URLField(null=True)
     image_url = models.URLField(null=True)
     image_small_url = models.URLField(null=True)

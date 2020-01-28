@@ -72,6 +72,7 @@ class Init_db:
                         new_product = Product.objects.create(
                             reference = product["id"],
                             name = product["product_name"],
+                            brands = product["brands"],
                             nutrition_grade_fr = product["nutrition_grades"],
                             url = product["url"],
                             image_url = product["image_url"],

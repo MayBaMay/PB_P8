@@ -1,9 +1,10 @@
+#!/usr/bin/env python
 from django.urls import reverse
 from django.test import TestCase
 
 from django.contrib.auth.models import User
 
-from .models import Category, Favorite, Product
+from ..models import Category, Favorite, Product
 
 class IndexPageTestCase(TestCase):
 

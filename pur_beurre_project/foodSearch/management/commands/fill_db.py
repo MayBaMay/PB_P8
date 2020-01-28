@@ -15,8 +15,8 @@ import openfoodfacts
 class Init_db:
 
     def __init__(self):
-        self.page = 1 # page counter
-        self.total_pages = 10 # number of page wanted from the api
+        self.page = 11 # page counter
+        self.total_pages = 1000 # number of page wanted from the api
         self.tps = []
 
     def reset_db(self):
@@ -114,7 +114,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         db = Init_db()
-        db.reset_db()
+        # db.reset_db()
         db.load_datas()
         self.stdout.write(self.style.SUCCESS("{} products in database".format(Product.objects.count())))
         self.stdout.write(self.style.SUCCESS("{} categories in database".format(Category.objects.count())))

@@ -27,8 +27,8 @@
                 </div>
                 <h3 class="h4 mb-2 text-white">{{ product.name }}</h3>
               </a>
-              <a href="/detail/{{ product.id }}/">En savoir plus sur ce produit</a><br>
-              <a href="/results/{{ product.id }}/">Chercher un substitut</a>
+              <a href="/results/{{ product.id }}/" class="text-white">Chercher un substitut</a><br>
+              <a href="/detail/{{ product.id }}/">En savoir plus sur ce produit</a>
 
               {% if product.nutrition_grade_fr == 'a' %}
                 <span style="background-color: #5bac09;" id="grade">{{ product.nutrition_grade_fr }}</span>

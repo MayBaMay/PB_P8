@@ -11,6 +11,7 @@ from googletrans import Translator
 from .models import Category, Favorite, Product
 from .forms import RegisterForm, ParagraphErrorList
 from .query_parser import QueryParser
+from .favorite import SaveFavorite
 
 
 def index(request):
@@ -129,7 +130,9 @@ def detail(request, product_id):
     return render(request, 'foodSearch/detail.html', context)
 
 def save_favorite(request, product_id, substitute_id):
+    current_user = request.user
     product = Product.objects.get(id=product_id)
     substitute = Product.objects.get(id=substitute_id)
-    
+    favorite = SaveFavorite(current_user, product, substitute_id)
     return redirect('foodSearch:watchlist')
+    

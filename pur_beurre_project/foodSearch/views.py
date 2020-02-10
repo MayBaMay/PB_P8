@@ -113,6 +113,7 @@ def results(request, product_id):
         result = paginator.get_page(page)
 
     context = {
+        'product':product,
         'result': result,
         "paginate":paginate
     }
@@ -127,6 +128,8 @@ def detail(request, product_id):
     }
     return render(request, 'foodSearch/detail.html', context)
 
-def checkbox_products(request):
-    # check if product is reference as
-    product_on_watchlist = request.POST.get('checks')
+def save_favorite(request, product_id, substitute_id):
+    product = Product.objects.get(id=product_id)
+    substitute = Product.objects.get(id=substitute_id)
+    
+    return redirect('foodSearch:watchlist')

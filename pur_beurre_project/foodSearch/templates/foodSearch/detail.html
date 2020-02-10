@@ -15,11 +15,6 @@
 <section style="background-color:#de9440;" class="page-section text-white" id="services">
   <div class="container">
 
-    <div class="row text-center" style="margin-bottom: 40px;">
-      <div class="col-12">
-        Marque(s): {{ product.brands }} </div>
-      </div>
-
     <div class="row align-items-center">
 
       <div class="col-md-5 ml-auto mr-auto mt-10 text-center" style="text-transform: uppercase;">
@@ -40,10 +35,20 @@
         {% endif %}
       </div>
 
-      <div class="col-md-5 ml-auto mr-auto text-center" style="background-color:rgba(52,90,97);">
+      <div class="col-md-5 pt-2 pb-2 ml-auto mr-auto text-center" style="background-color:rgba(52,90,97);">
+        <div class="col-12"><u>INFORMATIONS</u></div><br>
         <div class="row align-items-center">
           <div class="col text-right">
-            gras saturés :
+            Marque(s):
+          </div>
+          <div class="col text-left">
+            {{ product.brands }}
+          </div>
+        </div>
+        <br>
+        <div class="row align-items-center">
+          <div class="col text-right">
+            Gras saturés :
           </div>
           <div class="col text-left">
             {{ product.saturated_fat_100g }}
@@ -51,7 +56,7 @@
         </div>
         <div class="row align-items-center">
           <div class="col text-right">
-            sucre :
+            Sucre :
           </div>
           <div class="col text-left">
             {{ product.sugars_100g }}
@@ -59,7 +64,7 @@
         </div>
         <div class="row align-items-center">
           <div class="col text-right">
-            sel :
+            Sel :
           </div>
           <div class="col text-left">
             {{ product.salt_100g }}
@@ -67,10 +72,26 @@
         </div>
         <div class="row align-items-center">
           <div class="col text-right">
-            sodium :
+            Sodium :
           </div>
           <div class="col text-left">
             {{ product.sodium_100g }}
+          </div>
+        </div>
+        <div class="row align-items-center">
+          <div class="col text-right">
+            Carbohydrates :
+          </div>
+          <div class="col text-left">
+            {{ product.carbohydrates_100g }}
+          </div>
+        </div>
+        <div class="row align-items-center">
+          <div class="col text-right">
+            Energie :
+          </div>
+          <div class="col text-left">
+            {{ product.energy_100g }}
           </div>
         </div>
       </div>

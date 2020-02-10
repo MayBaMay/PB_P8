@@ -67,14 +67,20 @@ def search(request):
     return render(request, 'foodSearch/search.html', context)
 
 def results(request, product_id):
+    #get product we want to substitute
     product = Product.objects.get(id=product_id)
-    paginate = True
+    paginate = False
 
-    found_categories = Category.objects.filter(products__id=product_id)#[0].reference
+    # found categories linked to this product
+    found_categories = Category.objects.filter(products__id=product_id)
+    # get reference of product loaded in results
     reference_prod_loaded = []
     results = []
-    for nb in range(0,found_categories.count()): #pour chaque category liée au produit recherché$
-        for prod in Product.objects.filter(categories__reference=found_categories[nb].reference):
+
+    #for each category of the product asked
+    for category in found_categories:
+        # for product in this category
+        for prod in Product.objects.filter(categories__reference=category.reference):
             if prod.reference in reference_prod_loaded:
                 pass
             else:
@@ -122,4 +128,5 @@ def detail(request, product_id):
     return render(request, 'foodSearch/detail.html', context)
 
 def checkbox_products(request):
+    # check if product is reference as
     product_on_watchlist = request.POST.get('checks')

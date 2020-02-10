@@ -113,9 +113,9 @@ class Init_db:
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        db = Init_db()
-        # db.reset_db()
-        db.load_datas()
+        # db = Init_db()
+        # # db.reset_db()
+        # db.load_datas()
         self.stdout.write(self.style.SUCCESS("{} products in database".format(Product.objects.count())))
         self.stdout.write(self.style.SUCCESS("{} categories in database".format(Category.objects.count())))
-        self.stdout.write(self.style.SUCCESS("Temps moyen d'execution : {} secondes ---".format(round(mean(db.tps),1))))
+        # self.stdout.write(self.style.SUCCESS("Temps moyen d'execution : {} secondes ---".format(round(mean(db.tps),1))))

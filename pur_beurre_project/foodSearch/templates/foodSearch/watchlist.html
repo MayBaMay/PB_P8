@@ -5,7 +5,29 @@
 
 {% include 'foodSearch/headerpages.html' with title=title %}
 
+{% if user_watchlist|length_is:"0" %}
+  <div class="text-center">
+    Vous n'avez pas de encore de favoris
+  </div>
+{% else %}
+
 <section style="background-color:#de9440;" class="page-section text-white">
+  {% for favorite in user_watchlist %}
+    <div class="row">
+      <div class="col-6">
+        <a href="/detail/{% url 'get_initial_search_product_in_wachlist' favorite %}/">
+          <div class="img_prod" style="background-color: #e8a75d">
+            <img
+              class="image-color-theme img-responsive" src="{{ substitute.image_small_url }}"
+              height="200rem" width="100rem"/>
+          </div>
+          <h3 class="h4 mb-2 text-white">{{ substitute.name }}</h3>
+        </a>
+
+      </div>
+    </div>
+  {% endfor %}
+
 </section>
 
 {% endblock %}

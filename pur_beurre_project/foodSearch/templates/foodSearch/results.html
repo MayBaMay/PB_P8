@@ -44,7 +44,7 @@
               <span style="background-color: #f00000;" id="grade">{{ substitute.nutrition_grade_fr }}</span>
             {% endif %}
 
-              <a href="/save_favorite/{{ product.id }}/{{ substitute.id}}/" value="" class="text-white"><span class='fas fa-floppy-o'></span> Sauvegarder</a>
+              <a href="/save_favorite/{{ substitute.id }}/{{ product.id }}/" value="" class="text-white"><span class='fas fa-floppy-o'></span> Sauvegarder</a>
         </div>
         {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
       {% endfor %}

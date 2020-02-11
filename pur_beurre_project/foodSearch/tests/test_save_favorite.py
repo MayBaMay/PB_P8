@@ -11,7 +11,7 @@ class FilterFoundProductsTestCase(TestCase):
         self.prod1 = Product.objects.create(id=1, name="Fake product for db", brands="brand fake", reference="1")
         self.prod2 = Product.objects.create(id=2, name="Second fake product", brands="the wrong one", reference="2")
         self.prod3 = Product.objects.create(id=3, name="product", brands="not bad", reference="3")
-        Favorite.objects.create(user=self.current_user, product=self.prod2, initial_search_product=3)
+        Favorite.objects.create(user=self.current_user, substitute=self.prod2, initial_search_product=3)
 
     # check if already in Favorite
     def test_favorite_exists(self):
@@ -22,11 +22,11 @@ class FilterFoundProductsTestCase(TestCase):
     def test_update_initial_product(self):
         # pass
         SaveFavorite(self.current_user, self.prod2, 1)
-        favorite = Favorite.objects.get(user=self.current_user, product=self.prod2)
+        favorite = Favorite.objects.get(user=self.current_user, substitute=self.prod2)
         self.assertEqual(favorite.initial_search_product, 1)
 
     # if not create Favorite
     def test_add_substitute(self):
         SaveFavorite(self.current_user, self.prod1, 3)
-        favorite = Favorite.objects.get(user=self.current_user, product=self.prod1)
+        favorite = Favorite.objects.get(user=self.current_user, substitute=self.prod1)
         self.assertEqual(favorite.initial_search_product, 3)

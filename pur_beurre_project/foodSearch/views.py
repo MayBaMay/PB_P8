@@ -28,9 +28,18 @@ def userpage(request):
     return render(request, 'foodSearch/userpage.html', context)
 
 def watchlist(request):
+    current_user = request.user
     title = 'Mes aliments'
-    context = {'title':title}
+    user_watchlist = Favorite.objects.filter(user=current_user)
+    context = {
+        'title':title,
+        'user_watchlist':user_watchlist
+    }
     return render(request, 'foodSearch/watchlist.html', context)
+
+# def get_initial_search_product_in_wachlist(request, favorite):
+#     favorite = request.GET.get('favorite')
+
 
 def register(request):
     title = 'Créer un compte'
@@ -129,10 +138,9 @@ def detail(request, product_id):
     }
     return render(request, 'foodSearch/detail.html', context)
 
-def save_favorite(request, product_id, substitute_id):
+def save_favorite(request, substitute_id, product_id):
     current_user = request.user
     product = Product.objects.get(id=product_id)
     substitute = Product.objects.get(id=substitute_id)
-    favorite = SaveFavorite(current_user, product, substitute_id)
+    favorite = SaveFavorite(current_user, substitute, product_id)
     return redirect('foodSearch:watchlist')
-    

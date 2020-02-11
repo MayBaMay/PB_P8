@@ -11,7 +11,7 @@ class SaveFavorite:
 
 
     def find_favorite(self):
-        if Favorite.objects.filter(user=self.current_user, product=self.substitute).exists():
+        if Favorite.objects.filter(user=self.current_user, substitute=self.substitute).exists():
             self.previous = True
             self.update_initial_product()
         else:
@@ -19,9 +19,9 @@ class SaveFavorite:
             self.add_substitute()
 
     def update_initial_product(self):
-        favorite = Favorite.objects.get(user=self.current_user, product=self.substitute)
+        favorite = Favorite.objects.get(user=self.current_user, substitute=self.substitute)
         favorite.initial_search_product = self.product_id
         favorite.save()
 
     def add_substitute(self):
-        Favorite.objects.create(user=self.current_user, product=self.substitute, initial_search_product=self.product_id)
+        Favorite.objects.create(user=self.current_user, substitute=self.substitute, initial_search_product=self.product_id)

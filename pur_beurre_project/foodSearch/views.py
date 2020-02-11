@@ -111,6 +111,11 @@ def results(request, product_id):
         q_objects.add(Q(reference=item['reference']), Q.OR)
     result_list = Product.objects.filter(q_objects).order_by('nutrition_grade_fr')
 
+    # for result in result_list:
+    #     {result: True}
+
+    # {id : True}
+
     if result_list.count() != 0:
         paginate = True
 
@@ -140,4 +145,5 @@ def save_favorite(request, substitute_id, product_id):
     substitute = Product.objects.get(id=substitute_id)
     product = Product.objects.get(id=product_id)
     favorite = SaveFavorite(current_user, substitute, product)
+    favorite.find_favorite()
     return redirect('foodSearch:watchlist')

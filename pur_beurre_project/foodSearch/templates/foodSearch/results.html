@@ -27,7 +27,10 @@
               </div>
               <h3 class="h4 mb-2 text-white">{{ substitute.name }}</h3>
             </a>
-
+            <a href="/detail/{{ product.id }}/">En savoir plus sur ce produit</a>
+            {% if Favorite.objects.filter(id=substitute.id ) %}
+              <a href="/save_favorite/{{ substitute.id }}/{{ product.id }}/" value="" class="text-white"><span class='fas fa-floppy-o'></span> Sauvegarder</a>
+            {}
             {% if substitute.nutrition_grade_fr == 'a' %}
               <span style="background-color: #5bac09;" id="grade">{{ substitute.nutrition_grade_fr }}</span>
             {% endif %}
@@ -44,7 +47,6 @@
               <span style="background-color: #f00000;" id="grade">{{ substitute.nutrition_grade_fr }}</span>
             {% endif %}
 
-              <a href="/save_favorite/{{ substitute.id }}/{{ product.id }}/" value="" class="text-white"><span class='fas fa-floppy-o'></span> Sauvegarder</a>
         </div>
         {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
       {% endfor %}

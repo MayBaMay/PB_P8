@@ -3,6 +3,7 @@
 import json
 import time
 from statistics import mean
+import unicodedata
 
 from django.core.management.base import BaseCommand, CommandError
 from django.db import IntegrityError
@@ -15,8 +16,8 @@ import openfoodfacts
 class Init_db:
 
     def __init__(self):
-        self.page = 1087 # page counter
-        self.total_pages = 5000 # number of page wanted from the api
+        self.page = 1 # page counter
+        self.total_pages = 1000 # number of page wanted from the api
         self.tps = []
 
     def reset_db(self):
@@ -24,6 +25,10 @@ class Init_db:
         Category.objects.all().delete()
         Favorite.objects.all().delete()
         Product.objects.all().delete()
+
+    def upper_unaccent(self, sentence):
+        sentence_unaccent = ''.join((c for c in unicodedata.normalize('NFD', sentence) if unicodedata.category(c) != 'Mn'))
+        return sentence_unaccent.upper()
 
     def load_datas(self):
         """method loading datas from api in the database"""
@@ -65,14 +70,22 @@ class Init_db:
                     salt_100g = ""
 
                 try:
+                    name = product["product_name"]
+                    formated_name = self.upper_unaccent(name)
+                    brands = product["brands"]
+                    formated_bra
+                    nds = self.upper_unaccent(brands)
+
                     with transaction.atomic():
                         # insert each product in database
                         categories = product["categories_hierarchy"]
 
                         new_product = Product.objects.create(
                             reference = product["id"],
-                            name = product["product_name"],
-                            brands = product["brands"],
+                            name = name,
+                            formated_name = formated_name,
+                            brands = brands,
+                            formated_brands = formated_brands,
                             nutrition_grade_fr = product["nutrition_grades"],
                             url = product["url"],
                             image_url = product["image_url"],
@@ -114,8 +127,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # db = Init_db()
-        # # db.reset_db()
+        # db.reset_db()
         # db.load_datas()
         self.stdout.write(self.style.SUCCESS("{} products in database".format(Product.objects.count())))
         self.stdout.write(self.style.SUCCESS("{} categories in database".format(Category.objects.count())))
-        # self.stdout.write(self.style.SUCCESS("Temps moyen d'execution : {} secondes ---".format(round(mean(db.tps),1))))
+        self.stdout.write(self.style.SUCCESS("Temps moyen d'execution : {} secondes ---".format(round(mean(db.tps),1))))

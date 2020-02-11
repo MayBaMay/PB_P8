@@ -24,12 +24,12 @@ class QueryParser:
         query_list = self.split_upper_no_accent(self.query)
         q_objects = Q()
         for word in query_list:
-            q_objects.add(Q(name__icontains=word), Q.OR)
-            q_objects.add(Q(brands__icontains=word), Q.OR)
+            q_objects.add(Q(formated_name__icontains=word), Q.OR)
+            q_objects.add(Q(formated_brands__icontains=word), Q.OR)
         return Product.objects.filter(q_objects).distinct()
 
     def products_infos(self):
-    # for those products, get name and brand in the the same string
+    # for those products, get name and brand in a same list
         product_dict = {}
         for product in self.products_with_words():
             name_brand_string = product.name
@@ -41,6 +41,7 @@ class QueryParser:
 
     def occurences(self):
     # find occurences of words in query and in name_brand_string
+    # one occurence by word
         query_list = self.split_upper_no_accent(self.query)
         products_infos = self.products_infos()
         for key, value in products_infos.items():

@@ -33,8 +33,8 @@ class Category(models.Model):
 class Favorite(models.Model):
     created_at = models.DateTimeField("date d'envoi", auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    substitute = models.OneToOneField(Product, on_delete=models.CASCADE)
-    initial_search_product = models.IntegerField()
+    substitute = models.OneToOneField(Product, on_delete=models.CASCADE, related_name='substitute')
+    initial_search_product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='initial_search_product')
 
     def __str__(self):
         return ("{} {} {}".format(self.user, self.substitute, self.initial_search_product))

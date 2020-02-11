@@ -59,12 +59,12 @@
           </li>
           {% if user.is_authenticated %}
             <li class="nav-item">
-              <a title="Mes aliments" class="nav-link " href="{% url 'foodSearch:watchlist' %}">
-                <img id="carrot" src="{% static 'foodSearch/img/noun_Carrot_29691.png' %}" height="30" width="30">
+              <a class="nav-link" title="Mes aliments" href="{% url 'foodSearch:watchlist' %}">
+                <img src="{% static 'foodSearch/img/noun_Carrot_29691.png' %}" height="30" width="30" aria-hidden="true">
               </a>
             </li>
-            <li title="Me déconnecter" class="nav-item">
-              <a class="nav-link" href="{% url 'logout' %}"> <i class="fas fa-sign-out-alt fa-2x" aria-hidden="true"></i> </a>
+            <li class="nav-item">
+              <a class="nav-link" title="Me déconnecter" href="{% url 'logout' %}"> <i class="fas fa-sign-out-alt fa-2x" aria-hidden="true"></i> </a>
             </li>
           {% endif %}
         </ul>

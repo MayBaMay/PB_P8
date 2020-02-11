@@ -13,20 +13,37 @@
       Vous n'avez pas de encore de favoris
     </div>
   {% else %}
+    <div class="row">
+      <div class="col-6 text-center">
+        <p>MES PRODUITS</p>
+      </div>
+      <div class="col-6 text-center">
+        <p>MES SUBSTUTUTS</p>
+      </div>
+    </div>
     {% for favorite in user_watchlist %}
-      <!-- <div class="row">
-        <div class="col-6">
-          <a href="/detail/{% Product. %}/">
-            <div class="img_prod" style="background-color: #e8a75d">
+      <div class="row">
+        <div class="col-6 text-center">
+          <a href="/detail/{{ favorite.initial_search_product.id}}/">
+            <div class="img_prod">
               <img
-                class="image-color-theme img-responsive" src="{{ substitute.image_small_url }}"
+                class="image-color-theme img-responsive" src="{{ favorite.initial_search_product.image_small_url }}"
                 height="200rem" width="100rem"/>
             </div>
-            <h3 class="h4 mb-2 text-white">{{ substitute.name }}</h3>
+            <h3 class="h4 mb-2 text-white">{{ favorite.initial_search_product.name }}</h3>
           </a>
-
         </div>
-      </div> -->
+        <div class="col-6 text-center">
+          <a href="/detail/{{ favorite.substitute.id}}/">
+            <div class="img_prod">
+              <img
+                class="image-color-theme img-responsive" src="{{ favorite.substitute.image_small_url }}"
+                height="200rem" width="100rem"/>
+            </div>
+            <h3 class="h4 mb-2 text-white">{{ favorite.substitute.name }}</h3>
+          </a>
+        </div>
+      </div>
     {% endfor %}
   {% endif %}
 </section>

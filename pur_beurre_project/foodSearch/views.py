@@ -37,14 +37,6 @@ def watchlist(request):
     }
     return render(request, 'foodSearch/watchlist.html', context)
 
-# def get_initial_search_product_in_wachlist(request, favorite):
-#     favorite = request.GET.get('favorite')
-#     product_id = favorite.initial_search_product
-#     product = Product.objects.get(id=product_id)
-#     context = {
-#         'product':product
-#     }
-#     return render(request, context)
 
 def register(request):
     title = 'Créer un compte'
@@ -145,7 +137,7 @@ def detail(request, product_id):
 
 def save_favorite(request, substitute_id, product_id):
     current_user = request.user
-    product = Product.objects.get(id=product_id)
     substitute = Product.objects.get(id=substitute_id)
-    favorite = SaveFavorite(current_user, substitute, product_id)
+    product = Product.objects.get(id=product_id)
+    favorite = SaveFavorite(current_user, substitute, product)
     return redirect('foodSearch:watchlist')

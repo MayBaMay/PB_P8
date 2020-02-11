@@ -13,4 +13,5 @@ urlpatterns = [
     path('userpage/', views.userpage, name='userpage'),
     path('save_favorite/<int:substitute_id>/<int:product_id>/', views.save_favorite, name='save_favorite'),
     path('watchlist/', views.watchlist, name='watchlist'),
+    # path('get_initial_search_product_in_wachlist/', views.get_initial_search_product_in_wachlist, name='get_initial_search_product_in_wachlist')
 ]

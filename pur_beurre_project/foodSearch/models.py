@@ -34,7 +34,7 @@ class Favorite(models.Model):
     created_at = models.DateTimeField("date d'envoi", auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     substitute = models.OneToOneField(Product, on_delete=models.CASCADE)
-    initial_search_product = models.IntegerField(Product, null=True)
+    initial_search_product = models.IntegerField()
 
     def __str__(self):
         return ("{} {} {}".format(self.user, self.substitute, self.initial_search_product))

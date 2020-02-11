@@ -39,7 +39,12 @@ def watchlist(request):
 
 # def get_initial_search_product_in_wachlist(request, favorite):
 #     favorite = request.GET.get('favorite')
-
+#     product_id = favorite.initial_search_product
+#     product = Product.objects.get(id=product_id)
+#     context = {
+#         'product':product
+#     }
+#     return render(request, context)
 
 def register(request):
     title = 'Créer un compte'

@@ -79,7 +79,7 @@ def results(request, product_id):
         page_results = paginator.get_page(page)
 
     context = {
-        'page_results':parser.product,
+        'product':parser.product,
         'result': page_results,
         "paginate":parser.paginate
     }

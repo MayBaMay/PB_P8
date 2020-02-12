@@ -15,7 +15,7 @@ class SaveFavorite:
             self.previous = False
 
     def find_favorite(self):
-        if self.previous = True
+        if self.previous:
             self.update_initial_product()
         else:
             self.add_substitute()

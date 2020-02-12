@@ -17,38 +17,44 @@
       </div>
     {% else %}
       <div class="row">
-      {% for substitute in result %}
-        <div class="col-md-4 text-center mt-5">
-            <a href="/detail/{{ substitute.id }}/">
-              <div class="img_prod" style="background-color: #e8a75d">
-                <img
-                  class="image-color-theme img-responsive" src="{{ substitute.image_small_url }}"
-                  height="200rem" width="100rem"/>
-              </div>
-              <h3 class="h4 mb-2 text-white">{{ substitute.name }}</h3>
-            </a>
-            <a href="/detail/{{ product.id }}/">En savoir plus sur ce produit</a>
-            {% if Favorite.objects.filter(id=substitute.id ) %}
-              <a href="/save_favorite/{{ substitute.id }}/{{ product.id }}/" value="" class="text-white"><span class='fas fa-floppy-o'></span> Sauvegarder</a>
-            {}
-            {% if substitute.nutrition_grade_fr == 'a' %}
-              <span style="background-color: #5bac09;" id="grade">{{ substitute.nutrition_grade_fr }}</span>
-            {% endif %}
-            {% if substitute.nutrition_grade_fr == 'b' %}
-              <span style="background-color: #0977ac;" id="grade">{{ substitute.nutrition_grade_fr }}</span>
-            {% endif %}
-            {% if substitute.nutrition_grade_fr == 'c' %}
-              <span style="background-color: #f7e80b;" id="grade">{{ substitute.nutrition_grade_fr }}</span>
-            {% endif %}
-            {% if substitute.nutrition_grade_fr == 'd' %}
-              <span style="background-color: #f7a60b;" id="grade">{{ substitute.nutrition_grade_fr }}</span>
-            {% endif %}
-            {% if substitute.nutrition_grade_fr == 'e' %}
-              <span style="background-color: #f00000;" id="grade">{{ substitute.nutrition_grade_fr }}</span>
-            {% endif %}
+      {% for result in page_results %}
+        <!-- {% for substitute, favorite in result.items %}
+          <div class="col-md-4 text-center mt-5">
+              <a href="/detail/{{ substitute.id }}/">
+                <div class="img_prod" style="background-color: #e8a75d">
+                  <img
+                    class="image-color-theme img-responsive" src="{{ substitute.image_small_url }}"
+                    height="200rem" width="100rem"/>
+                </div>
+                <h3 class="h4 mb-2 text-white">{{ substitute.name }}</h3>
+              </a>
+              <a href="/detail/{{ product.id }}/">En savoir plus sur ce produit</a>
 
-        </div>
-        {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
+              {% if favorite %}
+                <a href="/delete_favorite/{{ substitute.id }}/{{ product.id }}/" value="" class="text-white"><span class='fas fa-floppy-o'></span> Retirer ce substitut de mes favoris</a>
+              {% else %}
+                <a href="/save_favorite/{{ substitute.id }}/{{ product.id }}/" value="" class="text-white"><span class='fas fa-floppy-o'></span> Sauvegarder</a>
+              {% endif %}
+
+              {% if substitute.nutrition_grade_fr == 'a' %}
+                <span style="background-color: #5bac09;" id="grade">{{ substitute.nutrition_grade_fr }}</span>
+              {% endif %}
+              {% if substitute.nutrition_grade_fr == 'b' %}
+                <span style="background-color: #0977ac;" id="grade">{{ substitute.nutrition_grade_fr }}</span>
+              {% endif %}
+              {% if substitute.nutrition_grade_fr == 'c' %}
+                <span style="background-color: #f7e80b;" id="grade">{{ substitute.nutrition_grade_fr }}</span>
+              {% endif %}
+              {% if substitute.nutrition_grade_fr == 'd' %}
+                <span style="background-color: #f7a60b;" id="grade">{{ substitute.nutrition_grade_fr }}</span>
+              {% endif %}
+              {% if substitute.nutrition_grade_fr == 'e' %}
+                <span style="background-color: #f00000;" id="grade">{{ substitute.nutrition_grade_fr }}</span>
+              {% endif %}
+
+          </div>
+          {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
+        {% endfor %} -->
       {% endfor %}
       </div>
     {% endif %}

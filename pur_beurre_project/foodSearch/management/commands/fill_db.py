@@ -109,7 +109,7 @@ class Init_db:
                                         except Category.DoesNotExist:
                                             # if category doesn't exist yet, create one
                                             cat = Category.objects.create(reference = category)
-                                            categ = Category.objects.get(reference=category)
+                                            # categ = Category.objects.get(reference=category)
                                         # in any case, add a relation between Category and Product
                                         cat.products.add(new_product)
                         ###### only keep cleaned datas #######

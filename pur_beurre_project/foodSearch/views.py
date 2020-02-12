@@ -3,7 +3,6 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db import transaction
-from django.db.models import Q
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from googletrans import Translator
@@ -11,6 +10,7 @@ from googletrans import Translator
 from .models import Category, Favorite, Product
 from .forms import RegisterForm, ParagraphErrorList
 from .query_parser import QueryParser
+from .results_parser import ResultsParser
 from .favorite import SaveFavorite
 
 
@@ -55,10 +55,6 @@ def register(request):
         }
     return render(request, 'registration/register.html', context)
 
-def fctSortDict(value):
-    # permet de trier la liste contenat les dictionnaire en fonction du nombre trouvé
-    return value['nb']
-
 def search(request):
     query = request.GET.get('query')
     title = 'Aliment cherché'
@@ -74,60 +70,18 @@ def search(request):
     return render(request, 'foodSearch/search.html', context)
 
 def results(request, product_id):
-    #get product we want to substitute
-    product = Product.objects.get(id=product_id)
-    paginate = False
 
-    # found categories linked to this product
-    found_categories = Category.objects.filter(products__id=product_id)
-    # get reference of product loaded in results
-    reference_prod_loaded = []
-    results = []
+    parser = ResultsParser(product_id)
 
-    #for each category of the product asked
-    for category in found_categories:
-        # for product in this category
-        for prod in Product.objects.filter(categories__reference=category.reference):
-            if prod.reference in reference_prod_loaded:
-                pass
-            else:
-                if prod.nutrition_grade_fr < product.nutrition_grade_fr:
-                    count_same_cat = 0 #count nb of categories in common
-                    cats = [] #name of those categories
-                    for cat in Category.objects.filter(products__name=prod.name):
-                        if cat in found_categories:
-                            if cat not in cats:
-                                cats.append(cat)
-                                count_same_cat += 1
-                    # get informations in dictionnary contained in the list results
-                    results.append({'name':prod.name, 'reference':prod.reference, 'nb':count_same_cat, 'cats_list':cats})
-                    reference_prod_loaded.append(prod.reference)
-
-    # get the 24 firsts most relevant products in an ordered queryset
-    results = sorted(results, key=fctSortDict, reverse=True)
-    results20 = results[0:24]
-    q_objects = Q()
-    for item in results20:
-        q_objects.add(Q(reference=item['reference']), Q.OR)
-    result_list = Product.objects.filter(q_objects).order_by('nutrition_grade_fr')
-
-    # for result in result_list:
-    #     {result: True}
-
-    # {id : True}
-
-    if result_list.count() != 0:
-        paginate = True
-
-    if paginate:
-        paginator = Paginator(result_list, 6)
+    if parser.paginate:
+        paginator = Paginator(parser.results_infos, 6)
         page = request.GET.get('page')
-        result = paginator.get_page(page)
+        page_results = paginator.get_page(page)
 
     context = {
-        'product':product,
-        'result': result,
-        "paginate":paginate
+        'page_results':parser.product,
+        'result': page_results,
+        "paginate":parser.paginate
     }
     return render(request, 'foodSearch/results.html', context)
 
@@ -146,4 +100,9 @@ def save_favorite(request, substitute_id, product_id):
     product = Product.objects.get(id=product_id)
     favorite = SaveFavorite(current_user, substitute, product)
     favorite.find_favorite()
-    return redirect('foodSearch:watchlist')
+    page = request.GET.get('page')
+    context = {
+        'product':product,
+        'page':page
+    }
+    return render(request, 'foodSearch/results.html', context)

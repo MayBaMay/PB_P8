@@ -12,5 +12,6 @@ urlpatterns = [
     path('detail/<int:product_id>/', views.detail, name='detail'),
     path('userpage/', views.userpage, name='userpage'),
     path('save_favorite/<int:substitute_id>/<int:product_id>/<int:page>/', views.save_favorite, name='save_favorite'),
+    path('delete_favorite/<int:substitute_id>/<int:product_id>/<int:page>/', views.delete_favorite, name='delete_favorite'),
     path('watchlist/', views.watchlist, name='watchlist'),
 ]

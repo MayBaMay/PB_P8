@@ -71,7 +71,8 @@ def search(request):
 def results(request, product_id):
     page = request.GET.get('page')
     parser = ResultsParser(product_id)
-
+    if page == None:
+        page = 1
     context = {
         'product':parser.product,
         'result': parser.paginator(page),
@@ -94,4 +95,11 @@ def save_favorite(request, substitute_id, product_id, page):
     substitute = Product.objects.get(id=substitute_id)
     product = Product.objects.get(id=product_id)
     Favorite.objects.create(user=current_user, substitute=substitute, initial_search_product=product)
+    return redirect('/results/{}/?query=&page={}'.format(product_id, page))
+
+def delete_favorite(request, substitute_id, product_id, page):
+    current_user = request.user
+    substitute = Product.objects.get(id=substitute_id)
+    product = Product.objects.get(id=product_id)
+    Favorite.objects.get(substitute=substitute).delete()
     return redirect('/results/{}/?query=&page={}'.format(product_id, page))

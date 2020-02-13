@@ -11,7 +11,6 @@ from .models import Category, Favorite, Product
 from .forms import RegisterForm, ParagraphErrorList
 from .query_parser import QueryParser
 from .results_parser import ResultsParser
-from .favorite import SaveFavorite
 
 
 def index(request):
@@ -70,18 +69,14 @@ def search(request):
     return render(request, 'foodSearch/search.html', context)
 
 def results(request, product_id):
-
+    page = request.GET.get('page')
     parser = ResultsParser(product_id)
-
-    if parser.paginate:
-        paginator = Paginator(parser.results_infos, 6)
-        page = request.GET.get('page')
-        page_results = paginator.get_page(page)
 
     context = {
         'product':parser.product,
-        'result': page_results,
-        "paginate":parser.paginate
+        'result': parser.paginator(page),
+        'page':page,
+        "paginate": True
     }
     return render(request, 'foodSearch/results.html', context)
 
@@ -94,15 +89,9 @@ def detail(request, product_id):
     }
     return render(request, 'foodSearch/detail.html', context)
 
-def save_favorite(request, substitute_id, product_id):
+def save_favorite(request, substitute_id, product_id, page):
     current_user = request.user
     substitute = Product.objects.get(id=substitute_id)
     product = Product.objects.get(id=product_id)
-    favorite = SaveFavorite(current_user, substitute, product)
-    favorite.find_favorite()
-    page = request.GET.get('page')
-    context = {
-        'product':product,
-        'page':page
-    }
-    return render(request, 'foodSearch/results.html', context)
+    Favorite.objects.create(user=current_user, substitute=substitute, initial_search_product=product)
+    return redirect('/results/{}/?query=&page={}'.format(product_id, page))

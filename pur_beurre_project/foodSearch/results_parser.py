@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 from django.db.models import Q
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+
 from .models import Category, Favorite, Product
 
 def fctSortDict(value):
@@ -63,7 +65,14 @@ class ResultsParser:
         results_infos = []
         for result in self.relevant_results_queryset:
             if Favorite.objects.filter(substitute=result).exists():
-                results_infos.append({result, True})
+                results_infos.append({result: True})
             else:
-                results_infos.append({result, False})
+                results_infos.append({result: False})
         return results_infos
+
+    def paginator(self, page):
+        result = Product.objects.all()
+        if self.paginate:
+            paginator = Paginator(self.results_infos, 6)
+            page_results = paginator.get_page(page)
+            return page_results

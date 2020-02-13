@@ -11,6 +11,6 @@ urlpatterns = [
     path('results/<int:product_id>/', views.results, name='results'),
     path('detail/<int:product_id>/', views.detail, name='detail'),
     path('userpage/', views.userpage, name='userpage'),
-    path('save_favorite/<int:substitute_id>/<int:product_id>/', views.save_favorite, name='save_favorite'),
+    path('save_favorite/<int:substitute_id>/<int:product_id>/<int:page>/', views.save_favorite, name='save_favorite'),
     path('watchlist/', views.watchlist, name='watchlist'),
 ]

@@ -97,3 +97,13 @@ class FilterFoundSubstitutesTestCase(TestCase):
                                                 {prod4, True},
                                                 {prod2, False}
                                                 ])
+
+    def test_paginator(self):
+        query_prod = Product.objects.get(reference="1")
+        user = User.objects.create(username="test User")
+        prod2 = Product.objects.get(reference="2")
+        prod3 = Product.objects.get(reference="3")
+        prod4 = Product.objects.get(reference="4")
+        Favorite.objects.create(user=user, substitute=prod4, initial_search_product=query_prod)
+        parser = ResultsParser(query_prod.id)
+        self.assertEqual(parser.paginator(1)[0], 2)

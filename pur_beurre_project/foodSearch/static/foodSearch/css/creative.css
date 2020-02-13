@@ -9745,7 +9745,7 @@ header.masthead h1 {
   size: 20px;
 }
 
-#grade{
+.grade{
   border-radius: 50%;
   position: absolute;
   top: -10px;

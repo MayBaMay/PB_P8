@@ -5,7 +5,27 @@
 
 {% include 'foodSearch/headerpages.html' with title=title %}
 
-
+<header class="h-10 pb-1 pt-1" style="background:None; background-color:#e8a75d;">
+  <div class="container h-10">
+    <div class="row h-10">
+      <div class="col-lg-10 align-self-end">
+        {% if user_watchlist|length_is:"0" %}
+          <div class="text-center">
+          </div>
+        {% else %}
+          <div class="row">
+            <div class="col-6 text-center">
+              <p>MES PRODUITS</p>
+            </div>
+            <div class="col-6 text-center">
+              <p>MES SUBSTUTUTS</p>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</header>
 
 <section style="background-color:#de9440;" class="page-section text-white">
   {% if user_watchlist|length_is:"0" %}
@@ -13,35 +33,73 @@
       Vous n'avez pas de encore de favoris
     </div>
   {% else %}
-    <div class="row">
-      <div class="col-6 text-center">
-        <p>MES PRODUITS</p>
-      </div>
-      <div class="col-6 text-center">
-        <p>MES SUBSTUTUTS</p>
-      </div>
-    </div>
     {% for favorite in user_watchlist %}
-      <div class="row">
+      <div class="row mt-3">
         <div class="col-6 text-center">
-          <a href="/detail/{{ favorite.initial_search_product.id}}/">
-            <div class="img_prod">
-              <img
-                class="image-color-theme img-responsive" src="{{ favorite.initial_search_product.image_small_url }}"
-                height="200rem" width="100rem"/>
+          <div class="row pr-5">
+            <div class="col-6 text-right">
+              <a href="/detail/{{ favorite.initial_search_product.id}}/">
+                <div class="img_prod">
+                  <img
+                    class="image-color-theme img-responsive" src="{{ favorite.initial_search_product.image_small_url }}"
+                    height="200rem" width="100rem"/>
+                </div>
+              </a>
             </div>
-            <h3 class="h4 mb-2 text-white">{{ favorite.initial_search_product.name }}</h3>
-          </a>
+              <div class="col-6 text-center">
+                <a href="/detail/{{ favorite.initial_search_product.id}}/">
+                  <h2 class="h4 mb-2 text-white">{{ favorite.initial_search_product.name }}</h2>
+                  {% if favorite.initial_search_product.nutrition_grade_fr == 'a' %}
+                    <img src="{% static 'foodSearch/img/nutriscoreA.png' %}" alt="nutriscoreA" class="img-fluid rounded">
+                  {% endif %}
+                  {% if favorite.initial_search_product.nutrition_grade_fr == 'b' %}
+                    <img src="{% static 'foodSearch/img/nutriscoreB.png' %}" alt="nutriscoreB" class="img-fluid rounded">
+                  {% endif %}
+                  {% if favorite.initial_search_product.nutrition_grade_fr == 'c' %}
+                    <img src="{% static 'foodSearch/img/nutriscoreC.png' %}" alt="nutriscoreC" class="img-fluid rounded">
+                  {% endif %}
+                  {% if favorite.initial_search_product.nutrition_grade_fr == 'd' %}
+                    <img src="{% static 'foodSearch/img/nutriscoreD.png' %}" alt="nutriscoreD" class="img-fluid rounded">
+                  {% endif %}
+                  {% if favorite.initial_search_product.nutrition_grade_fr == 'e' %}
+                    <img src="{% static 'foodSearch/img/nutriscoreE.png' %}" alt="nutriscoreE" class="img-fluid rounded">
+                  {% endif %}
+                </a>
+              </div>
+            </div>
         </div>
         <div class="col-6 text-center">
-          <a href="/detail/{{ favorite.substitute.id}}/">
-            <div class="img_prod">
-              <img
-                class="image-color-theme img-responsive" src="{{ favorite.substitute.image_small_url }}"
-                height="200rem" width="100rem"/>
+          <div class="row pr-5">
+            <div class="col-6 text-right">
+              <a href="/detail/{{ favorite.substitute.id}}/">
+                <div class="img_prod">
+                  <img
+                    class="image-color-theme img-responsive" src="{{ favorite.substitute.image_small_url }}"
+                    height="200rem" width="100rem"/>
+                </div>
+              </a>
             </div>
-            <h3 class="h4 mb-2 text-white">{{ favorite.substitute.name }}</h3>
-          </a>
+              <div class="col-6 text-center">
+                <a href="/detail/{{ favorite.substitute.id}}/">
+                  <h2 class="h4 mb-2 text-white">{{ favorite.substitute.name }}</h2>
+                  {% if favorite.substitute.nutrition_grade_fr == 'a' %}
+                    <img src="{% static 'foodSearch/img/nutriscoreA.png' %}" alt="nutriscoreA" class="img-fluid rounded">
+                  {% endif %}
+                  {% if favorite.substitute.nutrition_grade_fr == 'b' %}
+                    <img src="{% static 'foodSearch/img/nutriscoreB.png' %}" alt="nutriscoreB" class="img-fluid rounded">
+                  {% endif %}
+                  {% if favorite.substitute.nutrition_grade_fr == 'c' %}
+                    <img src="{% static 'foodSearch/img/nutriscoreC.png' %}" alt="nutriscoreC" class="img-fluid rounded">
+                  {% endif %}
+                  {% if favorite.substitute.nutrition_grade_fr == 'd' %}
+                    <img src="{% static 'foodSearch/img/nutriscoreD.png' %}" alt="nutriscoreD" class="img-fluid rounded">
+                  {% endif %}
+                  {% if favorite.substitute.nutrition_grade_fr == 'e' %}
+                    <img src="{% static 'foodSearch/img/nutriscoreE.png' %}" alt="nutriscoreE" class="img-fluid rounded">
+                  {% endif %}
+                </a>
+              </div>
+            </div>
         </div>
       </div>
     {% endfor %}

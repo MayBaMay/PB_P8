@@ -2294,6 +2294,12 @@ fieldset:disabled a.btn {
   border-color: #6c757d;
 }
 
+.btn-dark-green {
+  color: #fff;
+  background-color: #345a61;
+  border-color: #345a61;
+}
+
 .btn-secondary:hover {
   color: #fff;
   background-color: #5a6268;
@@ -9585,7 +9591,7 @@ hr.light {
 }
 
 .page-section {
-  padding: 8rem 0;
+  padding: 4rem 0;
   min-height: 60vh;
 }
 
@@ -9667,7 +9673,7 @@ hr.light {
   #mainNav.navbar-scrolled .navbar-nav .nav-item .nav-link:hover {
     color: #f4623a;
   }
-  #mainNav.navbar-scrolled  .fa-carott:hover{
+  #mainNav.navbar-scrolled .fa-carott:hover{
     content: url("../img/noun_Carrot_orange.png");
   }
 }
@@ -9689,6 +9695,8 @@ header.masthead {
 header.titlepage{
   height: 30vh;
   min-height: 15rem;
+  padding-top: 50px;
+  padding-bottom: 30px;
 }
 
 header.masthead h1 {

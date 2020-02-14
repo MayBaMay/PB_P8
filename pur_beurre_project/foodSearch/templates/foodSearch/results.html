@@ -4,11 +4,19 @@
 
 {% block content %}
 
-{% include 'foodSearch/headerpages.html' with title=title %}
-
-<section style="background-color:#de9440;" class="page-section text-white mb-5" id="services">
+<header class="" style="background-image: url({{ product.image_url }}); background-position: center center;   background-size: initial;   background-repeat: no-repeat; background-color: black;">
   <div class="container">
-    <h2 class="text-center mt-0">Vous avez recherché des alternatives au produit : <br>{{ product.name }}</h2>
+    <div class="row h-100 align-items-center justify-content-center text-center">
+      <div class="col-lg-10 align-self-end">
+        <h1 class="text-uppercase font-weight-bold" style="color:#c45525; background-color:rgba(52,90,97,0.6)">{{ product.name }}</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section style="background-color:#de9440;" class="page-section text-white" id="services">
+  <div class="container">
+    <h2 class="text-center mt-0">Vous pouvez remplacer cet aliment par :</h2>
     <hr class="divider my-4">
     {% if result|length_is:"0" %}
       <div class="text-center">
@@ -20,7 +28,7 @@
         {% for element in result %}
           {% for substitute, favorite in element.items %}
             <div class="col-md-4 text-center mt-5">
-                <a href="/detail/{{ substitute.id }}/">
+                <a href="/detail/{{ substitute.id }}/" title="En savoir plus sur ce produit">
                   <div class="img_prod" style="background-color: #e8a75d">
                     <img
                       class="image-color-theme img-responsive" src="{{ substitute.image_small_url }}"
@@ -32,7 +40,7 @@
 
                 {% if user.is_authenticated %}
                   {% if favorite %}
-                    <a href="/delete_favorite/{{ substitute.id }}/{{ product.id }}/{{ page }}/" value="" class="text-white"><span class='fas fa-floppy-o'></span> Retirer ce substitut de mes favoris</a>
+                    <a href="/delete_favorite_from_result/{{ substitute.id }}/{{ product.id }}/{{ page }}/" value="" class="text-white"><span class='fas fa-floppy-o'></span> Retirer ce substitut de mes favoris</a>
                   {% else %}
                     <a href="/save_favorite/{{ substitute.id }}/{{ product.id }}/{{ page }}/" value="" class="text-white"><span class='fas fa-floppy-o'></span> Sauvegarder</a>
                   {% endif %}

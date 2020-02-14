@@ -5,104 +5,66 @@
 
 {% include 'foodSearch/headerpages.html' with title=title %}
 
-<header class="h-10 pb-1 pt-1" style="background:None; background-color:#e8a75d;">
-  <div class="container h-10">
-    <div class="row h-10">
-      <div class="col-lg-10 align-self-end">
-        {% if user_watchlist|length_is:"0" %}
-          <div class="text-center">
-          </div>
-        {% else %}
-          <div class="row">
-            <div class="col-6 text-center">
-              <p>MES PRODUITS</p>
-            </div>
-            <div class="col-6 text-center">
-              <p>MES SUBSTUTUTS</p>
-            </div>
-          </div>
-        {% endif %}
+<section style="background-color:#de9440;" class="page-section text-white" id="services">
+  <div class="container">
+      <h2 class="text-center mt-0">Veuillez sélectionner le produit recherché :</h2>
+      <hr class="divider my-4">
+      {% if watchlist|length_is:"0" %}
+      <div class="text-center">
+        Vous n'avez pas de encore de favoris
       </div>
-    </div>
-  </div>
-</header>
-
-<section style="background-color:#de9440;" class="page-section text-white">
-  {% if user_watchlist|length_is:"0" %}
-    <div class="text-center">
-      Vous n'avez pas de encore de favoris
-    </div>
-  {% else %}
-    {% for favorite in user_watchlist %}
-      <div class="row mt-3">
-        <div class="col-6 text-center">
-          <div class="row pr-5">
-            <div class="col-6 text-right">
-              <a href="/detail/{{ favorite.initial_search_product.id}}/">
-                <div class="img_prod">
-                  <img
-                    class="image-color-theme img-responsive" src="{{ favorite.initial_search_product.image_small_url }}"
-                    height="200rem" width="100rem"/>
-                </div>
-              </a>
-            </div>
-              <div class="col-6 text-center">
-                <a href="/detail/{{ favorite.initial_search_product.id}}/">
-                  <h2 class="h4 mb-2 text-white">{{ favorite.initial_search_product.name }}</h2>
-                  {% if favorite.initial_search_product.nutrition_grade_fr == 'a' %}
-                    <img src="{% static 'foodSearch/img/nutriscoreA.png' %}" alt="nutriscoreA" class="img-fluid rounded">
-                  {% endif %}
-                  {% if favorite.initial_search_product.nutrition_grade_fr == 'b' %}
-                    <img src="{% static 'foodSearch/img/nutriscoreB.png' %}" alt="nutriscoreB" class="img-fluid rounded">
-                  {% endif %}
-                  {% if favorite.initial_search_product.nutrition_grade_fr == 'c' %}
-                    <img src="{% static 'foodSearch/img/nutriscoreC.png' %}" alt="nutriscoreC" class="img-fluid rounded">
-                  {% endif %}
-                  {% if favorite.initial_search_product.nutrition_grade_fr == 'd' %}
-                    <img src="{% static 'foodSearch/img/nutriscoreD.png' %}" alt="nutriscoreD" class="img-fluid rounded">
-                  {% endif %}
-                  {% if favorite.initial_search_product.nutrition_grade_fr == 'e' %}
-                    <img src="{% static 'foodSearch/img/nutriscoreE.png' %}" alt="nutriscoreE" class="img-fluid rounded">
-                  {% endif %}
-                </a>
-              </div>
-            </div>
-        </div>
-        <div class="col-6 text-center">
-          <div class="row pr-5">
-            <div class="col-6 text-right">
-              <a href="/detail/{{ favorite.substitute.id}}/">
-                <div class="img_prod">
+    {% else %}
+      <div class="row">
+        {% for favorite in watchlist %}
+          <div class="col-md-4 text-center mt-5">
+              <a href="/detail/{{ favorite.substitute.id}}/" title="Alternative à {{ favorite.initial_search_product.name }} {{ favorite.initial_search_product.brands }}">
+                <div class="img_prod" style="background-color: #e8a75d">
                   <img
                     class="image-color-theme img-responsive" src="{{ favorite.substitute.image_small_url }}"
                     height="200rem" width="100rem"/>
                 </div>
+                <h3 class="h4 mb-2 text-white">{{ favorite.substitute.name }}</h3>
               </a>
-            </div>
-              <div class="col-6 text-center">
-                <a href="/detail/{{ favorite.substitute.id}}/">
-                  <h2 class="h4 mb-2 text-white">{{ favorite.substitute.name }}</h2>
-                  {% if favorite.substitute.nutrition_grade_fr == 'a' %}
-                    <img src="{% static 'foodSearch/img/nutriscoreA.png' %}" alt="nutriscoreA" class="img-fluid rounded">
-                  {% endif %}
-                  {% if favorite.substitute.nutrition_grade_fr == 'b' %}
-                    <img src="{% static 'foodSearch/img/nutriscoreB.png' %}" alt="nutriscoreB" class="img-fluid rounded">
-                  {% endif %}
-                  {% if favorite.substitute.nutrition_grade_fr == 'c' %}
-                    <img src="{% static 'foodSearch/img/nutriscoreC.png' %}" alt="nutriscoreC" class="img-fluid rounded">
-                  {% endif %}
-                  {% if favorite.substitute.nutrition_grade_fr == 'd' %}
-                    <img src="{% static 'foodSearch/img/nutriscoreD.png' %}" alt="nutriscoreD" class="img-fluid rounded">
-                  {% endif %}
-                  {% if favorite.substitute.nutrition_grade_fr == 'e' %}
-                    <img src="{% static 'foodSearch/img/nutriscoreE.png' %}" alt="nutriscoreE" class="img-fluid rounded">
-                  {% endif %}
-                </a>
-              </div>
-            </div>
-        </div>
+              <a href="/detail/{{ favorite.substitute.id }}/">En savoir plus sur ce produit</a><br>
+              <a href="/delete_favorite_from_watchlist/{{ favorite.substitute.id }}/{{ page }}/" value="" class="text-white"><span class='fas fa-floppy-o'></span> Retirer ce substitut de mes favoris</a>
+
+              {% if favorite.substitute.nutrition_grade_fr == 'a' %}
+                <span style="background-color: #5bac09;" class="grade">{{ favorite.substitute.nutrition_grade_fr }}</span>
+              {% endif %}
+              {% if favorite.substitute.nutrition_grade_fr == 'b' %}
+                <span style="background-color: #0977ac;" class="grade">{{ favorite.substitute.nutrition_grade_fr }}</span>
+              {% endif %}
+              {% if favorite.substitute.nutrition_grade_fr == 'c' %}
+                <span style="background-color: #f7e80b;" class="grade">{{ favorite.substitute.nutrition_grade_fr }}</span>
+              {% endif %}
+              {% if favorite.substitute.nutrition_grade_fr == 'd' %}
+                <span style="background-color: #f7a60b;" class="grade">{{ favorite.substitute.nutrition_grade_fr }}</span>
+              {% endif %}
+              {% if favorite.substitute.nutrition_grade_fr == 'e' %}
+                <span style="background-color: #f00000;" class="grade">{{ favorite.substitute.nutrition_grade_fr }}</span>
+              {% endif %}
+          </div>
+          {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
+      {% endfor %}
       </div>
-    {% endfor %}
+    {% endif %}
+  </div>
+  {% if paginate %}
+  <div class="pagination text-center mt-5">
+          {% if watchlist.has_previous %}
+              <a class="btn btn-secondary btn-lg text-white" href="?page=1">&laquo; first</a>
+              <a class="btn btn-secondary btn-lg text-white" href="?page={{ watchlist.previous_page_number }}">previous</a>
+          {% endif %}
+
+          <span class="current mx-auto">
+              Page {{ watchlist.number }} of {{ watchlist.paginator.num_pages }}
+          </span>
+
+          {% if watchlist.has_next %}
+              <a class="btn btn-secondary btn-lg text-white" href="?page={{ watchlist.next_page_number }}">next</a>
+              <a class="btn btn-secondary btn-lg text-white" href="?page={{ watchlist.paginator.num_pages }}">last &raquo;</a>
+          {% endif %}
+  </div>
   {% endif %}
 </section>
 

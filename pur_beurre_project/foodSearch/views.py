@@ -17,7 +17,7 @@ def index(request):
     return render(request, 'foodSearch/index.html')
 
 def userpage(request):
-    title = 'Mon compte'
+    title = request.user
     context = {'title':title}
     if request.user.is_authenticated:
         username = request.user.username
@@ -29,13 +29,30 @@ def userpage(request):
 def watchlist(request):
     current_user = request.user
     title = 'Mes aliments'
+    page = request.GET.get('page')
     user_watchlist = Favorite.objects.filter(user=current_user)
+
+    if user_watchlist.count() > 6 :
+        paginate = True
+    else :
+        paginate = False
+
+    if paginate:
+        paginator = Paginator(user_watchlist, 6)
+        watchlist = paginator.get_page(page)
+    else:
+        watchlist = user_watchlist
+
+    if page == None:
+        page = 1
+
     context = {
+        'page':page,
         'title':title,
-        'user_watchlist':user_watchlist
+        'watchlist':watchlist,
+        'paginate':paginate
     }
     return render(request, 'foodSearch/watchlist.html', context)
-
 
 def register(request):
     title = 'Créer un compte'
@@ -56,7 +73,7 @@ def register(request):
 
 def search(request):
     query = request.GET.get('query')
-    title = 'Aliment cherché'
+    title = query
 
     if query=="":
         found_products = []
@@ -64,16 +81,19 @@ def search(request):
         parser = QueryParser(query)
 
     context = {
+        'title' : title,
         'found_products': parser.product_list[0:12],
     }
     return render(request, 'foodSearch/search.html', context)
 
 def results(request, product_id):
+    title = Product.objects.get(id=product_id).name
     page = request.GET.get('page')
     parser = ResultsParser(product_id)
     if page == None:
         page = 1
     context = {
+        'title':title,
         'product':parser.product,
         'result': parser.paginator(page),
         'page':page,
@@ -97,9 +117,15 @@ def save_favorite(request, substitute_id, product_id, page):
     Favorite.objects.create(user=current_user, substitute=substitute, initial_search_product=product)
     return redirect('/results/{}/?query=&page={}'.format(product_id, page))
 
-def delete_favorite(request, substitute_id, product_id, page):
+def delete_favorite_from_result(request, substitute_id, product_id, page):
     current_user = request.user
     substitute = Product.objects.get(id=substitute_id)
     product = Product.objects.get(id=product_id)
     Favorite.objects.get(substitute=substitute).delete()
     return redirect('/results/{}/?query=&page={}'.format(product_id, page))
+
+def delete_favorite_from_watchlist(request, substitute_id, page):
+    current_user = request.user
+    substitute = Product.objects.get(id=substitute_id)
+    Favorite.objects.get(substitute=substitute).delete()
+    return redirect('/watchlist/?page={}'.format(page))

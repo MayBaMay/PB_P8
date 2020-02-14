@@ -15,7 +15,7 @@ class ResultsParser:
         self.relevant_results_queryset = self.get_results_queryset()
         self.results_infos = self.get_results_dict_with_favorite_info()
 
-        if self.relevant_results_queryset.count() != 0:
+        if self.relevant_results_queryset.count() > 6:
             self.paginate = True
         else:
             self.paginate = False

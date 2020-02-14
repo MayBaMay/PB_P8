@@ -90,8 +90,8 @@
   {% if paginate %}
   <div class="pagination text-center mt-5">
           {% if result.has_previous %}
-              <a class="btn btn-secondary btn-lg text-white" href="?query={{ query }}&page=1">&laquo; first</a>
-              <a class="btn btn-secondary btn-lg text-white" href="?query={{ query }}&page={{ result.previous_page_number }}">previous</a>
+              <a class="paginate btn btn-secondary btn-sm text-white" href="?query={{ query }}&page=1">&laquo; first</a>
+              <a class="paginate btn btn-secondary btn-sm text-white" href="?query={{ query }}&page={{ result.previous_page_number }}">previous</a>
           {% endif %}
 
           <span class="current mx-auto">
@@ -99,8 +99,8 @@
           </span>
 
           {% if result.has_next %}
-              <a class="btn btn-secondary btn-lg text-white" href="?query={{ query }}&page={{ result.next_page_number }}">next</a>
-              <a class="btn btn-secondary btn-lg text-white" href="?query={{ query }}&page={{ result.paginator.num_pages }}">last &raquo;</a>
+              <a class="paginate btn btn-secondary btn-sm text-white" href="?query={{ query }}&page={{ result.next_page_number }}">next</a>
+              <a class="paginate btn btn-secondary btn-sm text-white" href="?query={{ query }}&page={{ result.paginator.num_pages }}">last &raquo;</a>
           {% endif %}
   </div>
   {% endif %}

@@ -5,8 +5,6 @@ from django.contrib.auth.models import User
 from django.db import transaction
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
-from googletrans import Translator
-
 from .models import Category, Favorite, Product
 from .forms import RegisterForm, ParagraphErrorList
 from .query_parser import QueryParser

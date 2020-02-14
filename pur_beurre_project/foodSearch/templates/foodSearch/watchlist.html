@@ -53,8 +53,8 @@
   {% if paginate %}
   <div class="pagination text-center mt-5">
           {% if watchlist.has_previous %}
-              <a class="btn btn-secondary btn-lg text-white" href="?page=1">&laquo; first</a>
-              <a class="btn btn-secondary btn-lg text-white" href="?page={{ watchlist.previous_page_number }}">previous</a>
+              <a class="btn btn-secondary btn-sm text-white" href="?page=1">&laquo; first</a>
+              <a class="btn btn-secondary btn-sm text-white" href="?page={{ watchlist.previous_page_number }}">previous</a>
           {% endif %}
 
           <span class="current mx-auto">
@@ -62,8 +62,8 @@
           </span>
 
           {% if watchlist.has_next %}
-              <a class="btn btn-secondary btn-lg text-white" href="?page={{ watchlist.next_page_number }}">next</a>
-              <a class="btn btn-secondary btn-lg text-white" href="?page={{ watchlist.paginator.num_pages }}">last &raquo;</a>
+              <a class="btn btn-secondary btn-sm text-white" href="?page={{ watchlist.next_page_number }}">next</a>
+              <a class="btn btn-secondary btn-sm text-white" href="?page={{ watchlist.paginator.num_pages }}">last &raquo;</a>
           {% endif %}
   </div>
   {% endif %}

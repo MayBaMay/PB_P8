@@ -9601,7 +9601,7 @@ hr.light {
   color: #212529;
 }
 
-#mainNav .navbar-nav .nav-item .nav-link {
+#mainNav .navbar-nav .nav-item .nav-link{
   color: #6c757d;
   font-family: "Merriweather Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-weight: 700;
@@ -9611,6 +9611,16 @@ hr.light {
 
 #mainNav .navbar-nav .nav-item .nav-link:hover, #mainNav .navbar-nav .nav-item .nav-link:active {
   color: #f4623a;
+}
+
+#mainNav .fa-carott{
+  content: url("../img/noun_Carrot_grey.png");
+  height: 28.8px;
+  width: 28.8px;
+}
+
+#mainNav .fa-carott:hover, #mainNav .fa-carott:active{
+  content: url("../img/noun_Carrot_white.png");
 }
 
 #mainNav .navbar-nav .nav-item .nav-link.active {
@@ -9651,8 +9661,14 @@ hr.light {
   #mainNav.navbar-scrolled .navbar-nav .nav-item .nav-link {
     color: #212529;
   }
+  #mainNav.navbar-scrolled .fa-carott{
+    content: url("../img/noun_Carrot_black.png");
+  }
   #mainNav.navbar-scrolled .navbar-nav .nav-item .nav-link:hover {
     color: #f4623a;
+  }
+  #mainNav.navbar-scrolled  .fa-carott:hover{
+    content: url("../img/noun_Carrot_orange.png");
   }
 }
 

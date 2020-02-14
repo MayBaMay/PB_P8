@@ -16,6 +16,12 @@ from .results_parser import ResultsParser
 def index(request):
     return render(request, 'foodSearch/index.html')
 
+def legals(request):
+    context = {
+        'title':'Mentions légales'
+    }
+    return render(request, 'foodSearch/legals.html', context)
+
 def userpage(request):
     title = request.user
     context = {'title':title}

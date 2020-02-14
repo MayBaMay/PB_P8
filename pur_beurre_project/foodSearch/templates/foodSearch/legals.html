@@ -1,0 +1,33 @@
+{% extends 'foodSearch/base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% include 'foodSearch/headerpages.html' with title=title %}
+<section style="background-color:#de9440;" class="page-section text-white" id="services">
+
+  <div class="row pb-3">
+    <div class="col-md-5 m-auto text-center border" style="background-color:#e8a75d;" >
+        <h2>Contacts :</h2>
+        <p>Téléphone : 01 00 00 00 00</p>
+        <p>Mail : <a href="mailto:contact@purbeurre.com">mailto:contact@purbeurre.com</a></p>
+    </div>
+  </div>
+  <div class="row pb-3">
+    <div class="col-md-5 m-auto text-center border" style="background-color:#e8a75d;" >
+        <h2>Hébergement du site :</h2>
+        <p>Plateforme utilisée : <a href="#">Heroku</a></p>
+    </div>
+  </div>
+  <div class="row pb-3">
+    <div class="col-md-5 m-auto text-center border" style="background-color:#e8a75d;" >
+        <h2>Droits d'auteur :</h2>
+        <p>Logo "carrot" : Par <a href="https://thenounproject.com/term/carrot/29691/">Fabien Jouin</a></p>
+        <p>Photo de Fond : Par <a href="https://unsplash.com/photos/eqsEZNCm4-c">Olenka Kotyk
+</a></p>
+        <p>Template Bootstrap: : <a href="https://startbootstrap.com/template-overviews/creative/">Lien</a></p>
+    </div>
+  </div>
+
+</section>
+{% endblock %}

@@ -40,20 +40,17 @@
 
                 {% if user.is_authenticated %}
                   {% if favorite %}
-                    <a href="/delete_favorite_from_result/{{ substitute.id }}/{{ product.id }}/{{ page }}/" value="" class="text-white"><span class='fas fa-floppy-o'></span> Retirer ce substitut de mes favoris</a>
+                    <a href="/delete_favorite_from_result/{{ substitute.id }}/{{ product.id }}/{{ page }}/" value="" class="text-white"><span class='fas fa-floppy-o'>
+                    </span> Retirer ce produit de mes favoris</a>
                   {% else %}
-                    <a href="/save_favorite/{{ substitute.id }}/{{ product.id }}/{{ page }}/" value="" class="text-white"><span class='fas fa-floppy-o'></span> Sauvegarder</a>
+                    <a href="/save_favorite/{{ substitute.id }}/{{ product.id }}/{{ page }}/" value="" class="text-white">
+                      <span class='fas fa-floppy-o'></span> Sauvegarder</a>
                   {% endif %}
                 {% else %}
                   <a data-toggle="modal" data-target="#modalNotConnected" class="text-white"><span class='fas fa-floppy-o'></span> Sauvegarder</a>
                   <div id="modalNotConnected" class="modal" tabindex="-1" role="dialog">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
-                        <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
                         <div class="modal-body">
                           <p class="text-secondary">Pour enregistrer ce produit dans votre liste de favoris <br>Veuillez vous connecter ou créer votre compte.</p>
                         </div>

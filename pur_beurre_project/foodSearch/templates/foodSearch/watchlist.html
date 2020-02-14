@@ -26,7 +26,8 @@
                 <h3 class="h4 mb-2 text-white">{{ favorite.substitute.name }}</h3>
               </a>
               <a href="/detail/{{ favorite.substitute.id }}/">En savoir plus sur ce produit</a><br>
-              <a href="/delete_favorite_from_watchlist/{{ favorite.substitute.id }}/{{ page }}/" value="" class="text-white"><span class='fas fa-floppy-o'></span> Retirer ce substitut de mes favoris</a>
+              <a href="/delete_favorite_from_watchlist/{{ favorite.substitute.id }}/{{ page }}/" value="" class="text-white">
+                <span class='fas fa-floppy-o'></span> Retirer ce produit de mes favoris</a>
 
               {% if favorite.substitute.nutrition_grade_fr == 'a' %}
                 <span style="background-color: #5bac09;" class="grade">{{ favorite.substitute.nutrition_grade_fr }}</span>

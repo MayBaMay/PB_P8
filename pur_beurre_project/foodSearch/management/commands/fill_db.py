@@ -2,6 +2,7 @@
 # coding: utf-8
 import json
 import time
+import datetime
 from statistics import mean
 import unicodedata
 
@@ -13,11 +14,10 @@ from foodSearch.models import Category, Product, Favorite
 
 import openfoodfacts
 
+
 class Init_db:
 
     def __init__(self):
-        self.page = 3001 # page counter
-        self.total_pages = 4000 # number of page wanted from the api
         self.tps = []
 
     def reset_db(self):
@@ -27,11 +27,19 @@ class Init_db:
         Product.objects.all().delete()
 
     def upper_unaccent(self, sentence):
-        sentence_unaccent = ''.join((c for c in unicodedata.normalize('NFD', sentence) if unicodedata.category(c) != 'Mn'))
-        return sentence_unaccent.upper()
+        try:
+            sentence_unaccent = ''.join((c for c in unicodedata.normalize('NFD', sentence) if unicodedata.category(c) != 'Mn'))
+            return sentence_unaccent.upper()
+        except:
+            print('upper_unaccent error')
+            return sentence
 
-    def load_datas(self):
+    def load_datas(self, page, total_pages):
         """method loading datas from api in the database"""
+
+        self.initial_page = page
+        self.page = page # page counter
+        self.total_pages = total_pages # number of page wanted from the api
 
         while self.page <= self.total_pages:
             print("\n")
@@ -73,8 +81,7 @@ class Init_db:
                     name = product["product_name"]
                     formated_name = self.upper_unaccent(name)
                     brands = product["brands"]
-                    formated_bra
-                    nds = self.upper_unaccent(brands)
+                    formated_brands = self.upper_unaccent(brands)
 
                     with transaction.atomic():
                         # insert each product in database
@@ -103,9 +110,8 @@ class Init_db:
                                 for category in product['categories_hierarchy']:
                                     if category[0:3] == 'en:':
                                         try:
-                                            with transaction.atomic():
-                                                # try to get the category in database
-                                                cat = Category.objects.get(reference=category)
+                                            # try to get the category in database
+                                            cat = Category.objects.get(reference=category)
                                         except Category.DoesNotExist:
                                             # if category doesn't exist yet, create one
                                             cat = Category.objects.create(reference = category)
@@ -118,17 +124,43 @@ class Init_db:
                 except:
                     pass
 
+            print("{} products in database".format(Product.objects.count()))
+            print("{} categories in database".format(Category.objects.count()))
             tps_page = round((time.time() - start_time),1)
             print("Temps d'execution page: {} secondes ---".format(tps_page))
             self.tps.append(tps_page)
             self.page += 1
 
+
 class Command(BaseCommand):
+    help = 'Update datas in database - options: reset or fill'
+
+    def add_arguments(self, parser):
+        parser.add_argument('-r', '--reset', action='store_true', dest='reset', help='Reset database')
+        parser.add_argument('-f', '--fill', action='store_true', dest='fill', help='Fill database')
 
     def handle(self, *args, **options):
-        db = Init_db()
-        # db.reset_db()
-        db.load_datas()
-        self.stdout.write(self.style.SUCCESS("{} products in database".format(Product.objects.count())))
-        self.stdout.write(self.style.SUCCESS("{} categories in database".format(Category.objects.count())))
-        self.stdout.write(self.style.SUCCESS("Temps moyen d'execution : {} secondes ---".format(round(mean(db.tps),1))))
+
+        if options['reset']:
+            db = Init_db()
+            db.reset_db()
+
+            file = open("db_reports.txt", "a")
+            file.write("\nRESET Database the {}:---DATABASE EMPTY\n".format(datetime.datetime.now()))
+
+        if options['fill']:
+            db = Init_db()
+            db.load_datas(101, 1000)
+
+            file = open("db_reports.txt", 'a')
+            file.write("""
+            Database update the {}:
+            --- Database FILLED from page {} to {}
+            --- {} products in database
+            --- {} categories in database
+            --- Temps moyen d'execution : {} secondes par page ---\n"""
+            .format(datetime.datetime.now(), db.initial_page, db.total_pages, Product.objects.count(), Category.objects.count(), round(mean(db.tps),1)))
+
+            self.stdout.write(self.style.SUCCESS("{} products in database".format(Product.objects.count())))
+            self.stdout.write(self.style.SUCCESS("{} categories in database".format(Category.objects.count())))
+            self.stdout.write(self.style.SUCCESS("Temps moyen d'execution : {} secondes ---".format(round(mean(db.tps),1))))

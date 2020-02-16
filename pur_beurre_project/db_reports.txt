@@ -1,0 +1,14 @@
+
+RESET Database the 2020-02-16 14:23:21.085410:---DATABASE EMPTY
+
+            Database update the 2020-02-16 14:30:28.052400:
+            --- Database FILLED from page 1 to 100
+            --- 661 products in database
+            --- 674 categories in database
+            --- Temps moyen d'execution : 4.2 secondes par page ---
+
+            Database update the 2020-02-16 15:48:18.985134:
+            --- Database FILLED from page 101 to 1000
+            --- 6693 products in database
+            --- 1606 categories in database
+            --- Temps moyen d'execution : 4.9 secondes par page ---

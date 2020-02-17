@@ -15,7 +15,7 @@
       <div class="row">
         {% for favorite in watchlist %}
           <div class="col-md-4 text-center mt-5">
-              <a href="/detail/{{ favorite.substitute.id}}/" title="Alternative à {{ favorite.initial_search_product.name }} {{ favorite.initial_search_product.brands }}">
+              <a href="/detail/{{ favorite.substitute.id}}/" title="Alternative à {{ favorite.initial_search_product.name }} {{ favorite.initial_search_product.brands }} (Nutriscore {{ favorite.initial_search_product.nutrition_grade_fr|upper}})">
                 <div class="img_prod" style="background-color: #e8a75d">
                   <img
                     class="image-color-theme img-responsive" src="{{ favorite.substitute.image_small_url }}"
@@ -28,19 +28,19 @@
                 <span class='fas fa-floppy-o'></span> Retirer ce produit de mes favoris</a>
 
               {% if favorite.substitute.nutrition_grade_fr == 'a' %}
-                <span style="background-color: #5bac09;" class="grade">{{ favorite.substitute.nutrition_grade_fr }}</span>
+                <span style="background-color: #5bac09;" class="grade upimg">{{ favorite.substitute.nutrition_grade_fr }}</span>
               {% endif %}
               {% if favorite.substitute.nutrition_grade_fr == 'b' %}
-                <span style="background-color: #0977ac;" class="grade">{{ favorite.substitute.nutrition_grade_fr }}</span>
+                <span style="background-color: #0977ac;" class="grade upimg">{{ favorite.substitute.nutrition_grade_fr }}</span>
               {% endif %}
               {% if favorite.substitute.nutrition_grade_fr == 'c' %}
-                <span style="background-color: #f7e80b;" class="grade">{{ favorite.substitute.nutrition_grade_fr }}</span>
+                <span style="background-color: #f7e80b;" class="grade upimg">{{ favorite.substitute.nutrition_grade_fr }}</span>
               {% endif %}
               {% if favorite.substitute.nutrition_grade_fr == 'd' %}
-                <span style="background-color: #f7a60b;" class="grade">{{ favorite.substitute.nutrition_grade_fr }}</span>
+                <span style="background-color: #f7a60b;" class="grade upimg">{{ favorite.substitute.nutrition_grade_fr }}</span>
               {% endif %}
               {% if favorite.substitute.nutrition_grade_fr == 'e' %}
-                <span style="background-color: #f00000;" class="grade">{{ favorite.substitute.nutrition_grade_fr }}</span>
+                <span style="background-color: #f00000;" class="grade upimg">{{ favorite.substitute.nutrition_grade_fr }}</span>
               {% endif %}
           </div>
           {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}

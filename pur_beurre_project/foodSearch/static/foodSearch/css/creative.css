@@ -9771,15 +9771,22 @@ header.masthead h1 {
 
 .grade{
   border-radius: 50%;
-  position: absolute;
-  top: -10px;
-  right: -10px;
   text-transform: uppercase;
   font-size: 28px;
   padding-left: 15px;
   padding-right: 15px;
 }
 
+.upimg{
+  position: absolute;
+  top: -10px;
+  right: -10px;
+}
+
 .pagination{
   font-size: 0.7rem !important;
+}
+
+#contact{
+  min-height: 0;
 }

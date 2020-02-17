@@ -142,6 +142,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         if options['reset']:
+            products = Product.objects.count()
+            categories = Category.objects.count()
             db = Init_db()
             db.reset_db()
 
@@ -149,17 +151,27 @@ class Command(BaseCommand):
             file.write("\nRESET Database the {}:---DATABASE EMPTY\n".format(datetime.datetime.now()))
 
         if options['fill']:
+            products = Product.objects.count()
+            categories = Category.objects.count()
+
             db = Init_db()
-            db.load_datas(101, 1000)
+            db.load_datas(4001, 5000)
 
             file = open("db_reports.txt", 'a')
             file.write("""
-            Database update the {}:
+            Database updated the {}:
             --- Database FILLED from page {} to {}
-            --- {} products in database
-            --- {} categories in database
+            --- {} products in database ({} added)
+            --- {} categories in database ({} added)
             --- Temps moyen d'execution : {} secondes par page ---\n"""
-            .format(datetime.datetime.now(), db.initial_page, db.total_pages, Product.objects.count(), Category.objects.count(), round(mean(db.tps),1)))
+            .format(datetime.datetime.now(),
+                    db.initial_page,
+                    db.total_pages,
+                    Product.objects.count(),
+                    Product.objects.count()-products,
+                    Category.objects.count(),
+                    Category.objects.count()-categories,
+                    round(mean(db.tps),1)))
 
             self.stdout.write(self.style.SUCCESS("{} products in database".format(Product.objects.count())))
             self.stdout.write(self.style.SUCCESS("{} categories in database".format(Category.objects.count())))

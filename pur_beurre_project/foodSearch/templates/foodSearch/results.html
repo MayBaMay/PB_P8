@@ -16,7 +16,23 @@
 
 <section style="background-color:#de9440;" class="page-section text-white" id="services">
   <div class="container">
-    <h2 class="text-center mt-0">Vous pouvez remplacer cet aliment par :</h2>
+    <h2 class="text-center mt-0">Vous pouvez remplacer cet aliment de nutriscore
+      {% if product.nutrition_grade_fr == 'a' %}
+        <span style="background-color: #5bac09;" class="grade">{{ product.nutrition_grade_fr }}</span>
+      {% endif %}
+      {% if product.nutrition_grade_fr == 'b' %}
+        <span style="background-color: #0977ac;" class="grade">{{ product.nutrition_grade_fr }}</span>
+      {% endif %}
+      {% if product.nutrition_grade_fr == 'c' %}
+        <span style="background-color: #f7e80b;" class="grade">{{ product.nutrition_grade_fr }}</span>
+      {% endif %}
+      {% if product.nutrition_grade_fr == 'd' %}
+        <span style="background-color: #f7a60b;" class="grade">{{ product.nutrition_grade_fr }}</span>
+      {% endif %}
+      {% if product.nutrition_grade_fr == 'e' %}
+        <span style="background-color: #f00000;" class="grade">{{ product.nutrition_grade_fr }}</span>
+      {% endif %}
+       <span>par :</span></h2>
     <hr class="divider my-4">
     {% if result|length_is:"0" %}
       <div class="text-center">
@@ -64,19 +80,19 @@
                 {% endif %}
 
                 {% if substitute.nutrition_grade_fr == 'a' %}
-                  <span style="background-color: #5bac09;" class="grade">{{ substitute.nutrition_grade_fr }}</span>
+                  <span style="background-color: #5bac09;" class="grade upimg">{{ substitute.nutrition_grade_fr }}</span>
                 {% endif %}
                 {% if substitute.nutrition_grade_fr == 'b' %}
-                  <span style="background-color: #0977ac;" class="grade">{{ substitute.nutrition_grade_fr }}</span>
+                  <span style="background-color: #0977ac;" class="grade upimg">{{ substitute.nutrition_grade_fr }}</span>
                 {% endif %}
                 {% if substitute.nutrition_grade_fr == 'c' %}
-                  <span style="background-color: #f7e80b;" class="grade">{{ substitute.nutrition_grade_fr }}</span>
+                  <span style="background-color: #f7e80b;" class="grade upimg">{{ substitute.nutrition_grade_fr }}</span>
                 {% endif %}
                 {% if substitute.nutrition_grade_fr == 'd' %}
-                  <span style="background-color: #f7a60b;" class="grade">{{ substitute.nutrition_grade_fr }}</span>
+                  <span style="background-color: #f7a60b;" class="grade upimg">{{ substitute.nutrition_grade_fr }}</span>
                 {% endif %}
                 {% if substitute.nutrition_grade_fr == 'e' %}
-                  <span style="background-color: #f00000;" class="grade">{{ substitute.nutrition_grade_fr }}</span>
+                  <span style="background-color: #f00000;" class="grade upimg">{{ substitute.nutrition_grade_fr }}</span>
                 {% endif %}
 
             </div>

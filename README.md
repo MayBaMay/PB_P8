@@ -1,7 +1,7 @@
 # PB_P8
 PureBeurreP8
 
-## Use the project
+## How to install this project
 
 ### 1 - Fork the project
 ### 2 - Clone the project on your PC
@@ -33,7 +33,7 @@ DATABASES = {
 ```
 
 #### STEP 4 : Migrate the model into the database
-you must be at this location to launch the command: Projet **PB_P8/pur_beurre_poject**
+you must be at this location to launch the command: Projet **PB_P8/pur_beurre_poject**<br/>
 `./manage.py migrate`
 
 #### STEP 5 : Load database

@@ -11,14 +11,15 @@ In this case i use postgresql, but we can use an other db engine.
 #### STEP 1 : Create a database.
 `createdb <your database name>`
 
-####STEP 2: Create your virtualenv in this path: Projet OpenClassRoom/Projet-8-Pur-Beurre.
+#### STEP 2: Create your virtualenv in this path: Projet OpenClassRoom/Projet-8-Pur-Beurre.
 `virtualenv env -p python3`
 `source env/bin/activate`
 `pip install -r requirement.txt`
 `cd pur_beurre_poject`
 
 #### STEP 3 : Setting up the database in PurBeurre/settings.py
-`DATABASES = {
+```
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': '<your database name>',
@@ -27,7 +28,8 @@ In this case i use postgresql, but we can use an other db engine.
         'HOST': '',
         'PORT': '5432',
     }
-}`
+}
+```
 
 #### STEP 4 : Migrate the model into the database
 you must be at this location to launch the command: Projet OpenClassRoom/Projet-8-Pur-Beurre/PurBeurre

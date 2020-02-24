@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db import transaction
@@ -19,6 +19,45 @@ def legals(request):
         'title':'Mentions légales'
     }
     return render(request, 'foodSearch/legals.html', context)
+
+def register(request):
+    title = 'Créer un compte'
+    if request.method == 'POST':
+        form = RegisterForm(request.POST, error_class=ParagraphErrorList)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('foodSearch:index')
+    else:
+        form = RegisterForm()
+
+    context = {
+        'title':title,
+        'form':form
+        }
+    return render(request, 'registration/register.html', context)
+
+def login_request(request):
+    page = request.META.get('HTTP_REFERER')
+    if request.method == 'POST':
+        form = AuthenticationForm(request,request.POST)
+        if form.is_valid():
+            username = form.cleaned_data('email')
+            password = form.cleaned_data('password')
+            user = authenticate(username, password)
+            if user is not None:
+                login(request, user)
+    form = AuthenticationForm()
+    context = {
+        'form':form
+    }
+    return render(request, page, context)
+
+def logout_request(request):
+    page = request.META.get('HTTP_REFERER')
+    logout(request)
+    return render(request, page)
+
 
 def userpage(request):
     title = request.user
@@ -57,23 +96,6 @@ def watchlist(request):
         'paginate':paginate
     }
     return render(request, 'foodSearch/watchlist.html', context)
-
-def register(request):
-    title = 'Créer un compte'
-    if request.method == 'POST':
-        form = RegisterForm(request.POST, error_class=ParagraphErrorList)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('foodSearch:index')
-    else:
-        form = RegisterForm()
-
-    context = {
-        'title':title,
-        'form':form
-        }
-    return render(request, 'registration/register.html', context)
 
 def search(request):
     query = request.GET.get('query')

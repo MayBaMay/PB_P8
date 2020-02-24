@@ -6,6 +6,7 @@
 
 <header class="" style="background-image: url({{ product.image_url }}); background-position: center center;   background-size: initial;   background-repeat: no-repeat; background-color: black;">
   <div class="container">
+    {% include 'registration/login.html' %}
     <div class="row h-100 align-items-center justify-content-center text-center">
       <div class="col-lg-10 align-self-end">
         <h1 class="text-uppercase font-weight-bold" style="color:#c45525; background-color:rgba(52,90,97,0.6)">{{ product.name }}</h1>
@@ -64,6 +65,7 @@
                   {% endif %}
                 {% else %}
                   <a data-toggle="modal" data-target="#modalNotConnected" class="text-white"><span class='fas fa-floppy-o'></span> Sauvegarder</a>
+
                   <div id="modalNotConnected" class="modal" tabindex="-1" role="dialog">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">

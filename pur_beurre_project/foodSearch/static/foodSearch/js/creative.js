@@ -1,4 +1,4 @@
-(function($) {
+ (function($) {
   "use strict"; // Start of use strict
 
   // Smooth scrolling using jQuery easing
@@ -54,5 +54,9 @@
       tError: '<a href="%url%">The image #%curr%</a> could not be loaded.'
     }
   });
+
+  $('#modalLogIn').on('shown.bs.modal', function () {
+  $('#mail').trigger('focus')
+  })
 
 })(jQuery); // End of use strict

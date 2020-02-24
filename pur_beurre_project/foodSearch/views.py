@@ -37,26 +37,21 @@ def register(request):
         }
     return render(request, 'registration/register.html', context)
 
-def login_request(request):
-    page = request.META.get('HTTP_REFERER')
-    if request.method == 'POST':
-        form = AuthenticationForm(request,request.POST)
-        if form.is_valid():
-            username = form.cleaned_data('email')
-            password = form.cleaned_data('password')
-            user = authenticate(username, password)
-            if user is not None:
-                login(request, user)
-    form = AuthenticationForm()
-    context = {
-        'form':form
-    }
-    return render(request, page, context)
-
-def logout_request(request):
-    page = request.META.get('HTTP_REFERER')
-    logout(request)
-    return render(request, page)
+# def login_request(request):
+#     username = request.POST['username']
+#     password = request.POST['password']
+#     user = authenticate(request, username=username, password=password)
+#     if user is not None:
+#         login(request, user)
+#     context = {
+#         'form':form
+#     }
+#     return render(request, page, context)
+#
+# def logout_request(request):
+#     page = request.META.get('HTTP_REFERER')
+#     logout(request)
+#     return render(request, page)
 
 
 def userpage(request):

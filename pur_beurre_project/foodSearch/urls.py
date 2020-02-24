@@ -6,8 +6,8 @@ app_name = 'foodSearch'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('login_request', views.login_request, name='login'),
-    path('logout_request', views.logout_request, name='logout'),
+    # path('login_request', views.login_request, name='login_request'),
+    # path('logout_request', views.logout_request, name='logout_request'),
     path('register/', views.register, name='register'),
     path('search/', views.search, name='search'),
     path('results/<int:product_id>/', views.results, name='results'),

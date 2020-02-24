@@ -13,7 +13,7 @@
       </div>
       <div class="modal-body">
         <div class="md-form mb-5">
-          <form method="post" action="{% url 'login' %}">
+          <form method="post" action="{% url 'foodSearch:login_request' %}">
             {% csrf_token %}
             <div class="md-form mb-3">
               <label data-error="wrong" data-success="right" for="defaultForm-text">Nom d'utilisateur</label>

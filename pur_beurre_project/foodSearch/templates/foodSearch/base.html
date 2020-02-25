@@ -65,7 +65,10 @@
               <a class="nav-link" title="Mes aliments" href="{% url 'foodSearch:watchlist' %}"> <i class="fa fa-carott" aria-hidden="true"></i> </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" title="Me déconnecter" href="{% url 'logout' %}"> <i class="fas fa-sign-out-alt fa-2x" aria-hidden="true"></i> </a>
+              <a href="" id="disconnect" class="nav-link" title="Me déconnecter" data-toggle="modal" data-target="#modalLogOut">
+                <i class="fas fa-sign-out-alt fa-2x"></i>
+              </a>
+
             </li>
           {% endif %}
         </ul>
@@ -76,6 +79,7 @@
   {% block content %}{% endblock %}
 
   {% include 'registration/login.html' %}
+  {% include 'registration/logout.html' %}
 
   <!-- Footer -->
   <footer class="bg-light py-5">

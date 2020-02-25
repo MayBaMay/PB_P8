@@ -1,58 +1,3 @@
-
-<!-- {% load static %}
-
-
-<div id="modalLogIn" class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Se connecter</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="md-form mb-5">
-          <form method="post" action="#">
-            {% csrf_token %}
-            <div class="md-form mb-3">
-              <label data-error="wrong" data-success="right" for="defaultForm-text">Nom d'utilisateur</label>
-              <input id="mail" type="text" id="defaultForm-email" class="form-control validate" value="{{ form.username }}">
-            </div>
-            <div class="md-form mb-3">
-              <i class="fas fa-lock prefix grey-text"></i>
-              <label data-error="wrong" data-success="right" for="defaultForm-pass">Mot de passe</label>
-              <input type="password" id="defaultForm-pass" class="form-control validate" value="{{ form.password }}">
-            </div>
-            <div class="md-form mb-3 text-center">
-              <button type="submit" class="btn btn-primary">Login</button>
-            </div>
-          </form>
-        </div>
-      </div>
-      <div class="modal-footer d-flex">
-        <p>
-          Vous n'avez toujours pas de compte Pur Beurre? Pas de panique, créez-en un :
-        </p>
-        <a class="btn btn-secondary" href="{% url 'foodSearch:register' %}" class="btn">Créer un compte</a>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-<!-- <form class="loginform" id="login-modal" action="" method="POST">{% csrf_token %}
-  <div class="md-form mb-3">
-    <input class="form-control" type="text" name="username" placeholder="Nom d'utilisateur">
-  </div>
-  <div class="md-form mb-3">
-    <input class="form-control" type="password" name="password" placeholder="Email">
-  </div>
-  <div class="md-form mb-3 text-center">
-    <input type="submit" value='Login' class="btn btn-primary"></input>
-  </div>
-</form> -->
-
-
 <!--  Login Form Modal -->
 <div id="modalLogIn"class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -65,7 +10,7 @@
         <div class="row">
           <div class="col-md-8 col-md-offset-2">
           <p id="loginerror"></p>
-            <form class="login-form" id="loginform" action="{% url 'foodSearch:login' %}">
+            <form action="{% url 'foodSearch:login' %}" method="POST">
               {% csrf_token %}
               <div class="form-group">
                 <input type="name" name="username" id="login-username" class="form-control"
@@ -77,8 +22,12 @@
                 <input type="password" name="password" id="login-password" class="form-control"
                  placeholder="Password" required="required" />
               </div>
+
               <p class="text-danger text-center" id="password-error" style="display:none;">Wrong
                 Password!</p>
+
+              <input type="" name="last_url" value="{{ request.get_full_path }}" required="False" />
+
               <div class="form-group text-center">
                 <input type="submit" value="Login" class="btn btn-primary"
                  id="signUp-Submit">

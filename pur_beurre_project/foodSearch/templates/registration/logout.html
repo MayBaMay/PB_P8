@@ -1,0 +1,24 @@
+<!--  Login Form Modal -->
+<div id="modalLogOut"class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Se déconnecter</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+          <p id="loginerror"></p>
+            <form action="{% url 'foodSearch:logout' %}" method="POST">
+              {% csrf_token %}
+              <p>Êtes-vous sûr de vouloir vous déconnecter?</p>
+              <input type="" name="last_url" value="{{ request.get_full_path }}" required="False" />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of Login Modal -->

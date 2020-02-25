@@ -24,22 +24,22 @@ def legals(request):
     }
     return render(request, 'foodSearch/legals.html', context)
 
-def register(request):
-    title = 'Créer un compte'
+def register_view(request):
+    response_data = {}
     if request.method == 'POST':
-        form = RegisterForm(request.POST, error_class=ParagraphErrorList)
-        if form.is_valid():
-            user = form.save()
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        try:
+            user = User.objects.get(username=username)
+            response_data = {'user':"already in DB"}
+        except User.DoesNotExist:
+            user = User.objects.create(username=username, email=email, password=password)
+            user.save()
+            log_user = authenticate(username=username, password=password)
             login(request, user)
-            return redirect('foodSearch:index')
-    else:
-        form = RegisterForm()
-
-    context = {
-        'title':title,
-        'form':form
-        }
-    return render(request, 'registration/register.html', context)
+            response_data = {'user':"success"}
+    return HttpResponse(JsonResponse(response_data))
 
 def login_view(request):
     response_data = {}

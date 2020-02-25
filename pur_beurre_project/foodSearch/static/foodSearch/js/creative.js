@@ -4,7 +4,7 @@
   // Smooth scrolling using jQuery easing
   $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
     if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-      var target = $(this.hash);
+      let target = $(this.hash);
       target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
       if (target.length) {
         $('html, body').animate({
@@ -27,7 +27,7 @@
   });
 
   // Collapse Navbar
-  var navbarCollapse = function() {
+  let navbarCollapse = function() {
     if ($("#mainNav").offset().top > 100) {
       $("#mainNav").addClass("navbar-scrolled");
     } else {
@@ -56,13 +56,14 @@
   });
 
 
-  $('#connection').click(function(){
+  $('.connection').click(function(){
+    $('#modalRegister').modal('hide');
     $('#modalLogIn').modal('show');
   });
 
   $('#loginform').submit(function(e){
-    var formId = $(this).attr('id');
-    var submitBtn = $(this).find('input[type=submit]');
+    let formId = $(this).attr('id');
+    let submitBtn = $(this).find('input[type=submit]');
     $('#no-user-error').css('display', 'none');
     $('#password-error').css('display', 'none');
     e.preventDefault();
@@ -71,7 +72,7 @@
       type: "POST", // GET or POST
       data: $(this).serialize(), // get the form data
       success: function(data){
-        var login_response = jQuery.parseJSON(data);
+        let login_response = jQuery.parseJSON(data);
         console.log(login_response);
         if (login_response.user == "success"){
           $('#modalLogIn').modal('hide');
@@ -89,14 +90,46 @@
     })
   })
 
-
   $('#disconnection').click(function(){
     $('#modalLogOut').modal('show');
   });
 
-  $('#loginform').submit(function(e){
+  $('#registration').click(function(){
     $('#modalLogIn').modal('hide');
-    window.history.go(0);
+    let formId = $('#registerForm').attr('id');
+    document.getElementById(formId).reset();
+    $('#username-error').css('display', 'none');
+    $('#modalRegister').modal('show');
+
+  });
+
+  $('#registerForm').submit(function(e){
+    let formId = $(this).attr('id');
+    let submitBtn = $(this).find('input[type=submit]');
+    $('#username-error').css('display', 'none');
+    e.preventDefault();
+    $.ajax({
+      url: "/register/", // the file to call
+      type: "POST", // GET or POST
+      data: $(this).serialize(), // get the form data
+      success: function(data){
+        let register_response = jQuery.parseJSON(data);
+        console.log(register_response);
+        if (register_response.user == "success"){
+          $('#modalRegister').modal('hide');
+          window.history.go(0);
+        }
+        else if (register_response.user == "already in DB") {
+          $('#username-error').css('display', 'block');
+          submitBtn.prop('disabled', false);
+           }
+        else{
+          $('#no-user-error').css('display', 'block');
+
+        }
+      }
+    })
   })
+
 
 })(jQuery); // End of use strict

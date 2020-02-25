@@ -57,6 +57,7 @@
 
 
   $('.connection').click(function(){
+    $('#modalNotConnected').modal('hide');
     $('#modalRegister').modal('hide');
     $('#modalLogIn').modal('show');
   });
@@ -75,8 +76,8 @@
         let login_response = jQuery.parseJSON(data);
         console.log(login_response);
         if (login_response.user == "success"){
+          document.location.reload(true);
           $('#modalLogIn').modal('hide');
-          window.history.go(0);
         }
         else if (login_response.user == "password wrong") {
           $('#password-error').css('display', 'block');
@@ -116,8 +117,8 @@
         let register_response = jQuery.parseJSON(data);
         console.log(register_response);
         if (register_response.user == "success"){
+          document.location.reload(true);
           $('#modalRegister').modal('hide');
-          window.history.go(0);
         }
         else if (register_response.user == "already in DB") {
           $('#username-error').css('display', 'block');
@@ -131,5 +132,8 @@
     })
   })
 
+  $('#NotConnected').click(function(){
+    $('#modalNotConnected').modal('show');
+  });
 
 })(jQuery); // End of use strict

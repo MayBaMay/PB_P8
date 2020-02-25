@@ -63,21 +63,8 @@
                       <span class='fas fa-floppy-o'></span> Sauvegarder</a>
                   {% endif %}
                 {% else %}
-                  <a data-toggle="modal" data-target="#modalNotConnected" class="text-white"><span class='fas fa-floppy-o'></span> Sauvegarder</a>
-
-                  <div id="modalNotConnected" class="modal" tabindex="-1" role="dialog">
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-body">
-                          <p class="text-secondary">Pour enregistrer ce produit dans votre liste de favoris <br>Veuillez vous connecter ou créer votre compte.</p>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                          <a href="{% url 'login' %}"><button type="button" class="btn btn-primary">Se connecter</button></a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <a href="" id="NotConnected" data-toggle="modal" data-target="#modalNotConnected">
+                    <span class='fas fa-floppy-o'></span> Sauvegarder</a>
                 {% endif %}
 
                 {% if substitute.nutrition_grade_fr == 'a' %}

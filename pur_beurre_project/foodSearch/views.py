@@ -7,6 +7,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.views.generic.edit import FormView
 from django.urls import resolve
 from django.http import HttpResponse, HttpResponseRedirect
+from django.http import JsonResponse
 
 from .models import Category, Favorite, Product
 from .forms import RegisterForm, ParagraphErrorList
@@ -41,26 +42,25 @@ def register(request):
     return render(request, 'registration/register.html', context)
 
 def login_view(request):
+    response_data = {}
     if request.method == 'POST':
 
         username = request.POST['username']
         password = request.POST['password']
-        last_url = request.POST['last_url']
-        print(last_url)
-
-        get_user = User.objects.get(username=username)
-        if get_user.check_password(password):
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect(last_url)
-
-def logout_view(request):
-    if request.method == 'POST':
-        last_url = request.POST['last_url']
-        print(last_url)
-        logout(request)
-    return redirect(last_url)
+        try:
+            get_user = User.objects.get(username=username)
+            if get_user.check_password(password):
+                user = authenticate(username=username, password=password)
+                if user is not None:
+                    login(request, user)
+                    response_data = {'user':"success"}
+                else:
+                    response_data = {'user':"user unknown"}
+            else:
+                response_data = {'user':"password wrong"}
+        except User.DoesNotExist:
+            response_data = {'user':"user unknown"}
+        return HttpResponse(JsonResponse(response_data))
 
 
 def userpage(request):

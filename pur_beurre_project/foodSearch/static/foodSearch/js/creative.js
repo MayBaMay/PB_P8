@@ -58,13 +58,45 @@
 
   $('#connection').click(function(){
     $('#modalLogIn').modal('show');
-    $('#modalLogOut').modal('hide');
   });
+
+  $('#loginform').submit(function(e){
+    var formId = $(this).attr('id');
+    var submitBtn = $(this).find('input[type=submit]');
+    $('#no-user-error').css('display', 'none');
+    $('#password-error').css('display', 'none');
+    e.preventDefault();
+    $.ajax({
+      url: "/login/", // the file to call
+      type: "POST", // GET or POST
+      data: $(this).serialize(), // get the form data
+      success: function(data){
+        var login_response = jQuery.parseJSON(data);
+        console.log(login_response);
+        if (login_response.user == "success"){
+          $('#modalLogIn').modal('hide');
+          window.history.go(0);
+        }
+        else if (login_response.user == "password wrong") {
+          $('#password-error').css('display', 'block');
+          submitBtn.prop('disabled', false);
+           }
+        else{
+          $('#no-user-error').css('display', 'block');
+          document.getElementById(formId).reset();
+        }
+      }
+    })
+  })
 
 
   $('#disconnection').click(function(){
     $('#modalLogOut').modal('show');
-    $('#modalLogIn').modal('hide');
   });
+
+  $('#loginform').submit(function(e){
+    $('#modalLogIn').modal('hide');
+    window.history.go(0);
+  })
 
 })(jQuery); // End of use strict

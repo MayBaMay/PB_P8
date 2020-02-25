@@ -10,21 +10,19 @@
         <div class="row">
           <div class="col-md-8 col-md-offset-2">
           <p id="loginerror"></p>
-            <form action="{% url 'foodSearch:login' %}" method="POST">
+            <form id="loginform" action="{% url 'foodSearch:login' %}" method="POST">
               {% csrf_token %}
               <div class="form-group">
                 <input type="name" name="username" id="login-username" class="form-control"
                  placeholder="Nom d'utilisateur" required="required"/>
               </div>
-              <p class="text-danger text-center" id="no-user-error" style="display:none;">We
-                 didn't find you! Please Register</p>
+              <p class="text-danger text-center" id="no-user-error" style="display:none;">Utilisateur introuvable, créez un compte ou réessayez</p>
               <div class="form-group">
                 <input type="password" name="password" id="login-password" class="form-control"
-                 placeholder="Password" required="required" />
+                 placeholder="Mot de passe" required="required" />
               </div>
 
-              <p class="text-danger text-center" id="password-error" style="display:none;">Wrong
-                Password!</p>
+              <p class="text-danger text-center" id="password-error" style="display:none;">Mot de passe incorrect</p>
 
               <input type="hidden" name="last_url" value="{{ request.get_full_path }}" required="False" />
 
@@ -56,19 +54,44 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">
-        <p id="loginerror"></p>
-        <form action="{% url 'foodSearch:logout' %}" method="POST">
-          {% csrf_token %}
-          <p>Êtes-vous sûr de vouloir vous déconnecter?</p>
-          <input type="hidden" name="last_url" value="{{ request.get_full_path }}" required="False" />
-          <div class="form-group">
-            <input type="submit" value="oui, je me déconnecte" class="btn btn-primary"
-          </div>
-        </form>
+        <p>Êtes-vous sûr de vouloir vous déconnecter?</p>
+        <a href="{% url 'logout' %}"><button type="button" name="button" id="logoutform" class="btn btn-primary">Oui, je me déconnecte</button></a>
       </div>
     </div>
   </div>
 </div>
+<!-- End of Login Modal -->
 
-
+<!--  Login Form Modal -->
+<!-- <div id="modalLogOut" class="modal fade modalLogOut" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ title }}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="{% url 'foodSearch:register' %}">
+          {% csrf_token %}
+          {% for non_field_error in form.non_field.errors %}
+            <p class="help is-danger">{{ non_field_error}}</p>
+          {% endfor %}
+          {% for field in form %}
+            <div class="field">
+              <label for="{{ field.id_for_label }}" class="label mt-1">{{ field.html_name }}</label>
+                {{ field }}
+                {% if field.help_text %}
+                  <p class="help">{{ field.help_text }}</p>
+                {% endif %}
+                {% for error in field.errors %}
+                  <p class="help">{{ error }}</p>
+                {% endfor %}
+            </div>
+          {% endfor %}
+          <button type="submit" class="btn btn-secondary mt-3">Créer mon compte</button>
+          </form>
+      </div>
+    </div>
+  </div>
+</div> -->
 <!-- End of Login Modal -->

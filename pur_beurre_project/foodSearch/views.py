@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db import transaction
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.views.generic.edit import FormView
 
 from .models import Category, Favorite, Product
 from .forms import RegisterForm, ParagraphErrorList
@@ -37,21 +38,41 @@ def register(request):
         }
     return render(request, 'registration/register.html', context)
 
-def login_request(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(request, username=username, password=password)
-    if user is not None:
-        login(request, user)
-    context = {
-        'form':form
-    }
-    return render(request, page, context)
+def login(request):
+    if request.method == 'POST':
+        reqponse.data = {}
+        username = request.POST['username']
+        password = request.POST['password']
 
-def logout_request(request):
-    page = request.META.get('HTTP_REFERER')
-    logout(request)
-    return render(request, page)
+        try:
+            get_user = User.objects.get(username=username)
+            if get_user.check_password(password):
+                user = authenticate(username=username, password=password)
+                if user is not None:
+                    login(request, user)
+                    response_data = {'login' : "Success"}
+                else:
+                    response_data = {'user':"Failed"}
+            else:
+                response_data = {'user':"password wrong"}
+        except User.DoesNotExist:
+            response_data = {'user':"Failed"}
+    else:
+        response_data = {'user':"Failed"}
+    return HttpResponse(JsonResponse(response_data))
+
+
+# `def login_request(request):
+#     username = request.POST['username']
+#     password = request.POST['password']
+#     user = authenticate(request, username=username, password=password)
+#     if user is not None:
+#         login(request, user)
+
+# def logout_request(request):
+#     page = request.META.get('HTTP_REFERER')
+#     logout(request)
+#     return render(request, page)
 
 
 def userpage(request):

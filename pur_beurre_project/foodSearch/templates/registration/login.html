@@ -1,5 +1,5 @@
 
-{% load static %}
+<!-- {% load static %}
 
 
 <div id="modalLogIn" class="modal" tabindex="-1" role="dialog">
@@ -13,7 +13,7 @@
       </div>
       <div class="modal-body">
         <div class="md-form mb-5">
-          <form method="post" action="{% url 'foodSearch:login_request' %}">
+          <form method="post" action="#">
             {% csrf_token %}
             <div class="md-form mb-3">
               <label data-error="wrong" data-success="right" for="defaultForm-text">Nom d'utilisateur</label>
@@ -38,4 +38,60 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
+
+<!-- <form class="loginform" id="login-modal" action="" method="POST">{% csrf_token %}
+  <div class="md-form mb-3">
+    <input class="form-control" type="text" name="username" placeholder="Nom d'utilisateur">
+  </div>
+  <div class="md-form mb-3">
+    <input class="form-control" type="password" name="password" placeholder="Email">
+  </div>
+  <div class="md-form mb-3 text-center">
+    <input type="submit" value='Login' class="btn btn-primary"></input>
+  </div>
+</form> -->
+
+
+<!--  Login Form Modal -->
+<div id="modalLogIn"class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Se connecter</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+          <p id="loginerror"></p>
+            <form class="login-form" id="loginform" action="{% url 'foodSearch:login' %}">
+              {% csrf_token %}
+              <div class="form-group">
+                <input type="name" name="username" id="login-username" class="form-control"
+                 placeholder="Nom d'utilisateur" required="required"/>
+              </div>
+              <p class="text-danger text-center" id="no-user-error" style="display:none;">We
+                 didn't find you! Please Register</p>
+              <div class="form-group">
+                <input type="password" name="password" id="login-password" class="form-control"
+                 placeholder="Password" required="required" />
+              </div>
+              <p class="text-danger text-center" id="password-error" style="display:none;">Wrong
+                Password!</p>
+              <div class="form-group text-center">
+                <input type="submit" value="Login" class="btn btn-primary"
+                 id="signUp-Submit">
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer d-flex">
+          <p>
+            Vous n'avez toujours pas de compte Pur Beurre? Pas de panique, créez-en un :
+          </p>
+          <a class="btn btn-secondary" href="{% url 'foodSearch:register' %}" class="btn">Créer un compte</a>
+        </div>
+      </div>
+
+<!-- End of Login Modal -->

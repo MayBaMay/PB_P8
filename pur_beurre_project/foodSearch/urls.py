@@ -6,7 +6,7 @@ app_name = 'foodSearch'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    # path('login_request', views.login_request, name='login_request'),
+    path('login/', views.login, name='login'),
     # path('logout_request', views.logout_request, name='logout_request'),
     path('register/', views.register, name='register'),
     path('search/', views.search, name='search'),

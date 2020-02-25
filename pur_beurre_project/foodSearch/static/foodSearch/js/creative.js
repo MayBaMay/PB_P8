@@ -55,14 +55,16 @@
     }
   });
 
-  let $signIn = $('#modalLogIn');
-  $('#connect').click(function(){
-    $signIn.modal();
+
+  $('#connection').click(function(){
+    $('#modalLogIn').modal('show');
+    $('#modalLogOut').modal('hide');
   });
 
-  let $signOut = $('#modalLogOut');
-  $('#disconnect').click(function(){
-    $signOut.modal();
+
+  $('#disconnection').click(function(){
+    $('#modalLogOut').modal('show');
+    $('#modalLogIn').modal('hide');
   });
 
 })(jQuery); // End of use strict

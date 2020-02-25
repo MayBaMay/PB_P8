@@ -1,5 +1,5 @@
 <!--  Login Form Modal -->
-<div id="modalLogIn"class="modal fade" tabindex="-1" role="dialog">
+<div id="modalLogIn" class="modal fade modalLogIn" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -26,7 +26,7 @@
               <p class="text-danger text-center" id="password-error" style="display:none;">Wrong
                 Password!</p>
 
-              <input type="" name="last_url" value="{{ request.get_full_path }}" required="False" />
+              <input type="hidden" name="last_url" value="{{ request.get_full_path }}" required="False" />
 
               <div class="form-group text-center">
                 <input type="submit" value="Login" class="btn btn-primary"
@@ -42,5 +42,33 @@
           <a class="btn btn-secondary" href="{% url 'foodSearch:register' %}" class="btn">Créer un compte</a>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+<!-- End of Login Modal -->
+
+<!--  Login Form Modal -->
+<div id="modalLogOut" class="modal fade modalLogOut" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Se déconnecter</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <p id="loginerror"></p>
+        <form action="{% url 'foodSearch:logout' %}" method="POST">
+          {% csrf_token %}
+          <p>Êtes-vous sûr de vouloir vous déconnecter?</p>
+          <input type="hidden" name="last_url" value="{{ request.get_full_path }}" required="False" />
+          <div class="form-group">
+            <input type="submit" value="oui, je me déconnecte" class="btn btn-primary"
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <!-- End of Login Modal -->

@@ -119,7 +119,8 @@ def search(request):
 def results(request, product_id):
     title = Product.objects.get(id=product_id).name
     page = request.GET.get('page')
-    parser = ResultsParser(product_id)
+    current_user = request.user
+    parser = ResultsParser(product_id, current_user)
     if page == None:
         page = 1
     context = {

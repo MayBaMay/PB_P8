@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from django.db.models import Q
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-
+from django.contrib.auth.models import User
 from .models import Category, Favorite, Product
 
 def fctSortDict(value):
@@ -9,8 +9,9 @@ def fctSortDict(value):
 
 class ResultsParser:
 
-    def __init__(self, product_id):
+    def __init__(self, product_id, current_user):
         self.product = Product.objects.get(id=product_id)
+        self.current_user = current_user
         self.all_results = self.products_same_categories()
         self.relevant_results_queryset = self.get_results_queryset()
         self.results_infos = self.get_results_dict_with_favorite_info()
@@ -64,7 +65,7 @@ class ResultsParser:
         # result in dictionnary with key=object & value=boolean(product already in favorite)
         results_infos = []
         for result in self.relevant_results_queryset:
-            if Favorite.objects.filter(substitute=result).exists():
+            if Favorite.objects.filter(substitute=result, user=self.current_user).exists():
                 results_infos.append({result: True})
             else:
                 results_infos.append({result: False})

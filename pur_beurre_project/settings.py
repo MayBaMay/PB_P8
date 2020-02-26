@@ -23,14 +23,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '7l*om2l-k#b0ec)e(5_3+z)m4p%9fgh3p*t$(f93hgxjaftr@6'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 if os.environ.get('ENV') == 'PRODUCTION':
     DEBUG = False
+    ALLOWED_HOSTS = ['pbp8.herokuapp.com']
 else:
     DEBUG = True
-
-ALLOWED_HOSTS = ['pbp8.herokuapp.com']
-
+    ALLOWED_HOSTS = []
 
 # Application definition
 

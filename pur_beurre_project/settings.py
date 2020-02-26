@@ -29,7 +29,7 @@ if os.environ.get('ENV') == 'PRODUCTION':
 else:
     DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['pbp8.herokuapp.com']
 
 
 # Application definition
@@ -148,4 +148,4 @@ if os.environ.get('ENV') == 'PRODUCTION':
     STATICFILES_STORAGE = 'Whitenoise.storage.CompressedManifestStaticFilesStorage'
 
     db_from_env = dj_database_url.config(conn_max_age=500)
-    DATABASE['DEFAULT'].update(db_from_env)
+    DATABASES['default'].update(db_from_env)

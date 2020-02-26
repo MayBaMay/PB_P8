@@ -123,6 +123,7 @@ def results(request, product_id):
     parser = ResultsParser(product_id, current_user)
     if page == None:
         page = 1
+
     context = {
         'title':title,
         'product':parser.product,
@@ -142,21 +143,27 @@ def detail(request, product_id):
     return render(request, 'foodSearch/detail.html', context)
 
 def save_favorite(request, substitute_id, product_id, page):
-    current_user = request.user
-    substitute = Product.objects.get(id=substitute_id)
-    product = Product.objects.get(id=product_id)
-    Favorite.objects.create(user=current_user, substitute=substitute, initial_search_product=product)
+    try:
+        current_user = request.user
+        substitute = Product.objects.get(id=substitute_id)
+        product = Product.objects.get(id=product_id)
+        Favorite.objects.create(user=current_user, substitute=substitute, initial_search_product=product)
+    except:
+        pass
     return redirect('/results/{}/?query=&page={}'.format(product_id, page))
 
 def delete_favorite_from_result(request, substitute_id, product_id, page):
-    current_user = request.user
-    substitute = Product.objects.get(id=substitute_id)
-    product = Product.objects.get(id=product_id)
-    Favorite.objects.get(substitute=substitute).delete()
+    try:
+        current_user = request.user
+        substitute = Product.objects.get(id=substitute_id)
+        product = Product.objects.get(id=product_id)
+        Favorite.objects.get(user=current_user, substitute=substitute).delete()
+    except:
+        pass
     return redirect('/results/{}/?query=&page={}'.format(product_id, page))
 
 def delete_favorite_from_watchlist(request, substitute_id, page):
     current_user = request.user
     substitute = Product.objects.get(id=substitute_id)
-    Favorite.objects.get(substitute=substitute).delete()
+    Favorite.objects.get(user=current_user, substitute=substitute).delete()
     return redirect('/watchlist/?page={}'.format(page))

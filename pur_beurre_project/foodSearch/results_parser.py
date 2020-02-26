@@ -65,8 +65,11 @@ class ResultsParser:
         # result in dictionnary with key=object & value=boolean(product already in favorite)
         results_infos = []
         for result in self.relevant_results_queryset:
-            if Favorite.objects.filter(substitute=result, user=self.current_user).exists():
-                results_infos.append({result: True})
+            if self.current_user.is_authenticated:
+                if Favorite.objects.filter(substitute=result, user=self.current_user).exists():
+                    results_infos.append({result: True})
+                else:
+                    results_infos.append({result: False})
             else:
                 results_infos.append({result: False})
         return results_infos

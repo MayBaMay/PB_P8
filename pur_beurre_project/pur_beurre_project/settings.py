@@ -29,7 +29,7 @@ if os.environ.get('ENV') == 'PRODUCTION':
 else:
     DEBUG = True
 
-ALLOWED_HOSTS = ['pbp8.herokuapp.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -135,6 +135,8 @@ STATIC_URL = '/static/'
 SITE_URL = 'http://127.0.0.1:8000'
 
 INTERNAL_IPS = ['127.0.0.1']
+
+LOGOUT_REDIRECT_URL = '/'
 
 if os.environ.get('ENV') == 'PRODUCTION':
     PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))

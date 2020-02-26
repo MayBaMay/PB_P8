@@ -13,7 +13,7 @@ from django.db import transaction
 from foodSearch.models import Category, Product, Favorite
 from .settings import FIRST_PAGE, LAST_PAGE
 
-import openfoodfacts
+# import openfoodfacts
 
 
 class Init_db:

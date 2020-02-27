@@ -13,6 +13,7 @@ When registered, the user can save those favorite subsitutes.
 This project was conceived with postgresql, but we can use an other db engine.
 
 #### STEP 1 : Create a database.
+(with postgresql)<br/>
 `createdb <your database name>`
 
 #### STEP 2: Create your virtualenv in this path: Projet OpenClassRoom/Projet-8-Pur-Beurre

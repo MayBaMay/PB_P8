@@ -40,9 +40,10 @@ you must be at this location to launch the command: Projet **PB_P8/pur_beurre_pr
 open the module **pur_beurre_project/foodSearch/management/commands/settings.py**.<br/>
 Change the pages from OpenFoodFacts you want to include in your database
 ```
-FIRST_PAGE =  <first page>
-LAST_PAGE = <last page>
+FIRST_PAGE =  <first page from openfoodfacts api you want to load>
+LAST_PAGE = <last page from openfoodfacts api you want to load>
 ```
+<br/>NB: 10 products per page (around 5 seconds per page on my mac)
 
 `./manage.py fill_db -f`
 

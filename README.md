@@ -1,4 +1,4 @@
-# PUR BEURRE - OPENCLASSROOM - PROJECT #8 PYTHON
+# PUR BEURRE - OPENCLASSROOM PYTHON - PROJECT #8
 This open source project was created for the OpenClassRoom's Python developer course (Project 8/13)).
 It is a DJANGO application integrating a back-end part based on Python 3.7 and a front-end part developed with HTML5, CSS3 and JavaScript using Bootsrap.
 

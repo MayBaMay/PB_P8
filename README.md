@@ -39,7 +39,7 @@ you must be at this location to launch the command: Projet **PB_P8/pur_beurre_pr
 
 #### STEP 5 : Load database
 open the module **pur_beurre_project/foodSearch/management/commands/settings.py**.<br/>
-Change the pages from OpenFoodFacts you want to include in your database
+Change the pages from OpenFoodFacts you want to include in your database<br/>
 *NB: 10 products per page (around 5 seconds per page on my mac)*
 ```
 FIRST_PAGE =  <first page from openfoodfacts api you want to load>

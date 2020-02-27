@@ -32,41 +32,31 @@ class ResultsParser:
                 # for product in this category
                 for compared_prod in Product.objects.filter(categories__reference=category.reference):
                     if compared_prod.nutrition_grade_fr == self.product.nutrition_grade_fr:
-                        # avoid duplication
-                        if compared_prod.id not in loaded_products_ids:
-                            # get common categories for each product and occurences with the searched product
-                            count_same_categories = 0 #count nb of categories in common
-                            common_categories = [] #id of those categories
-                            for compared_category in Category.objects.filter(products__id=compared_prod.id):
-                                if compared_category in found_categories:
-                                    if compared_category.id not in common_categories:
-                                        common_categories.append(compared_category.id)
-                                        count_same_categories += 1
-                            # save product as already treated, avoid duplications
-                            loaded_products_ids.append(compared_prod.id)
-                            # get informations in dictionnary contained in the list results
-                            results.append({'id':compared_prod.id, 'nb':count_same_categories})
+                        self.compare_products_categories(results, loaded_products_ids, compared_prod, found_categories)
         else:
             #for each category of the product asked
             for category in found_categories:
                 # for product in this category
                 for compared_prod in Product.objects.filter(categories__reference=category.reference):
                     if compared_prod.nutrition_grade_fr < self.product.nutrition_grade_fr:
-                        # avoid duplication
-                        if compared_prod.id not in loaded_products_ids:
-                            # get common categories for each product and occurences with the searched product
-                            count_same_categories = 0 #count nb of categories in common
-                            common_categories = [] #id of those categories
-                            for compared_category in Category.objects.filter(products__id=compared_prod.id):
-                                if compared_category in found_categories:
-                                    if compared_category.id not in common_categories:
-                                        common_categories.append(compared_category.id)
-                                        count_same_categories += 1
-                            # save product as already treated, avoid duplications
-                            loaded_products_ids.append(compared_prod.id)
-                            # get informations in dictionnary contained in the list results
-                            results.append({'id':compared_prod.id, 'nb':count_same_categories})
+                        self.compare_products_categories(results, loaded_products_ids, compared_prod, found_categories)
         return results
+
+    def compare_products_categories(self, results, loaded_products_ids, compared_prod, found_categories):
+        # avoid duplication
+        if compared_prod.id not in loaded_products_ids:
+            # get common categories for each product and occurences with the searched product
+            count_same_categories = 0 #count nb of categories in common
+            common_categories = [] #id of those categories
+            for compared_category in Category.objects.filter(products__id=compared_prod.id):
+                if compared_category in found_categories:
+                    if compared_category.id not in common_categories:
+                        common_categories.append(compared_category.id)
+                        count_same_categories += 1
+            # save product as already treated, avoid duplications
+            loaded_products_ids.append(compared_prod.id)
+            # get informations in dictionnary contained in the list results
+            results.append({'id':compared_prod.id, 'nb':count_same_categories})
 
     def get_most_relevant_products(self):
         # get the 24 firsts most relevant products in an ordered queryset

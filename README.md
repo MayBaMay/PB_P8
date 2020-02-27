@@ -60,4 +60,8 @@ With your usual browser, use the application on url http://127.0.0.1:8000/
 This project can be tested on url https://pbp8.herokuapp.com/
 
 ## Next Steps
-Allow user to change his password or ask for an other one if he lost it
+This app tries to correspond to the specifications. Some features, specified as not required, have not been developped:
+* For now, user can't change his password or ask for an other one if he lost it
+* This app only compares products with nutriscore, it would be relevant to add criterias as organic, components...
+* The user profile is as specified almost empty, we could add more informations on the user
+* We could add a research input in the favorite page.

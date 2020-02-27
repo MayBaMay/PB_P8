@@ -22,7 +22,6 @@ This project was conceived with postgresql, but we can use an other db engine.
 `virtualenv env -p python3`<br/>
 `source env/bin/activate`<br/>
 `pip install -r requirements.txt`<br/>
-`cd pur_beurre_project`<br/>
 
 #### STEP 3 : Setting up the database in pur_beurre_project/settings.py
 ```
@@ -39,12 +38,11 @@ DATABASES = {
 ```
 
 #### STEP 4 : Migrate the model into the database
-you must be at this location to launch the command: Projet **PB_P8/pur_beurre_project**<br/>
 `./manage.py migrate`
 
 #### STEP 5 : Load database
 Open the module **pur_beurre_project/foodSearch/management/commands/settings.py**.<br/>
-Change the pages from OpenFoodFacts you want to include in your database<br/>
+Change the pages from [OpenFoodFacts](https://github.com/openfoodfacts/openfoodfacts-python/blob/master/openfoodfacts/products.pyyou) want to include in your database<br/>
 *NB: 10 products per page (around 5 seconds per page on my mac)*
 ```
 FIRST_PAGE =  <first page from openfoodfacts api you want to load>

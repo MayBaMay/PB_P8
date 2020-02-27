@@ -53,7 +53,7 @@ Change the pages from OpenFoodFacts you want to include in your database<br/>
 FIRST_PAGE =  <first page from openfoodfacts api you want to load>
 LAST_PAGE = <last page from openfoodfacts api you want to load>
 ```
-3. Launch the command on your terminal
+3. Launch the command on your terminal<br/>
 `./manage.py fill_db -f`
 
 #### STEP 6 : Launch project

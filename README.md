@@ -1,5 +1,9 @@
-# PB_P8
-PureBeurreP8
+# PUR BEURRE - OPENCLASSROOM - PROJECT #8 PYTHON
+This open source project was created for the OpenClassRoom's Python developer course (Project 8/13)).
+It is a DJANGO application integrating a back-end part based on Python 3.7 and a front-end part developed with HTML5, CSS3 and JavaScript using Bootsrap.
+
+Ask the application a product name, select one of the products to confirm your choice and it will give you a list of similar products with a better nutriscore.
+When registered, the user can save those favorite subsitutes.
 
 ## How to install this project
 
@@ -38,7 +42,7 @@ you must be at this location to launch the command: Projet **PB_P8/pur_beurre_pr
 `./manage.py migrate`
 
 #### STEP 5 : Load database
-open the module **pur_beurre_project/foodSearch/management/commands/settings.py**.<br/>
+Open the module **pur_beurre_project/foodSearch/management/commands/settings.py**.<br/>
 Change the pages from OpenFoodFacts you want to include in your database<br/>
 *NB: 10 products per page (around 5 seconds per page on my mac)*
 ```
@@ -50,3 +54,10 @@ LAST_PAGE = <last page from openfoodfacts api you want to load>
 #### STEP 6 : Launch project
 `./manage.py runserver`
 With your usual browser, use the application on url http://127.0.0.1:8000/
+
+## Find the project online
+
+This project can be tested on url https://pbp8.herokuapp.com/
+
+## Next Steps
+Allow user to change his password or ask for an other one if he lost it

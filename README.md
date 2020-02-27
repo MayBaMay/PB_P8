@@ -12,7 +12,7 @@ This project was conceived with postgresql, but we can use an other db engine.
 `createdb <your database name>`
 
 #### STEP 2: Create your virtualenv in this path: Projet OpenClassRoom/Projet-8-Pur-Beurre
-(on mac and linux)
+(on mac and linux)<br/>
 `cd PB_P8`<br/>
 `virtualenv env -p python3`<br/>
 `source env/bin/activate`<br/>

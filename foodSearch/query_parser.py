@@ -32,7 +32,6 @@ class QueryParser:
     def products_infos(self):
     # for those products, get name and brand in a same list
         product_dict = {}
-        print(self.products_with_words().count())
         for product in self.products_with_words():
             name_brand_string = product.formated_name
             name_brand_string += " "
@@ -59,4 +58,3 @@ class QueryParser:
         for product in products_ordered:
             product = Product.objects.get(id=product[0])
             self.product_list.append(product)
-        print('fin query_parser')

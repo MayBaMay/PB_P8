@@ -114,6 +114,7 @@ def search(request):
         'title' : title,
         'found_products': parser.product_list[0:12],
     }
+    print('fin views')
     return render(request, 'foodSearch/search.html', context)
 
 def results(request, product_id):
@@ -150,7 +151,7 @@ def save_favorite(request, substitute_id, product_id, page):
         Favorite.objects.create(user=current_user, substitute=substitute, initial_search_product=product)
     except:
         pass
-    return redirect('/results/{}/?query=&page={}'.format(product_id, page))
+    return redirect('/results/{}/?page={}'.format(product_id, page))
 
 def delete_favorite_from_result(request, substitute_id, product_id, page):
     try:
@@ -160,7 +161,7 @@ def delete_favorite_from_result(request, substitute_id, product_id, page):
         Favorite.objects.get(user=current_user, substitute=substitute).delete()
     except:
         pass
-    return redirect('/results/{}/?query=&page={}'.format(product_id, page))
+    return redirect('/results/{}/?page={}'.format(product_id, page))
 
 def delete_favorite_from_watchlist(request, substitute_id, page):
     current_user = request.user

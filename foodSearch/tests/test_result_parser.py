@@ -9,6 +9,9 @@ class FilterFoundSubstitutesTestCase(TestCase):
     def setUp(self):
         query_prod = Product.objects.create(name="tarte citron meringuée", formated_name="x", brands="x", formated_brands="x", reference="1", nutrition_grade_fr="E")
 
+        # user:
+        current_user = User.objects.create(username="usertest", email="user@test.com", password="password")
+
         #categories :
         cat1 = Category.objects.create(reference="en:biscuits-and-cakes")
         cat2 = Category.objects.create(reference="en:cakes")
@@ -75,6 +78,7 @@ class FilterFoundSubstitutesTestCase(TestCase):
 
     def test_products_same_categories(self):
         query_prod = Product.objects.get(reference="1")
+        current_user = User.objects.get(username="usertest")
         prod2 = Product.objects.get(reference="2")
         prod3 = Product.objects.get(reference="3")
         prod4 = Product.objects.get(reference="4")
@@ -89,17 +93,18 @@ class FilterFoundSubstitutesTestCase(TestCase):
         cat5 = Category.objects.get(reference="en:frozen-cakes-and-pastries")
         cat6 = Category.objects.get(reference="en:dairy-desserts")
         cat7 = Category.objects.get(reference="en:desserts")
-        parser = ResultsParser(query_prod.id)
-        self.assertEqual({'id':prod2.id, 'nb':2, 'cats_list':[cat1, cat2]} in parser.all_results, True)
-        self.assertEqual( {'id':prod4.id, 'nb':5, 'cats_list':[cat1, cat2, cat3, cat4, cat7]} in parser.all_results, True)
-        self.assertEqual( {'id':prod3.id, 'nb':1, 'cats_list':[cat7]} in parser.all_results, True)
-        self.assertEqual( {'id':prod6.id, 'nb':5, 'cats_list':[cat1, cat2, cat3, cat4, cat7]} in parser.all_results, True)
-        self.assertEqual( {'id':prod7.id, 'nb':5, 'cats_list':[cat1, cat2, cat3, cat4, cat7]} in parser.all_results, True)
-        self.assertEqual( {'id':prod8.id, 'nb':5, 'cats_list':[cat1, cat2, cat3, cat4, cat7]} in parser.all_results, True)
-        self.assertEqual( {'id':prod9.id, 'nb':5, 'cats_list':[cat1, cat2, cat3, cat4, cat7]} in parser.all_results, True)
+        parser = ResultsParser(query_prod.id, current_user)
+        self.assertEqual({'id':prod2.id, 'nb':2} in parser.all_results, True)
+        self.assertEqual( {'id':prod4.id, 'nb':5} in parser.all_results, True)
+        self.assertEqual( {'id':prod3.id, 'nb':1} in parser.all_results, True)
+        self.assertEqual( {'id':prod6.id, 'nb':5} in parser.all_results, True)
+        self.assertEqual( {'id':prod7.id, 'nb':5} in parser.all_results, True)
+        self.assertEqual( {'id':prod8.id, 'nb':5} in parser.all_results, True)
+        self.assertEqual( {'id':prod9.id, 'nb':5} in parser.all_results, True)
 
     def test_get_most_relevant_products(self):
         query_prod = Product.objects.get(reference="1")
+        current_user = User.objects.get(username="usertest")
         prod2 = Product.objects.get(reference="2")
         prod3 = Product.objects.get(reference="3")
         prod4 = Product.objects.get(reference="4")
@@ -107,7 +112,7 @@ class FilterFoundSubstitutesTestCase(TestCase):
         prod7 = Product.objects.get(reference="7")
         prod8 = Product.objects.get(reference="8")
         prod9 = Product.objects.get(reference="9")
-        parser = ResultsParser(query_prod.id)
+        parser = ResultsParser(query_prod.id, current_user)
         ids=[]
         for elt in parser.get_most_relevant_products():
             ids.append(elt['id'])
@@ -115,7 +120,8 @@ class FilterFoundSubstitutesTestCase(TestCase):
 
     def test_get_results_queryset(self):
         query_prod = Product.objects.get(reference="1")
-        parser = ResultsParser(query_prod.id)
+        current_user = User.objects.get(username="usertest")
+        parser = ResultsParser(query_prod.id, current_user)
         self.assertEqual(parser.relevant_results_queryset.count(), 7)
         result_list = []
         for elt in parser.relevant_results_queryset:
@@ -124,7 +130,7 @@ class FilterFoundSubstitutesTestCase(TestCase):
 
     def test_get_results_dict_with_favorite_info(self):
         query_prod = Product.objects.get(reference="1")
-        user = User.objects.create(username="test User")
+        current_user = User.objects.get(username="usertest")
         prod2 = Product.objects.get(reference="2")
         prod3 = Product.objects.get(reference="3")
         prod4 = Product.objects.get(reference="4")
@@ -132,24 +138,24 @@ class FilterFoundSubstitutesTestCase(TestCase):
         prod7 = Product.objects.get(reference="7")
         prod8 = Product.objects.get(reference="8")
         prod9 = Product.objects.get(reference="9")
-        Favorite.objects.create(user=user, substitute=prod4, initial_search_product=query_prod)
-        parser = ResultsParser(query_prod.id)
+        Favorite.objects.create(user=current_user, substitute=prod4, initial_search_product=query_prod)
+        parser = ResultsParser(query_prod.id, current_user)
         self.assertEqual(parser.results_infos, [
-                                                {prod3: False},
-                                                {prod4: True},
-                                                {prod6: False},
-                                                {prod9: False},
-                                                {prod7: False},
-                                                {prod8: False},
-                                                {prod2: False}
+                                                {prod3: False}, # {<Product: yaourt>: False},
+                                                {prod4: True}, # {<Product: tarte citron bio sans sucre ajouté>: True},
+                                                {prod6: False}, # {<Product: tarte pomme allégée>: False},
+                                                {prod9: False}, # {<Product: roulé au citron>: False},
+                                                {prod7: False}, # {<Product: tarte poire>: False},
+                                                {prod8: False}, # {<Product: charlotte pomme citron>: False},
+                                                {prod2: False} # {<Product: madeleines citron surgelées>: False}
                                                 ])
 
     def test_paginator(self):
         query_prod = Product.objects.get(reference="1")
-        user = User.objects.create(username="test User")
+        current_user = User.objects.get(username="usertest")
         prod2 = Product.objects.get(reference="2")
         prod3 = Product.objects.get(reference="3")
         prod4 = Product.objects.get(reference="4")
-        Favorite.objects.create(user=user, substitute=prod4, initial_search_product=query_prod)
-        parser = ResultsParser(query_prod.id)
+        Favorite.objects.create(user=current_user, substitute=prod4, initial_search_product=query_prod)
+        parser = ResultsParser(query_prod.id, current_user)
         self.assertEqual(parser.paginator(1)[0], {prod3:False})

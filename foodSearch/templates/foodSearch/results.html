@@ -16,6 +16,13 @@
 
 <section style="background-color:#de9440;" class="page-section text-white" id="services">
   <div class="container">
+    {% if product.nutrition_grade_fr == 'a' %}
+      <h2 class="text-center mt-0">Cet aliment est déjà de nutriscore
+        {% if product.nutrition_grade_fr == 'a' %}
+          <span style="background-color: #5bac09;" class="grade">{{ product.nutrition_grade_fr }}</span>
+        {% endif %}<br>
+         <span>Voici des alternatives similaires :</span></h2>
+    {% else %}
     <h2 class="text-center mt-0">Vous pouvez remplacer cet aliment de nutriscore
       {% if product.nutrition_grade_fr == 'a' %}
         <span style="background-color: #5bac09;" class="grade">{{ product.nutrition_grade_fr }}</span>
@@ -33,6 +40,7 @@
         <span style="background-color: #f00000;" class="grade">{{ product.nutrition_grade_fr }}</span>
       {% endif %}
        <span>par :</span></h2>
+    {% endif %}
     <hr class="divider my-4">
     {% if result|length_is:"0" %}
       <div class="text-center">

@@ -59,6 +59,8 @@
   $('.connection').click(function(){
     $('#modalNotConnected').modal('hide');
     $('#modalRegister').modal('hide');
+    let loginform = $('#modalLogIn').attr('id');
+    document.getElementById(loginform).reset();
     $('#modalLogIn').modal('show');
   });
 

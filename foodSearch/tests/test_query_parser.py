@@ -53,10 +53,8 @@ class FilterFoundProductsTestCase(TestCase):
 
     def test_order_found_products(self):
         parser = QueryParser(self.query_name_brands)
-        parser.order_found_products()
         self.assertEqual(parser.product_list[0].reference, '1')
         self.assertEqual(parser.product_list[1].reference, '2')
         self.assertEqual(parser.product_list[2].reference, '3')
         parser = QueryParser(self.one_result_query)
-        parser.order_found_products()
         self.assertEqual(parser.product_list[0].reference, '2')

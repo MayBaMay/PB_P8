@@ -11,14 +11,14 @@ This project was conceived with postgresql, but we can use an other db engine.
 #### STEP 1 : Create a database.
 `createdb <your database name>`
 
-#### STEP 2: Create your virtualenv in this path: Projet OpenClassRoom/Projet-8-Pur-Beurre.
+#### STEP 2: Create your virtualenv in this path: Projet OpenClassRoom/Projet-8-Pur-Beurre (on mac and linux)
 `cd PB_P8`<br/>
 `virtualenv env -p python3`<br/>
 `source env/bin/activate`<br/>
-`pip install -r requirement.txt`<br/>
-`cd pur_beurre_poject`<br/>
+`pip install -r requirements.txt`<br/>
+`cd pur_beurre_project`<br/>
 
-#### STEP 3 : Setting up the database in pur_beurre_poject/settings.py
+#### STEP 3 : Setting up the database in pur_beurre_project/settings.py
 ```
 DATABASES = {
     'default': {
@@ -33,7 +33,7 @@ DATABASES = {
 ```
 
 #### STEP 4 : Migrate the model into the database
-you must be at this location to launch the command: Projet **PB_P8/pur_beurre_poject**<br/>
+you must be at this location to launch the command: Projet **PB_P8/pur_beurre_project**<br/>
 `./manage.py migrate`
 
 #### STEP 5 : Load database

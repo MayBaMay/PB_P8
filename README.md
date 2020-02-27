@@ -42,17 +42,18 @@ DATABASES = {
 
 #### STEP 5 : Load database
 
-We uses the [OpenFoodFacts API for python](https://github.com/openfoodfacts/openfoodfacts-python)<br/>
+1. We uses the [OpenFoodFacts API for python](https://github.com/openfoodfacts/openfoodfacts-python)<br/>
 Make sure you've installed it on your environnement (not in the requirements.txt)<br/>
 `sudo pip install git+https://github.com/openfoodfacts/openfoodfacts-python`<br/>
-<br/>
-Open the module **pur_beurre_project/foodSearch/management/commands/settings.py**.<br/>
+
+2. Open the module **pur_beurre_project/foodSearch/management/commands/settings.py**.<br/>
 Change the pages from OpenFoodFacts you want to include in your database<br/>
 *NB: 10 products per page (around 5 seconds per page on my mac)*
 ```
 FIRST_PAGE =  <first page from openfoodfacts api you want to load>
 LAST_PAGE = <last page from openfoodfacts api you want to load>
 ```
+3. Launch the command on your terminal
 `./manage.py fill_db -f`
 
 #### STEP 6 : Launch project

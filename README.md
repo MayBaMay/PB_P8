@@ -42,7 +42,7 @@ DATABASES = {
 
 #### STEP 5 : Load database
 Open the module **pur_beurre_project/foodSearch/management/commands/settings.py**.<br/>
-Change the pages from [OpenFoodFacts](https://github.com/openfoodfacts/openfoodfacts-python/blob/master/openfoodfacts/products.pyyou) want to include in your database<br/>
+Change the pages from [OpenFoodFacts](https://github.com/openfoodfacts/openfoodfacts-python/blob/master/openfoodfacts/products.py) want to include in your database<br/>
 *NB: 10 products per page (around 5 seconds per page on my mac)*
 ```
 FIRST_PAGE =  <first page from openfoodfacts api you want to load>

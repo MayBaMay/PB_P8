@@ -55,15 +55,21 @@
     }
   });
 
-
+  // show modalLogIn
   $('.connection').click(function(){
+    // hide other modals
     $('#modalNotConnected').modal('hide');
     $('#modalRegister').modal('hide');
-    let loginform = $('#modalLogIn').attr('id');
+    // reset modalLogIn
+    let loginform = $('#loginform').attr('id');
     document.getElementById(loginform).reset();
+    $('#no-user-error').css('display', 'none');
+    $('#password-error').css('display', 'none');
+    // show modalLogIn
     $('#modalLogIn').modal('show');
   });
 
+  // submit modal login
   $('#loginform').submit(function(e){
     let formId = $(this).attr('id');
     let submitBtn = $(this).find('input[type=submit]');
@@ -128,7 +134,6 @@
            }
         else{
           $('#no-user-error').css('display', 'block');
-
         }
       }
     })

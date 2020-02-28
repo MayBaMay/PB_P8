@@ -143,4 +143,6 @@
     $('#modalNotConnected').modal('show');
   });
 
+  console.log()
+
 })(jQuery); // End of use strict

@@ -30,21 +30,7 @@
               <a href="/detail/{{ product.id }}/">En savoir plus sur ce produit</a><br>
               <a href="/results/{{ product.id }}/" class="text-white">Chercher un substitut</a>
 
-              {% if product.nutrition_grade_fr == 'a' %}
-                <span style="background-color: #5bac09;" class="grade upimg">{{ product.nutrition_grade_fr }}</span>
-              {% endif %}
-              {% if product.nutrition_grade_fr == 'b' %}
-                <span style="background-color: #0977ac;" class="grade upimg">{{ product.nutrition_grade_fr }}</span>
-              {% endif %}
-              {% if product.nutrition_grade_fr == 'c' %}
-                <span style="background-color: #f7e80b;" class="grade upimg">{{ product.nutrition_grade_fr }}</span>
-              {% endif %}
-              {% if product.nutrition_grade_fr == 'd' %}
-                <span style="background-color: #f7a60b;" class="grade upimg">{{ product.nutrition_grade_fr }}</span>
-              {% endif %}
-              {% if product.nutrition_grade_fr == 'e' %}
-                <span style="background-color: #f00000;" class="grade upimg">{{ product.nutrition_grade_fr }}</span>
-              {% endif %}
+              <span class="grade upimg {{ product.nutrition_grade_fr }}">{{ product.nutrition_grade_fr }}</span>
           </div>
           {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
       {% endfor %}

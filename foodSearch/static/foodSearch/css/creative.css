@@ -9798,3 +9798,20 @@ header.masthead h1 {
 #contact{
   min-height: 0;
 }
+
+/* NUTRISCORE COLORS */
+.a{
+  background-color: #5bac09;
+}
+.b{
+  background-color: #0977ac;
+}
+.c{
+  background-color: #f7e80b;
+}
+.d{
+  background-color: #f7a60b;
+}
+.e{
+  background-color: #f00000;
+}

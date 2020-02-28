@@ -24,22 +24,8 @@
          <span>Voici des alternatives similaires :</span></h2>
     {% else %}
     <h2 class="text-center mt-0">Vous pouvez remplacer cet aliment de nutriscore
-      {% if product.nutrition_grade_fr == 'a' %}
-        <span style="background-color: #5bac09;" class="grade">{{ product.nutrition_grade_fr }}</span>
-      {% endif %}
-      {% if product.nutrition_grade_fr == 'b' %}
-        <span style="background-color: #0977ac;" class="grade">{{ product.nutrition_grade_fr }}</span>
-      {% endif %}
-      {% if product.nutrition_grade_fr == 'c' %}
-        <span style="background-color: #f7e80b;" class="grade">{{ product.nutrition_grade_fr }}</span>
-      {% endif %}
-      {% if product.nutrition_grade_fr == 'd' %}
-        <span style="background-color: #f7a60b;" class="grade">{{ product.nutrition_grade_fr }}</span>
-      {% endif %}
-      {% if product.nutrition_grade_fr == 'e' %}
-        <span style="background-color: #f00000;" class="grade">{{ product.nutrition_grade_fr }}</span>
-      {% endif %}
-       <span>par :</span></h2>
+      <span class="grade {{ product.nutrition_grade_fr }}">{{ product.nutrition_grade_fr }}</span>
+      <span>par :</span></h2>
     {% endif %}
     <hr class="divider my-4">
     {% if result|length_is:"0" %}
@@ -75,21 +61,7 @@
                     <span class='fas fa-floppy-o'></span> Sauvegarder</a>
                 {% endif %}
 
-                {% if substitute.nutrition_grade_fr == 'a' %}
-                  <span style="background-color: #5bac09;" class="grade upimg">{{ substitute.nutrition_grade_fr }}</span>
-                {% endif %}
-                {% if substitute.nutrition_grade_fr == 'b' %}
-                  <span style="background-color: #0977ac;" class="grade upimg">{{ substitute.nutrition_grade_fr }}</span>
-                {% endif %}
-                {% if substitute.nutrition_grade_fr == 'c' %}
-                  <span style="background-color: #f7e80b;" class="grade upimg">{{ substitute.nutrition_grade_fr }}</span>
-                {% endif %}
-                {% if substitute.nutrition_grade_fr == 'd' %}
-                  <span style="background-color: #f7a60b;" class="grade upimg">{{ substitute.nutrition_grade_fr }}</span>
-                {% endif %}
-                {% if substitute.nutrition_grade_fr == 'e' %}
-                  <span style="background-color: #f00000;" class="grade upimg">{{ substitute.nutrition_grade_fr }}</span>
-                {% endif %}
+                  <span class="grade upimg {{ substitute.nutrition_grade_fr }}">{{ substitute.nutrition_grade_fr }}</span>
 
             </div>
           {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}

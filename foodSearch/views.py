@@ -114,7 +114,6 @@ def search(request):
         'title' : title,
         'found_products': parser.product_list[0:12],
     }
-    print('fin views')
     return render(request, 'foodSearch/search.html', context)
 
 def results(request, product_id):

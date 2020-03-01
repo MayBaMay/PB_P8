@@ -8,22 +8,40 @@ class QueryParser:
     def __init__(self, query):
         self.query = query
         self.product_list = []
-        self.query_list = self.split_upper_no_accent(self.query)
-        self.order_found_products()
+        self.formatted_query = self.upper_no_accent(self.query)
+        self.get_query_list()
 
-    def split_upper_no_accent(self, sentence):
+
+    def upper_no_accent(self, sentence):
         query_up = sentence.upper()
         query_up_no_accent = self.no_accent(query_up)
-        return query_up_no_accent.split()
+        return query_up_no_accent
 
     def no_accent(self, sentence):
         sentence_no_accent = ''.join((c for c in unicodedata.normalize('NFD', sentence) if unicodedata.category(c) != 'Mn'))
         return sentence_no_accent
 
+    def get_query_list(self):
+        if self.exact_query():
+            for product in self.exact_query():
+                self.product_list.append(product)
+        else:
+            self.query_list = self.formatted_query.split()
+            for product in self.order_found_products():
+                product = Product.objects.get(id=product[0])
+                self.product_list.append(product)
+
+    def exact_query(self):
+        products = Product.objects.filter(formated_name=self.formatted_query)
+        if products.exists():
+            return products
+        else:
+            return False
+
     def products_with_words(self):
     # find all products with one on the word in it
         q_objects = Q()
-        for word in self.query_list:
+        for word in self.formatted_query.split():
             if word not in ['DE', 'DES', 'LE', 'LA', 'LES', 'AU', 'AUX', 'A']:
                 q_objects.add(Q(formated_name__contains=word), Q.OR)
                 q_objects.add(Q(formated_brands__contains=word), Q.OR)
@@ -46,7 +64,7 @@ class QueryParser:
         occurences = self.products_infos()
         for key, value in occurences.items():
             found = 0
-            for word in self.query_list:
+            for word in self.formatted_query.split():
                 if word in value:
                     found += 1
             occurences[key] = found
@@ -54,7 +72,4 @@ class QueryParser:
 
     def order_found_products(self):
         # load products references in an ordered list
-        products_ordered = sorted(self.occurences().items(), key=lambda t: t[1], reverse=True)
-        for product in products_ordered:
-            product = Product.objects.get(id=product[0])
-            self.product_list.append(product)
+        return sorted(self.occurences().items(), key=lambda t: t[1], reverse=True)

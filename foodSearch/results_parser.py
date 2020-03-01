@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import time
 from django.db.models import Q
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth.models import User
@@ -10,6 +11,7 @@ def fctSortDict(value):
 class ResultsParser:
 
     def __init__(self, product_id, current_user):
+        start_time = time.time()
         self.product = Product.objects.get(id=product_id)
         self.current_user = current_user
         self.all_results = self.products_same_categories()
@@ -20,22 +22,31 @@ class ResultsParser:
             self.paginate = True
         else:
             self.paginate = False
+        print(round((time.time() - start_time),1))
 
     def products_same_categories(self):
         results=[]
         loaded_products_ids = []
         # found categories linked to this product
         found_categories = Category.objects.filter(products__id=self.product.id)
+        nb_found_categories = found_categories.count()
+
+        # get 3 most specifics categories of the product (last 3)
+        if nb_found_categories > 3:
+            specific_categories = found_categories[nb_found_categories-3: nb_found_categories]
+        else:
+            specific_categories = found_categories
+
         if self.product.nutrition_grade_fr == 'a':
             #for each category of the product asked
-            for category in found_categories:
+            for category in specific_categories:
                 # for product in this category
                 for compared_prod in Product.objects.filter(categories__reference=category.reference):
                     if compared_prod.nutrition_grade_fr == self.product.nutrition_grade_fr:
                         self.compare_products_categories(results, loaded_products_ids, compared_prod, found_categories)
         else:
             #for each category of the product asked
-            for category in found_categories:
+            for category in specific_categories:
                 # for product in this category
                 for compared_prod in Product.objects.filter(categories__reference=category.reference):
                     if compared_prod.nutrition_grade_fr < self.product.nutrition_grade_fr:
@@ -85,8 +96,9 @@ class ResultsParser:
         return results_infos
 
     def paginator(self, page):
-        result = Product.objects.all()
         if self.paginate:
             paginator = Paginator(self.results_infos, 6)
             page_results = paginator.get_page(page)
-            return page_results
+        else:
+            page_results = self.results_infos
+        return page_results

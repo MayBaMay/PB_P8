@@ -20,15 +20,15 @@ class FilterFoundProductsTestCase(TestCase):
         parser = QueryParser(self.one_result_query)
         self.assertEqual(parser.upper_no_accent(self.one_result_query), 'SECOND')
 
-    def test_exact_query(self):
+    def test_get_exact_query_list(self):
         parser = QueryParser(self.query_name_brands)
-        self.assertEqual(parser.exact_query(), False)
+        self.assertEqual(parser.get_exact_query_list(), False)
         parser = QueryParser(self.exact_query)
-        self.assertEqual(parser.exact_query().count(), 1)
+        self.assertEqual(parser.get_exact_query_list().count(), 1)
 
     def test_get_query_list(self):
         parser = QueryParser(self.exact_query)
-        self.assertEqual(len(parser.product_list), 1)
+        self.assertEqual(len(parser.product_list), 4)
         self.assertEqual(parser.product_list[0].id, 33)
         parser = QueryParser(self.query_name)
         self.assertEqual(parser.product_list[0].id, 31)

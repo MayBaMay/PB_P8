@@ -45,9 +45,9 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto my-2 my-lg-0">
           <li class="nav-item">
-            <form action="{% url 'foodSearch:search' %}" method="get" accept-charset="utf-8">
+            <form class="searchForm" action="{% url 'foodSearch:search' %}" method="get" accept-charset="utf-8">
               {% csrf_token %}
-                <input id="searchForm" class="form-control" name="query" placeholder="Chercher un produit">
+                <input class="searchInput" class="form-control" name="query" placeholder="Chercher un produit">
             </form>
           </li>
           <li class="nav-item">
@@ -62,7 +62,7 @@
           </li>
           {% if user.is_authenticated %}
             <li class="nav-item">
-              <a class="nav-link" title="Mes aliments" href="{% url 'foodSearch:watchlist' %}"> <i class="fa fa-carott" aria-hidden="true"></i> </a>
+              <a class="nav-link load" title="Mes aliments" href="{% url 'foodSearch:watchlist' %}"> <i class="fa fa-carott" aria-hidden="true"></i> </a>
             </li>
             <li class="nav-item">
               <!-- <a class="nav-link" title="Me déconnecter" href="{% url 'logout' %}"> <i class="fas fa-sign-out-alt fa-2x" aria-hidden="true"></i> </a> -->

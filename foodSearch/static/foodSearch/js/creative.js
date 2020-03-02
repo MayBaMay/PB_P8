@@ -109,7 +109,6 @@
     document.getElementById(formId).reset();
     $('#username-error').css('display', 'none');
     $('#modalRegister').modal('show');
-
   });
 
   $('#registerForm').submit(function(e){
@@ -173,6 +172,10 @@
         }
 
       })
+    })
+
+    $('.return').click(function(){
+      window.location.replace(document.referrer);
     })
 
 })(jQuery); // End of use strict

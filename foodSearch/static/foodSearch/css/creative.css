@@ -9821,7 +9821,7 @@ header.masthead h1 {
   height: 100vh;
   position: fixed;
   z-index: 5000;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
   top: 0;
   left: 0;
   display: flex;

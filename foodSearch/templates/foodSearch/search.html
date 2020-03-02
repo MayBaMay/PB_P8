@@ -19,7 +19,7 @@
       <div class="row">
         {% for product in found_products %}
           <div class="col-md-4 text-center mt-5">
-              <a href="/results/{{ product.id }}/" title="chercher un substitut">
+              <a href="/results/{{ product.id }}/" class="load" title="chercher un substitut">
                 <div class="img_prod" style="background-color: #e8a75d">
                   <img
                     class="image-color-theme img-responsive" src="{{ product.image_small_url }}"
@@ -28,7 +28,7 @@
                 <h3 class="h4 mb-2 text-white">{{ product.name }}</h3>
               </a>
               <a href="/detail/{{ product.id }}/">En savoir plus sur ce produit</a><br>
-              <a href="/results/{{ product.id }}/" class="text-white">Chercher un substitut</a>
+              <a href="/results/{{ product.id }}/" class="text-white load">Chercher un substitut</a>
 
               <span class="grade upimg {{ product.nutrition_grade_fr }}">{{ product.nutrition_grade_fr }}</span>
           </div>

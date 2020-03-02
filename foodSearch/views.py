@@ -143,28 +143,34 @@ def detail(request, product_id):
     }
     return render(request, 'foodSearch/detail.html', context)
 
-def save_favorite(request, substitute_id, product_id, page):
-    try:
-        current_user = request.user
-        substitute = Product.objects.get(id=substitute_id)
-        product = Product.objects.get(id=product_id)
-        Favorite.objects.create(user=current_user, substitute=substitute, initial_search_product=product)
-    except:
-        pass
-    return redirect('/results/{}/?page={}'.format(product_id, page))
+def load_favorite(request):
+    namepage = request.POST['namepage']
+    user = request.POST['user']
+    substitute_id = request.POST['substitute']
+    favorite = request.POST['favorite']
+    product_id = request.POST['product']
+    page = request.POST['page']
 
-def delete_favorite_from_result(request, substitute_id, product_id, page):
-    try:
-        current_user = request.user
-        substitute = Product.objects.get(id=substitute_id)
-        product = Product.objects.get(id=product_id)
-        Favorite.objects.get(user=current_user, substitute=substitute).delete()
-    except:
-        pass
-    return redirect('/results/{}/?page={}'.format(product_id, page))
+    current_user = User.objects.get(id=user)
+    if favorite == 'True':
+        # delete favorite
+        try:
+            substitute = Product.objects.get(id=substitute_id)
+            product = Product.objects.get(id=product_id)
+            Favorite.objects.get(user=current_user, substitute=substitute).delete()
+            favorite = False
+        except:
+            print('ERROR DELETE')
+    else:
+        # save as favorite
+        try:
+            substitute = Product.objects.get(id=substitute_id)
+            product = Product.objects.get(id=product_id)
+            fav = Favorite.objects.create(user=current_user, substitute=substitute, initial_search_product=product)
+            favorite = True
+        except:
+            print('ERROR SAVE')
 
-def delete_favorite_from_watchlist(request, substitute_id, page):
-    current_user = request.user
-    substitute = Product.objects.get(id=substitute_id)
-    Favorite.objects.get(user=current_user, substitute=substitute).delete()
-    return redirect('/watchlist/?page={}'.format(page))
+    return HttpResponse(JsonResponse({'substitute_id': substitute_id,
+                                    'product_id': product_id,
+                                    'favorite': favorite}))

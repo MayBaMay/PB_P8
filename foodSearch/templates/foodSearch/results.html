@@ -49,16 +49,22 @@
                 <a href="/detail/{{ product.id }}/">En savoir plus sur ce produit</a><br>
 
                 {% if user.is_authenticated %}
-                  {% if favorite %}
-                    <a href="/delete_favorite_from_result/{{ substitute.id }}/{{ product.id }}/{{ page }}/" value="" class="text-white"><span class='fas fa-floppy-o'>
-                    </span> Retirer ce produit de mes favoris</a>
-                  {% else %}
-                    <a href="/save_favorite/{{ substitute.id }}/{{ product.id }}/{{ page }}/" value="" class="text-white">
-                      <span class='fas fa-floppy-o'></span> Sauvegarder</a>
-                  {% endif %}
+                  <form id="{{ substitute.id }}" class="favoriteForm" method="post">{% csrf_token %}
+                    <input type="hidden" name="namepage" value="results">
+                    <input type="hidden" name="user" value="{{ user.id }}">
+                    <input type="hidden" name="substitute" value="{{ substitute.id }}">
+                    <input type="hidden" name="favorite" value="{{ favorite }}">
+                    <input type="hidden" name="product" value="{{ product.id }}">
+                    <input type="hidden" name="page" value="{{ page }}">
+                    {% if favorite %}
+                      <button type="submit" class="btn btn-link text-white"><span class='fas fa-floppy-o'></span> Retirer ce produit de mes favoris</button>
+                    {% else %}
+                      <button type="submit" class="btn btn-link text-white"><span class='fas fa-floppy-o'></span> Sauvegarder</button>
+                    {% endif %}
+                  </form>
                 {% else %}
-                  <a href="" id="NotConnected" data-toggle="modal" data-target="#modalNotConnected">
-                    <span class='fas fa-floppy-o'></span> Sauvegarder</a>
+                    <a href="" id="NotConnected" data-toggle="modal" data-target="#modalNotConnected">
+                      <span class='fas fa-floppy-o'></span> Sauvegarder</a>
                 {% endif %}
 
                   <span class="grade upimg {{ substitute.nutrition_grade_fr }}">{{ substitute.nutrition_grade_fr }}</span>

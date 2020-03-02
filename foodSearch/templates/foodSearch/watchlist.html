@@ -14,22 +14,30 @@
     {% else %}
       <div class="row">
         {% for favorite in watchlist %}
-          <div class="col-md-4 text-center mt-5">
-              <a href="/detail/{{ favorite.substitute.id}}/" title="Alternative à {{ favorite.initial_search_product.name }} {{ favorite.initial_search_product.brands }} (Nutriscore {{ favorite.initial_search_product.nutrition_grade_fr|upper}})">
-                <div class="img_prod" style="background-color: #e8a75d">
-                  <img
-                    class="image-color-theme img-responsive" src="{{ favorite.substitute.image_small_url }}"
-                    height="200rem" width="100rem"/>
-                </div>
-                <h3 class="h4 mb-2 text-white">{{ favorite.substitute.name }}</h3>
-              </a>
-              <a href="/detail/{{ favorite.substitute.id }}/">En savoir plus sur ce produit</a><br>
-              <a href="/delete_favorite_from_watchlist/{{ favorite.substitute.id }}/{{ page }}/" value="" class="text-white">
-                <span class='fas fa-floppy-o'></span> Retirer ce produit de mes favoris</a>
+        <div class="col-md-4 text-center mt-5 prodbox">
+            <a href="/detail/{{ favorite.substitute.id}}/" title="Alternative à {{ favorite.initial_search_product.name }} {{ favorite.initial_search_product.brands }} (Nutriscore {{ favorite.initial_search_product.nutrition_grade_fr|upper}})">
+              <div class="img_prod" style="background-color: #e8a75d">
+                <img
+                  class="image-color-theme img-responsive" src="{{ favorite.substitute.image_small_url }}"
+                  height="200rem" width="100rem"/>
+              </div>
+              <h3 class="h4 mb-2 text-white">{{ favorite.substitute.name }}</h3>
+            </a>
+            <a href="/detail/{{ favorite.substitute.id }}/">En savoir plus sur ce produit</a><br>
+            <form id="{{ substitute.id }}" class="favoriteForm wachlist" method="post">{% csrf_token %}
+              <input type="hidden" name="namepage" value="wachlist">
+              <input type="hidden" name="user" value="{{ user.id }}">
+              <input type="hidden" name="substitute" value="{{ favorite.substitute.id }}">
+              <input type="hidden" name="favorite" value="True">
+              <input type="hidden" name="product" value="{{ favorite.initial_search_product.id }}">
+              <input type="hidden" name="page" value="{{ page }}">
 
-              <span class="grade upimg {{ favorite.substitute.nutrition_grade_fr }}">{{ favorite.substitute.nutrition_grade_fr }}</span>
-          </div>
-          {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
+              <button type="submit" class="btn btn-link text-white"><span class='fas fa-floppy-o'></span> Retirer ce produit de mes favoris</button>
+            </form>
+
+            <span class="grade upimg {{ favorite.substitute.nutrition_grade_fr }}">{{ favorite.substitute.nutrition_grade_fr }}</span>
+        </div>
+        {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
       {% endfor %}
       </div>
     {% endif %}

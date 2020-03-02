@@ -143,6 +143,36 @@
     $('#modalNotConnected').modal('show');
   });
 
-  console.log()
+  // SAVE FAVORITE
+  $('.favoriteForm').submit(function(e){
+    let form = $(this)
+    let wachlist = $(this).hasClass("wachlist")
+    e.preventDefault();
+    $.ajax({
+      url: "/load_favorite/", // the file to call
+      type: "POST", // GET or POST
+      data: $(this).serialize(),
+      })
+      .done(function(data) {
+        let favorite_response = jQuery.parseJSON(data);
+        console.log(favorite_response);
+        console.log(favorite_response.substitute_id)
+        console.log(favorite_response.product_id)
+        console.log(favorite_response.favorite)
+        let submit = form.find('button')
+        if (wachlist){
+          form.parent(".prodbox").remove()
+        }
+        else{
+          if(favorite_response.favorite == true){
+          submit.html("<span class='fas fa-floppy-o'></span> Retirer ce produit de mes favoris")
+          }
+        else{
+          submit.html("<span class='fas fa-floppy-o'></span> Sauvegarder")
+          }
+        }
+
+      })
+    })
 
 })(jQuery); // End of use strict

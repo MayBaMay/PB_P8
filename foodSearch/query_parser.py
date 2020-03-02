@@ -9,7 +9,6 @@ class QueryParser:
         self.query = query
         self.product_list = []
         self.formatted_query = self.upper_no_accent(self.query)
-        self.get_final_list()
 
 
     def upper_no_accent(self, sentence):
@@ -22,25 +21,28 @@ class QueryParser:
         return sentence_no_accent
 
     def get_final_list(self):
-        if self.get_exact_query_list():
-            for product in self.get_exact_query_list():
+        i=0
+        if self.get_exact_query_set():
+            for product in self.get_exact_query_set():
                 self.product_list.append(product)
-            if len(self.product_list) < 12:
-                self.get_large_list()
-        else:
-            self.get_large_list()
+        while len(self.product_list) < 12:
+            try:
+                self.get_large_list(i)
+                i+=1
+            except:
+                break
 
-    def get_exact_query_list(self):
+    def get_exact_query_set(self):
         products = Product.objects.filter(formated_name=self.formatted_query)
         if products.exists():
             return products
         else:
             return False
 
-    def get_large_list(self):
+    def get_large_list(self, i):
         self.query_list = self.formatted_query.split()
-        for product in self.order_found_products():
-            product = Product.objects.get(id=product[0])
+        product = Product.objects.get(id=self.order_found_products()[i][0])
+        if product not in self.product_list:
             self.product_list.append(product)
 
     def products_with_words(self):

@@ -109,6 +109,7 @@ def search(request):
         found_products = []
     else:
         parser = QueryParser(query)
+        parser.get_final_list()
 
     context = {
         'title' : title,

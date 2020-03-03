@@ -9622,13 +9622,14 @@ hr.light {
 }
 
 
-#mainNav .fa-carott{
+#mainNav .fa-carrot{
   content: url("../img/noun_Carrot_darkgrey.png");
+  opacity: 0.8;
   height: 28.8px;
   width: 28.8px;
 }
 
-#mainNav .fa-carott:hover, #mainNav .fa-carott:active{
+#mainNav .fa-carrot:hover, #mainNav .fa-carrot:active{
   content: url("../img/noun_Carrot_orange.png");
 }
 
@@ -9651,13 +9652,13 @@ hr.light {
     color: rgba(255, 255, 255, 0.7);
     padding: 0 1rem;
   }
-  #mainNav .fa-carott{
+  #mainNav .fa-carrot{
     content: url("../img/noun_Carrot_grey.png");
   }
   #mainNav .navbar-nav .nav-item .nav-link:hover {
     color: #fff;
   }
-  #mainNav .navbar-nav .nav-item .fa-carott:hover {
+  #mainNav .navbar-nav .nav-item .fa-carrot:hover {
     content: url("../img/noun_Carrot_white.png");
   }
   #mainNav .navbar-nav .nav-item:last-child .nav-link {
@@ -9676,13 +9677,13 @@ hr.light {
   #mainNav.navbar-scrolled .navbar-nav .nav-item .nav-link {
     color: #212529;
   }
-  #mainNav.navbar-scrolled .fa-carott{
+  #mainNav.navbar-scrolled .fa-carrot{
     content: url("../img/noun_Carrot_black.png");
   }
   #mainNav.navbar-scrolled .navbar-nav .nav-item .nav-link:hover {
     color: #f4623a;
   }
-  #mainNav.navbar-scrolled .navbar-nav .nav-item .fa-carott:hover{
+  #mainNav.navbar-scrolled .navbar-nav .nav-item .fa-carrot:hover{
     content: url("../img/noun_Carrot_orange.png");
   }
 }

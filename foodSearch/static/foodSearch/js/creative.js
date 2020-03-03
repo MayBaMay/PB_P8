@@ -90,10 +90,12 @@
         else if (login_response.user == "password wrong") {
           $('#password-error').css('display', 'block');
           submitBtn.prop('disabled', false);
+          hideLoader()
            }
         else{
           $('#no-user-error').css('display', 'block');
           document.getElementById(formId).reset();
+          hideLoader()
         }
       }
     })

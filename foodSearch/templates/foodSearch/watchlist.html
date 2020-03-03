@@ -7,13 +7,13 @@
 
 <section style="background-color:#de9440;" class="page-section text-white" id="services">
   <div class="container">
-      {% if watchlist|length_is:"0" %}
+      {% if watchlistpage|length_is:"0" %}
       <div class="text-center">
         Vous n'avez pas de encore de favoris
       </div>
     {% else %}
       <div class="row">
-        {% for favorite in watchlist %}
+        {% for favorite in watchlistpage %}
         <div class="col-md-4 text-center mt-5 prodbox">
             <a href="/detail/{{ favorite.substitute.id}}/" title="Alternative à {{ favorite.initial_search_product.name }} {{ favorite.initial_search_product.brands }} (Nutriscore {{ favorite.initial_search_product.nutrition_grade_fr|upper}})">
               <div class="img_prod" style="background-color: #e8a75d">
@@ -25,12 +25,10 @@
             </a>
             <a href="/detail/{{ favorite.substitute.id }}/">En savoir plus sur ce produit</a><br>
             <form id="{{ substitute.id }}" class="favoriteForm wachlist" method="post">{% csrf_token %}
-              <input type="hidden" name="namepage" value="wachlist">
               <input type="hidden" name="user" value="{{ user.id }}">
               <input type="hidden" name="substitute" value="{{ favorite.substitute.id }}">
               <input type="hidden" name="favorite" value="True">
               <input type="hidden" name="product" value="{{ favorite.initial_search_product.id }}">
-              <input type="hidden" name="page" value="{{ page }}">
 
               <button type="submit" class="btn btn-link text-white"><span class='fas fa-floppy-o'></span> Retirer ce produit de mes favoris</button>
             </form>
@@ -44,18 +42,18 @@
   </div>
   {% if paginate %}
   <div class="pagination text-center mt-5">
-          {% if watchlist.has_previous %}
+          {% if watchlistpage.has_previous %}
               <a class="btn btn-secondary btn-sm text-white" href="?page=1">&laquo; first</a>
-              <a class="btn btn-secondary btn-sm text-white" href="?page={{ watchlist.previous_page_number }}">previous</a>
+              <a class="btn btn-secondary btn-sm text-white" href="?page={{ watchlistpage.previous_page_number }}">previous</a>
           {% endif %}
 
           <span class="current mx-auto">
-              Page {{ watchlist.number }} of {{ watchlist.paginator.num_pages }}
+              Page {{ watchlistpage.number }} of {{ watchlistpage.paginator.num_pages }}
           </span>
 
-          {% if watchlist.has_next %}
-              <a class="btn btn-secondary btn-sm text-white" href="?page={{ watchlist.next_page_number }}">next</a>
-              <a class="btn btn-secondary btn-sm text-white" href="?page={{ watchlist.paginator.num_pages }}">last &raquo;</a>
+          {% if watchlistpage.has_next %}
+              <a class="btn btn-secondary btn-sm text-white" href="?page={{ watchlistpage.next_page_number }}">next</a>
+              <a class="btn btn-secondary btn-sm text-white" href="?page={{ watchlistpage.paginator.num_pages }}">last &raquo;</a>
           {% endif %}
   </div>
   {% endif %}

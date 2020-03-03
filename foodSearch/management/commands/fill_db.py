@@ -80,9 +80,9 @@ class Init_db:
 
                 try:
                     name = product["product_name"]
-                    formated_name = self.upper_unaccent(name)
+                    formatted_name = self.upper_unaccent(name)
                     brands = product["brands"]
-                    formated_brands = self.upper_unaccent(brands)
+                    formatted_brands = self.upper_unaccent(brands)
 
                     with transaction.atomic():
                         # insert each product in database
@@ -91,9 +91,9 @@ class Init_db:
                         new_product = Product.objects.create(
                             reference = product["id"],
                             name = name,
-                            formated_name = formated_name,
+                            formatted_name = formatted_name,
                             brands = brands,
-                            formated_brands = formated_brands,
+                            formatted_brands = formatted_brands,
                             nutrition_grade_fr = product["nutrition_grades"],
                             url = product["url"],
                             image_url = product["image_url"],

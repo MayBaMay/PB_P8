@@ -7,8 +7,8 @@ from ..results_parser import ResultsParser
 class FilterFoundSubstitutesTestCase(TestCase):
 
     def setUp(self):
-        query_prod = Product.objects.create(name="tarte citron meringuée", formated_name="x", brands="x", formated_brands="x", reference="1", nutrition_grade_fr="E")
-        query_prod_2 = Product.objects.create(name="biscuit citronade", formated_name="x", brands="x", formated_brands="x", reference="10", nutrition_grade_fr="E")
+        query_prod = Product.objects.create(name="tarte citron meringuée", formatted_name="x", brands="x", formatted_brands="x", reference="1", nutrition_grade_fr="E")
+        query_prod_2 = Product.objects.create(name="biscuit citronade", formatted_name="x", brands="x", formatted_brands="x", reference="10", nutrition_grade_fr="E")
 
         # user:
         current_user = User.objects.create(username="usertest", email="user@test.com", password="password")
@@ -31,47 +31,47 @@ class FilterFoundSubstitutesTestCase(TestCase):
         cat7.products.add(query_prod)
         cat1.products.add(query_prod_2)
 
-        prod2 = Product.objects.create(name="madeleines citron surgelées", reference="2", nutrition_grade_fr="C", formated_name="x", brands="x", formated_brands="x")
+        prod2 = Product.objects.create(name="madeleines citron surgelées", reference="2", nutrition_grade_fr="C", formatted_name="x", brands="x", formatted_brands="x")
         cat1.products.add(prod2)
         cat2.products.add(prod2)
         cat5.products.add(prod2)
 
-        prod3 = Product.objects.create(name="yaourt", reference="3", nutrition_grade_fr="A", formated_name="x", brands="x", formated_brands="x")
+        prod3 = Product.objects.create(name="yaourt", reference="3", nutrition_grade_fr="A", formatted_name="x", brands="x", formatted_brands="x")
         cat6.products.add(prod3)
         cat7.products.add(prod3)
 
-        prod4 = Product.objects.create(name="tarte citron bio sans sucre ajouté", reference="4", nutrition_grade_fr="B", formated_name="x", brands="x", formated_brands="x")
+        prod4 = Product.objects.create(name="tarte citron bio sans sucre ajouté", reference="4", nutrition_grade_fr="B", formatted_name="x", brands="x", formatted_brands="x")
         cat1.products.add(prod4)
         cat2.products.add(prod4)
         cat3.products.add(prod4)
         cat4.products.add(prod4)
         cat7.products.add(prod4)
 
-        prod5 = Product.objects.create(name="fromage de chèvre", reference="5", nutrition_grade_fr="D", formated_name="x", brands="x", formated_brands="x")
+        prod5 = Product.objects.create(name="fromage de chèvre", reference="5", nutrition_grade_fr="D", formatted_name="x", brands="x", formatted_brands="x")
         cat8.products.add(prod5)
 
-        prod6 = Product.objects.create(name="tarte pomme allégée", reference="6", nutrition_grade_fr="B", formated_name="x", brands="x", formated_brands="x")
+        prod6 = Product.objects.create(name="tarte pomme allégée", reference="6", nutrition_grade_fr="B", formatted_name="x", brands="x", formatted_brands="x")
         cat1.products.add(prod6)
         cat2.products.add(prod6)
         cat3.products.add(prod6)
         cat4.products.add(prod6)
         cat7.products.add(prod6)
 
-        prod7= Product.objects.create(name="tarte poire", reference="7", nutrition_grade_fr="B", formated_name="x", brands="x", formated_brands="x")
+        prod7= Product.objects.create(name="tarte poire", reference="7", nutrition_grade_fr="B", formatted_name="x", brands="x", formatted_brands="x")
         cat1.products.add(prod7)
         cat2.products.add(prod7)
         cat3.products.add(prod7)
         cat4.products.add(prod7)
         cat7.products.add(prod7)
 
-        prod8 = Product.objects.create(name="charlotte pomme citron", reference="8", nutrition_grade_fr="B", formated_name="x", brands="x", formated_brands="x")
+        prod8 = Product.objects.create(name="charlotte pomme citron", reference="8", nutrition_grade_fr="B", formatted_name="x", brands="x", formatted_brands="x")
         cat1.products.add(prod8)
         cat2.products.add(prod8)
         cat3.products.add(prod8)
         cat4.products.add(prod8)
         cat7.products.add(prod8)
 
-        prod9 = Product.objects.create(name="roulé au citron", reference="9", nutrition_grade_fr="B", formated_name="x", brands="x", formated_brands="x")
+        prod9 = Product.objects.create(name="roulé au citron", reference="9", nutrition_grade_fr="B", formatted_name="x", brands="x", formatted_brands="x")
         cat1.products.add(prod9)
         cat2.products.add(prod9)
         cat3.products.add(prod9)

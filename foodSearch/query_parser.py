@@ -33,7 +33,7 @@ class QueryParser:
                 break
 
     def get_exact_query_set(self):
-        products = Product.objects.filter(formated_name=self.formatted_query)
+        products = Product.objects.filter(formatted_name=self.formatted_query)
         if products.exists():
             return products
         else:
@@ -50,17 +50,17 @@ class QueryParser:
         q_objects = Q()
         for word in self.formatted_query.split():
             if word not in ['DE', 'DES', 'LE', 'LA', 'LES', 'AU', 'AUX', 'A']:
-                q_objects.add(Q(formated_name__contains=word), Q.OR)
-                q_objects.add(Q(formated_brands__contains=word), Q.OR)
+                q_objects.add(Q(formatted_name__contains=word), Q.OR)
+                q_objects.add(Q(formatted_brands__contains=word), Q.OR)
         return Product.objects.filter(q_objects).distinct()
 
     def products_infos(self):
     # for those products, get name and brand in a same list
         product_dict = {}
         for product in self.products_with_words():
-            name_brand_string = product.formated_name
+            name_brand_string = product.formatted_name
             name_brand_string += " "
-            name_brand_string += product.formated_brands
+            name_brand_string += product.formatted_brands
             list_name_brand_string = name_brand_string.split()
             product_dict[product.id] = list_name_brand_string
         return product_dict

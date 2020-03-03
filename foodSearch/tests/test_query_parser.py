@@ -6,9 +6,9 @@ from ..query_parser import QueryParser
 class FilterFoundProductsTestCase(TestCase):
 
     def setUp(self):
-        Product.objects.create(id=31, name="Fàke product for db", formated_name="FAKE PRODUCT FOR DB", brands="brand fake", formated_brands="BRAND FAKE", reference='1')
-        Product.objects.create(id=32, name="Second fake prôduct", formated_name="SECOND FAKE PRODUCT", brands="the wrong one", formated_brands="THE WRONG ONE", reference='2')
-        Product.objects.create(id=33, name="product", formated_name="PRODUCT", brands="not bad", formated_brands="NOT BAD", reference='3')
+        Product.objects.create(id=31, name="Fàke product for db", formatted_name="FAKE PRODUCT FOR DB", brands="brand fake", formatted_brands="BRAND FAKE", reference='1')
+        Product.objects.create(id=32, name="Second fake prôduct", formatted_name="SECOND FAKE PRODUCT", brands="the wrong one", formatted_brands="THE WRONG ONE", reference='2')
+        Product.objects.create(id=33, name="product", formatted_name="PRODUCT", brands="not bad", formatted_brands="NOT BAD", reference='3')
         self.exact_query = "product"
         self.query_name = "fàke product"
         self.query_name_brands = "fake prôduct brand"

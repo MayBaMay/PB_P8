@@ -42,7 +42,9 @@ class InitDB:
     def upper_unaccent(sentence):
         """"return a string in upper case and without any accent"""
         try:
-            sentence_unaccent = ''.join((c for c in unicodedata.normalize('NFD', sentence) if unicodedata.category(c) != 'Mn'))
+            sentence_unaccent = ''.join(
+                (c for c in unicodedata.normalize('NFD', sentence)
+                 if unicodedata.category(c) != 'Mn'))
             return sentence_unaccent.upper()
         except:
             print('upper_unaccent error')
@@ -162,7 +164,7 @@ class Command(BaseCommand):
                             dest='fill',
                             help='Fill database')
 
-    def handle(self, *args, **options):
+    def handle(self, **options):
         """Class handler, launch reset or fill depending on option choice"""
 
         if options['reset']:

@@ -7,9 +7,9 @@ When registered, the user can save those favorite subsitutes.
 
 ## How to install this project
 
-### [u]1 - Fork the project[u]
-### [u]2 - Clone the project on your PC[u]
-### [u]3 - Create and set the database[u]
+[/u]### 1 - Fork the project[/u]
+### 2 - Clone the project on your PC
+### 3 - Create and set the database
 This project was conceived with postgresql, but we can use an other db engine.
 
 #### STEP 1 : Create a database.
@@ -64,7 +64,7 @@ DB_REPORTS_FILE = <file in which you want a report of your DB changes>
 `./manage.py fill_db -f`
 
 
-### [u]4 - Launch project[u]
+### 4 - Launch project
 `./manage.py runserver`
 With your usual browser, use the application on url http://127.0.0.1:8000/
 

@@ -1,33 +1,46 @@
 #! /usr/bin/env python3
 # coding: utf-8
-import json
+
+"""
+This module create a command allowing user to reset or fill database
+with datas from openfactfood api in order to use them in the appliaction foodSearch
+"""
+
 import time
 import datetime
 from statistics import mean
 import unicodedata
 
-from django.core.management.base import BaseCommand, CommandError
-from django.db import IntegrityError
+from django.core.management.base import BaseCommand
 from django.db import transaction
+
+import openfoodfacts
 
 from foodSearch.models import Category, Product, Favorite
 from .settings import FIRST_PAGE, LAST_PAGE, DB_REPORTS_FILE
 
-import openfoodfacts
 
-
-class Init_db:
+class InitDB:
+    """
+    This class defines code relative to reset or fill database
+    """
 
     def __init__(self):
         self.tps = []
+        self.initial_page = 1
+        self.page = 1 # page counter
+        self.total_pages = 1000 # number of page wanted from the api
 
-    def reset_db(self):
+    @staticmethod
+    def reset_db():
         """Method clearing database"""
         Category.objects.all().delete()
         Favorite.objects.all().delete()
         Product.objects.all().delete()
 
-    def upper_unaccent(self, sentence):
+    @staticmethod
+    def upper_unaccent(sentence):
+        """"return a string in upper case and without any accent"""
         try:
             sentence_unaccent = ''.join((c for c in unicodedata.normalize('NFD', sentence) if unicodedata.category(c) != 'Mn'))
             return sentence_unaccent.upper()
@@ -57,7 +70,7 @@ class Init_db:
                     saturated_fat_100g = product['nutriments']['saturated-fat_100g']
                 except KeyError:
                     saturated_fat_100g = ""
-                try :
+                try:
                     carbohydrates_100g = product['nutriments']['carbohydrates_100g']
                 except KeyError:
                     carbohydrates_100g = ""
@@ -86,26 +99,26 @@ class Init_db:
 
                     with transaction.atomic():
                         # insert each product in database
-                        categories = product["categories_hierarchy"]
 
                         new_product = Product.objects.create(
-                            reference = product["id"],
-                            name = name,
-                            formatted_name = formatted_name,
-                            brands = brands,
-                            formatted_brands = formatted_brands,
-                            nutrition_grade_fr = product["nutrition_grades"],
-                            url = product["url"],
-                            image_url = product["image_url"],
-                            image_small_url = product["image_small_url"],
-                            saturated_fat_100g = saturated_fat_100g,
-                            carbohydrates_100g = carbohydrates_100g,
-                            energy_100g = energy_100g,
-                            sugars_100g = sugars_100g,
-                            sodium_100g = sodium_100g,
-                            salt_100g = salt_100g,
+                            reference=product["id"],
+                            name=name,
+                            formatted_name=formatted_name,
+                            brands=brands,
+                            formatted_brands=formatted_brands,
+                            nutrition_grade_fr=product["nutrition_grades"],
+                            url=product["url"],
+                            image_url=product["image_url"],
+                            image_small_url=product["image_small_url"],
+                            saturated_fat_100g=saturated_fat_100g,
+                            carbohydrates_100g=carbohydrates_100g,
+                            energy_100g=energy_100g,
+                            sugars_100g=sugars_100g,
+                            sodium_100g=sodium_100g,
+                            salt_100g=salt_100g,
                         )
-                        # insert each category in database only if products has categories infos(no keyerror in product['categories_hierarchy'])
+                        # insert each category in database only if products
+                        # has categories infos(no keyerror in product['categories_hierarchy'])
                         try:
                             with transaction.atomic():
                                 for category in product['categories_hierarchy']:
@@ -115,7 +128,7 @@ class Init_db:
                                             cat = Category.objects.get(reference=category)
                                         except Category.DoesNotExist:
                                             # if category doesn't exist yet, create one
-                                            cat = Category.objects.create(reference = category)
+                                            cat = Category.objects.create(reference=category)
                                             # categ = Category.objects.get(reference=category)
                                         # in any case, add a relation between Category and Product
                                         cat.products.add(new_product)
@@ -127,39 +140,47 @@ class Init_db:
 
             print("{} products in database".format(Product.objects.count()))
             print("{} categories in database".format(Category.objects.count()))
-            tps_page = round((time.time() - start_time),1)
+            tps_page = round((time.time() - start_time), 1)
             print("Temps d'execution page: {} secondes ---".format(tps_page))
             self.tps.append(tps_page)
             self.page += 1
 
 
 class Command(BaseCommand):
-    help = 'Update datas in database - options: reset or fill'
+    """Update datas in database - options: reset or fill"""
 
     def add_arguments(self, parser):
-        parser.add_argument('-r', '--reset', action='store_true', dest='reset', help='Reset database')
-        parser.add_argument('-f', '--fill', action='store_true', dest='fill', help='Fill database')
+        """Class arguments : reset or fill"""
+        parser.add_argument('-r',
+                            '--reset',
+                            action='store_true',
+                            dest='reset',
+                            help='Reset database')
+        parser.add_argument('-f',
+                            '--fill',
+                            action='store_true',
+                            dest='fill',
+                            help='Fill database')
 
     def handle(self, *args, **options):
+        """Class handler, launch reset or fill depending on option choice"""
 
         if options['reset']:
-            products = Product.objects.count()
-            categories = Category.objects.count()
-            db = Init_db()
-            db.reset_db()
+            database = InitDB()
+            database.reset_db()
 
             file = open(DB_REPORTS_FILE, "a")
-            file.write("\nRESET Database the {}:---DATABASE EMPTY\n".format(datetime.datetime.now()))
+            file.write("\nRESET Database the {}:--DATABASE EMPTY\n".format(datetime.datetime.now()))
             file.close()
 
-            self.stdout.write(self.style.SUCCESS("Reset base de données effectué --- Base de données vide"))
+            self.stdout.write(self.style.SUCCESS("Reset base de données effectué"))
 
         if options['fill']:
             products = Product.objects.count()
             categories = Category.objects.count()
 
-            db = Init_db()
-            db.load_datas(FIRST_PAGE, LAST_PAGE)
+            database = InitDB()
+            database.load_datas(FIRST_PAGE, LAST_PAGE)
 
             file = open(DB_REPORTS_FILE, "a")
             file.write("""
@@ -168,14 +189,15 @@ class Command(BaseCommand):
             --- {} products in database ({} added)
             --- {} categories in database ({} added)
             --- Temps moyen d'execution : {} secondes par page ---\n"""
-            .format(datetime.datetime.now(),
-                    db.initial_page,
-                    db.total_pages,
-                    Product.objects.count(),
-                    Product.objects.count()-products,
-                    Category.objects.count(),
-                    Category.objects.count()-categories,
-                    round(mean(db.tps),1)))
+                       .format(datetime.datetime.now(),
+                               database.initial_page,
+                               database.total_pages,
+                               Product.objects.count(),
+                               Product.objects.count()-products,
+                               Category.objects.count(),
+                               Category.objects.count()-categories,
+                               round(mean(database.tps), 1)))
             file.close()
 
-            self.stdout.write(self.style.SUCCESS("\nTemps moyen d'execution : {} secondes ---".format(round(mean(db.tps),1))))
+            self.stdout.write(self.style.SUCCESS("\nTemps moyen d'execution : {} secondes ---"
+                                                 .format(round(mean(database.tps), 1))))

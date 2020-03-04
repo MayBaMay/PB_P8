@@ -11,7 +11,7 @@ from django.db import IntegrityError
 from django.db import transaction
 
 from foodSearch.models import Category, Product, Favorite
-from .settings import FIRST_PAGE, LAST_PAGE
+from .settings import FIRST_PAGE, LAST_PAGE, DB_REPORTS_FILE
 
 import openfoodfacts
 
@@ -148,7 +148,7 @@ class Command(BaseCommand):
             db = Init_db()
             db.reset_db()
 
-            file = open("text.txt", "a")
+            file = open(DB_REPORTS_FILE, "a")
             file.write("\nRESET Database the {}:---DATABASE EMPTY\n".format(datetime.datetime.now()))
 
         if options['fill']:
@@ -158,7 +158,7 @@ class Command(BaseCommand):
             db = Init_db()
             db.load_datas(FIRST_PAGE, LAST_PAGE)
 
-            file = open("test.txt", 'a')
+            file = open(DB_REPORTS_FILE, 'a')
             file.write("""
             Database updated the {}:
             --- Database FILLED from page {} to {}

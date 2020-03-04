@@ -150,6 +150,9 @@ class Command(BaseCommand):
 
             file = open(DB_REPORTS_FILE, "a")
             file.write("\nRESET Database the {}:---DATABASE EMPTY\n".format(datetime.datetime.now()))
+            file.close()
+
+            self.stdout.write(self.style.SUCCESS("Reset base de données effectué --- Base de données vide"))
 
         if options['fill']:
             products = Product.objects.count()
@@ -158,7 +161,7 @@ class Command(BaseCommand):
             db = Init_db()
             db.load_datas(FIRST_PAGE, LAST_PAGE)
 
-            file = open(DB_REPORTS_FILE, 'a')
+            file = open(DB_REPORTS_FILE, "a")
             file.write("""
             Database updated the {}:
             --- Database FILLED from page {} to {}
@@ -173,7 +176,6 @@ class Command(BaseCommand):
                     Category.objects.count(),
                     Category.objects.count()-categories,
                     round(mean(db.tps),1)))
+            file.close()
 
-            self.stdout.write(self.style.SUCCESS("{} products in database".format(Product.objects.count())))
-            self.stdout.write(self.style.SUCCESS("{} categories in database".format(Category.objects.count())))
-            self.stdout.write(self.style.SUCCESS("Temps moyen d'execution : {} secondes ---".format(round(mean(db.tps),1))))
+            self.stdout.write(self.style.SUCCESS("\nTemps moyen d'execution : {} secondes ---".format(round(mean(db.tps),1))))

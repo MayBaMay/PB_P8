@@ -42,6 +42,12 @@ DATABASES = {
 
 #### STEP 5 : Load database
 
+### *Option 1 : fastest one, with a dump file(.json) and the django loaddata command*
+
+`./manage.py loaddata foodSearch/dumps/foodSearch.json`
+
+### *Option 2 : slowest one, with the script that imports datas from the OpenFoodFacts API*
+
 1. We uses the [OpenFoodFacts API for python](https://github.com/openfoodfacts/openfoodfacts-python)<br/>
 Make sure you've installed it on your environnement (not in the requirements.txt)<br/>
 `sudo pip install git+https://github.com/openfoodfacts/openfoodfacts-python`<br/>
@@ -52,9 +58,11 @@ Change the pages from OpenFoodFacts you want to include in your database<br/>
 ```
 FIRST_PAGE =  <first page from openfoodfacts api you want to load>
 LAST_PAGE = <last page from openfoodfacts api you want to load>
+DB_REPORTS_FILE = <file in which you want a report of your DB changes> (optional)
 ```
 3. Launch the command on your terminal<br/>
 `./manage.py fill_db -f`
+
 
 #### STEP 6 : Launch project
 `./manage.py runserver`

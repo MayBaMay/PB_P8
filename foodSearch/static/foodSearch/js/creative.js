@@ -63,8 +63,8 @@
     // reset modalLogIn
     let loginform = $('#loginform').attr('id');
     document.getElementById(loginform).reset();
-    $('#no-user-error').css('display', 'none');
-    $('#password-error').css('display', 'none');
+    $('.no-user-error').css('display', 'none');
+    $('.password-error').css('display', 'none');
     // show modalLogIn
     $('#modalLogIn').modal('show');
   });
@@ -73,8 +73,8 @@
   $('#loginform').submit(function(e){
     let formId = $(this).attr('id');
     let submitBtn = $(this).find('input[type=submit]');
-    $('#no-user-error').css('display', 'none');
-    $('#password-error').css('display', 'none');
+    $('.no-user-error').css('display', 'none');
+    $('.password-error').css('display', 'none');
     e.preventDefault();
     $.ajax({
       url: "/login/", // the file to call
@@ -88,12 +88,12 @@
           $('#modalLogIn').modal('hide');
         }
         else if (login_response.user == "password wrong") {
-          $('#password-error').css('display', 'block');
+          $('.password-error').css('display', 'block');
           submitBtn.prop('disabled', false);
           hideLoader()
            }
         else{
-          $('#no-user-error').css('display', 'block');
+          $('.no-user-error').css('display', 'block');
           document.getElementById(formId).reset();
           hideLoader()
         }
@@ -134,13 +134,13 @@
           submitBtn.prop('disabled', false);
            }
         else{
-          $('#no-user-error').css('display', 'block');
+          $('.no-user-error').css('display', 'block');
         }
       }
     })
   })
 
-  $('#NotConnected').click(function(){
+  $('.NotConnected').click(function(){
     $('#modalNotConnected').modal('show');
   });
 

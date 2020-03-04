@@ -19,19 +19,19 @@
 
       <div class="col-md-5 ml-auto mr-auto mt-10 text-center" style="text-transform: uppercase;">
         {% if product.nutrition_grade_fr == 'a' %}
-          <img src="{% static 'foodSearch/img/nutriscoreA.png' %}" alt="nutriscoreA" class="img-fluid rounded" alt="Responsive image">
+          <img src="{% static 'foodSearch/img/nutriscoreA.png' %}" alt="nutriscoreA" class="img-fluid rounded">
         {% endif %}
         {% if product.nutrition_grade_fr == 'b' %}
-          <img src="{% static 'foodSearch/img/nutriscoreB.png' %}" alt="nutriscoreB" class="img-fluid rounded" alt="Responsive image">
+          <img src="{% static 'foodSearch/img/nutriscoreB.png' %}" alt="nutriscoreB" class="img-fluid rounded">
         {% endif %}
         {% if product.nutrition_grade_fr == 'c' %}
-          <img src="{% static 'foodSearch/img/nutriscoreC.png' %}" alt="nutriscoreC" class="img-fluid rounded" alt="Responsive image">
+          <img src="{% static 'foodSearch/img/nutriscoreC.png' %}" alt="nutriscoreC" class="img-fluid rounded">
         {% endif %}
         {% if product.nutrition_grade_fr == 'd' %}
-          <img src="{% static 'foodSearch/img/nutriscoreD.png' %}" alt="nutriscoreD" class="img-fluid rounded" alt="Responsive image">
+          <img src="{% static 'foodSearch/img/nutriscoreD.png' %}" alt="nutriscoreD" class="img-fluid rounded">
         {% endif %}
         {% if product.nutrition_grade_fr == 'e' %}
-          <img src="{% static 'foodSearch/img/nutriscoreE.png' %}" alt="nutriscoreE" class="img-fluid rounded" alt="Responsive image">
+          <img src="{% static 'foodSearch/img/nutriscoreE.png' %}" alt="nutriscoreE" class="img-fluid rounded">
         {% endif %}
       </div>
 
@@ -95,10 +95,10 @@
     </div>
   </div>
   <div class="row justify-content-center mt-5">
-      <a href="{{ product.url }}"><button type="button" class="btn btn-dark-green">Voir la fiche d'OpenFoodFacts</button></a>
+      <a class="btn btn-dark-green" href="{{ product.url }}" role="button" >Voir la fiche d'OpenFoodFacts</a>
   </div>
   <div class="row justify-content-center mt-3">
-      <a class="btn btn-secondary" href="javascript:history.go(-1)" role="button load">Retour</a>
+      <a class="btn btn-secondary" href="javascript:history.go(-1)" role="button">Retour</a>
   </div>
 </section>
 {% endblock %}

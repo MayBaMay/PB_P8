@@ -13,17 +13,17 @@
             <form id="loginform" action="{% url 'foodSearch:login' %}" method="POST">
               {% csrf_token %}
               <div class="form-group">
-                <input type="name" name="username" id="login-username" class="form-control"
+                <input type="text" name="username" id="login-username" class="form-control"
                  placeholder="Nom d'utilisateur" required="required"/>
               </div>
-              <p class="text-danger text-center" id="no-user-error" style="display:none;">Utilisateur introuvable, créez un compte ou réessayez</p>
+              <p class="text-danger text-center no-user-error" style="display:none;">Utilisateur introuvable, créez un compte ou réessayez</p>
               <div class="form-group">
                 <input type="password" name="password" id="login-password" class="form-control" placeholder="Mot de passe" required="required" />
               </div>
 
-              <p class="text-danger text-center" id="password-error" style="display:none;">Mot de passe incorrect</p>
+              <p class="text-danger text-center password-error" style="display:none;">Mot de passe incorrect</p>
 
-              <input type="hidden" name="last_url" value="{{ request.get_full_path }}" required="False" />
+              <input type="hidden" name="last_url" value="{{ request.get_full_path }}" />
 
               <div class="form-group text-center">
                 <input type="submit" value="Login" class="btn btn-primary" id="signUp-Submit">
@@ -53,7 +53,7 @@
       </div>
       <div class="modal-body">
         <p>Êtes-vous sûr de vouloir vous déconnecter?</p>
-        <a id="logoutbtn" href="{% url 'logout' %}"><button type="button" name="button" class="btn btn-primary">Oui, je me déconnecte</button></a>
+        <a id="logoutbtn" href="{% url 'logout' %}" role="button" class="btn btn-primary">Oui, je me déconnecte</a>
       </div>
     </div>
   </div>
@@ -72,7 +72,7 @@
         <form id="registerForm" method="post" action="{% url 'foodSearch:register' %}">
           {% csrf_token %}
           <div class="form-group">
-            <input type="name" name="username" id="signUp-username" class="form-control"
+            <input type="text" name="username" id="signUp-username" class="form-control"
              placeholder="Nom d'utilisateur" required="required"/>
           </div>
           <div class="text-danger text-center" id="username-error" style="display:none;">
@@ -83,12 +83,12 @@
             <input type="email" name="email" id="signUp-email" class="form-control"
              placeholder="Email" required="required" />
           </div>
-          <p class="text-danger text-center" id="no-user-error" style="display:none;">Utilisateur introuvable, créez un compte ou réessayez</p>
+          <p class="text-danger text-center no-user-error" style="display:none;">Utilisateur introuvable, créez un compte ou réessayez</p>
           <div class="form-group">
             <input type="password" name="password" id="signUp-password" class="form-control"
              placeholder="Mot de passe" required="required" />
           </div>
-          <p class="text-danger text-center" id="password-error" style="display:none;">Mot de passe incorrect</p>
+          <p class="text-danger text-center password-error" style="display:none;">Mot de passe incorrect</p>
           <button type="submit" class="btn btn-secondary mt-3">Créer mon compte</button>
           </form>
       </div>

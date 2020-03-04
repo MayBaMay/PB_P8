@@ -18,13 +18,15 @@
             <a href="/detail/{{ favorite.substitute.id}}/" title="Alternative à {{ favorite.initial_search_product.name }} {{ favorite.initial_search_product.brands }} (Nutriscore {{ favorite.initial_search_product.nutrition_grade_fr|upper}})">
               <div class="img_prod" style="background-color: #e8a75d">
                 <img
-                  class="image-color-theme img-responsive" src="{{ favorite.substitute.image_small_url }}"
-                  height="200rem" width="100rem"/>
+                  class="image-color-theme img-responsive"
+                  src="{{ favorite.substitute.image_small_url }}"
+                  alt="product image"
+                  />
               </div>
               <h3 class="h4 mb-2 text-white">{{ favorite.substitute.name }}</h3>
             </a>
             <a href="/detail/{{ favorite.substitute.id }}/">En savoir plus sur ce produit</a><br>
-            <form id="{{ substitute.id }}" class="favoriteForm wachlist" method="post">{% csrf_token %}
+            <form id="{{ favorite.substitute.id }}" class="favoriteForm wachlist" method="post">{% csrf_token %}
               <input type="hidden" name="user" value="{{ user.id }}">
               <input type="hidden" name="substitute" value="{{ favorite.substitute.id }}">
               <input type="hidden" name="favorite" value="True">
@@ -58,7 +60,7 @@
   </div>
   {% endif %}
   <div class="row justify-content-center mt-3">
-      <button class="btn btn-secondary return load" role="button">Retour</button>
+      <button class="btn btn-secondary return load">Retour</button>
   </div>
 </section>
 

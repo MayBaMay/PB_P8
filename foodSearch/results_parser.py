@@ -4,8 +4,7 @@
 
 import time
 from django.db.models import Q
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 from .models import Category, Favorite, Product
 
 def fct_sort_dict(value):

@@ -42,11 +42,11 @@ DATABASES = {
 
 #### STEP 5 : Load database
 
-### *Option 1 : fastest one, with a dump file(.json) and the django loaddata command*
+  *Option 1 : fastest one, with a dump file(.json) and the django loaddata command*
 
 `./manage.py loaddata foodSearch/dumps/foodSearch.json`
 
-### *Option 2 : slowest one, with the script that imports datas from the OpenFoodFacts API*
+  *Option 2 : slowest one, with the script that imports datas from the OpenFoodFacts API*
 
 1. We uses the [OpenFoodFacts API for python](https://github.com/openfoodfacts/openfoodfacts-python)<br/>
 Make sure you've installed it on your environnement (not in the requirements.txt)<br/>

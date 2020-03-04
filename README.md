@@ -7,7 +7,9 @@ When registered, the user can save those favorite subsitutes.
 
 ## How to install this project
 
-[/u]### 1 - Fork the project[/u]
+[center]
+### 1 - Fork the project
+[center]
 ### 2 - Clone the project on your PC
 ### 3 - Create and set the database
 This project was conceived with postgresql, but we can use an other db engine.

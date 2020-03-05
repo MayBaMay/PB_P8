@@ -63,7 +63,6 @@ def login_view(request):
         response_data = {'user':"user unknown"}
     return HttpResponse(JsonResponse(response_data))
 
-
 def userpage(request):
     """View rendering userpage"""
     title = request.user

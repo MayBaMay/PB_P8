@@ -1,6 +1,7 @@
 #!/usr/bin/env python
+import json
+from django.test import TestCase, Client
 from django.urls import reverse
-from django.test import TestCase
 
 from django.contrib.auth.models import User
 
@@ -28,7 +29,7 @@ class IndexPageTestCase(TestCase):
 #         self.assertEqual(response.status_code, 200)
 #
 #     # test that a new register is made
-#     def test_new_account_is_registered(self):
+#     def test_login(self):
 #         old_accounts = User.objects.count()
 #         username = self.user.username
 #         password = self.user.password
@@ -38,3 +39,6 @@ class IndexPageTestCase(TestCase):
 #         })
 #         new_accounts = User.objects.count()
 #         self.assertEqual(new_accounts, old_accounts + 1)
+#
+#     # username = 'fake name'
+#     # password = 'fake_password'

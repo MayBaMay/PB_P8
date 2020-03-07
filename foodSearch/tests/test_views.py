@@ -9,10 +9,9 @@ from  django.contrib.auth.models import User
 
 from ..models import Category, Favorite, Product
 
+
 class GeneralPagesTestCase(TestCase):
 
-    # test that index returns a 200
-    # must start with `test`
     def test_index_page(self):
         # you must add a name to index view: `name="index"`
         response = self.client.get(reverse('foodSearch:index'))
@@ -23,17 +22,14 @@ class GeneralPagesTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'foodSearch/legals.html')
 
+
 class RegisterPageTestCase(StaticLiveServerTestCase):
 
-    # ran before each test.
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.selenium = WebDriver()
         cls.selenium.implicitly_wait(10)
-        User.objects.create(username="Test",
-                            email="userinDB@test.com",
-                            password="password")
 
     @classmethod
     def tearDownClass(cls):
@@ -62,6 +58,9 @@ class RegisterPageTestCase(StaticLiveServerTestCase):
         self.assertEqual(User.objects.get(username="usertest").is_authenticated, True)
 
     def test_login(self):
+        User.objects.create(username="Test",
+                            email="userinDB@test.com",
+                            password="password")
         self.selenium.get('%s%s' % (self.live_server_url, '/'))
         self.selenium.find_element_by_css_selector("#connect").click()
         signin_modal = self.selenium.find_element_by_css_selector("#modalLogIn")
@@ -76,13 +75,12 @@ class RegisterPageTestCase(StaticLiveServerTestCase):
         self.assertEqual(User.objects.filter(username="Test").count(), 1)
         self.assertEqual(User.objects.get(username="Test").is_authenticated, True)
 
-    # def test_logout(self):
-    #     self.selenium.get('%s%s' % (self.live_server_url, '/'))
-    #     self.selenium.find_element_by_css_selector("#disconnection").click()
-    #     signin_modal = self.selenium.find_element_by_css_selector("#modalLogOut")
-    #     self.assertTrue(signin_modal.is_displayed())
-    #     self.selenium.find_element_by_css_selector("#logoutbtn").click()
-    #     self.assertEqual(User.objects.get(username="Test").is_authenticated, False)
+        #
+        # self.selenium.find_element_by_css_selector("#disconnection").click()
+        # signin_modal = self.selenium.find_element_by_css_selector("#modalLogOut")
+        # self.assertTrue(signin_modal.is_displayed())
+        # self.selenium.find_element_by_css_selector("#logoutbtn").click()
+        # self.assertEqual(User.objects.get(username="Test").is_authenticated, False)
 
 
 class ProceedResearchTestCase(TestCase):
@@ -110,3 +108,14 @@ class ProceedResearchTestCase(TestCase):
         response= self.client.get(reverse('foodSearch:detail', args=[self.prod.id]))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'foodSearch/detail.html')
+
+
+class ManageFavoriteTestCase(StaticLiveServerTestCase):
+
+    def test_watchlist(self):
+        pass
+        # favorite = Favorite.objects.create(user, substitute, self.prod)
+        #login usertest
+
+    def test_load_favorite(self):
+        pass

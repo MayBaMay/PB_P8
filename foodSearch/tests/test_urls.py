@@ -1,45 +1,58 @@
+"""urls.py tests"""
 from django.test import SimpleTestCase
 from django.urls import resolve, reverse
-from ..views import index, legals, register_view, login_view, userpage, watchlist, search, results, detail, load_favorite
+from ..views import index, legals, register_view, login_view, search, results
+from ..views import userpage, watchlist, detail, load_favorite
 
 class TestUrls(SimpleTestCase):
+    """test on urls.py with SimpleTestCase class"""
 
     def test_index_url_is_resolved(self):
+        """test index_url"""
         url = reverse('foodSearch:index')
-        self.assertEquals(resolve(url).func, index)
+        self.assertEqual(resolve(url).func, index)
 
     def test_legals_url_is_resolved(self):
+        """test legals_url"""
         url = reverse('foodSearch:legals')
-        self.assertEquals(resolve(url).func, legals)
+        self.assertEqual(resolve(url).func, legals)
 
     def test_register_view_url_is_resolved(self):
+        """test register_view"""
         url = reverse('foodSearch:register')
-        self.assertEquals(resolve(url).func, register_view)
+        self.assertEqual(resolve(url).func, register_view)
 
     def test_login_url_is_resolved(self):
+        """test login_url"""
         url = reverse('foodSearch:login')
-        self.assertEquals(resolve(url).func, login_view)
+        self.assertEqual(resolve(url).func, login_view)
 
     def test_userpage_url_is_resolved(self):
+        """test userpage_url"""
         url = reverse('foodSearch:userpage')
-        self.assertEquals(resolve(url).func, userpage)
+        self.assertEqual(resolve(url).func, userpage)
 
     def test_watchlist_url_is_resolved(self):
+        """test watchlist_url"""
         url = reverse('foodSearch:watchlist')
-        self.assertEquals(resolve(url).func, watchlist)
+        self.assertEqual(resolve(url).func, watchlist)
 
     def test_search_url_is_resolved(self):
+        """test search_url"""
         url = reverse('foodSearch:search')
-        self.assertEquals(resolve(url).func, search)
+        self.assertEqual(resolve(url).func, search)
 
     def test_results_url_is_resolved(self):
+        """test results_url"""
         url = reverse('foodSearch:results', args=[00000])
-        self.assertEquals(resolve(url).func, results)
+        self.assertEqual(resolve(url).func, results)
 
     def test_detail_url_is_resolved(self):
+        """test detail_url"""
         url = reverse('foodSearch:detail', args=[00000])
-        self.assertEquals(resolve(url).func, detail)
+        self.assertEqual(resolve(url).func, detail)
 
     def test_load_favorite_url_is_resolved(self):
+        """test load_favorite"""
         url = reverse('foodSearch:load_favorite')
-        self.assertEquals(resolve(url).func, load_favorite)
+        self.assertEqual(resolve(url).func, load_favorite)

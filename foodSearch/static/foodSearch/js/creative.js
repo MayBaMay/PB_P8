@@ -1,3 +1,33 @@
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+
+
  (function($) {
   "use strict"; // Start of use strict
 
@@ -76,13 +106,14 @@
     $('.no-user-error').css('display', 'none');
     $('.password-error').css('display', 'none');
     e.preventDefault();
+    console.log($(this).serialize())
     $.ajax({
       url: "/login/", // the file to call
       type: "POST", // GET or POST
       data: $(this).serialize(), // get the form data
       success: function(data){
         let login_response = jQuery.parseJSON(data);
-        console.log(login_response);
+        // console.log(login_response);
         if (login_response.user == "success"){
           document.location.reload(true);
           $('#modalLogIn').modal('hide');
@@ -124,7 +155,7 @@
       data: $(this).serialize(), // get the form data
       success: function(data){
         let register_response = jQuery.parseJSON(data);
-        console.log(register_response);
+        // console.log(register_response);
         if (register_response.user == "success"){
           document.location.reload(true);
           $('#modalRegister').modal('hide');
@@ -156,13 +187,15 @@
       data: $(this).serialize(),
       })
       .done(function(data) {
+        var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+        // console.log(csrftoken)
         let favorite_response = jQuery.parseJSON(data);
-        console.log(favorite_response);
-        console.log(favorite_response.substitute_id)
-        console.log(favorite_response.product_id)
-        console.log(favorite_response.favorite)
+        // console.log(favorite_response);
+        // console.log(favorite_response.substitute_id)
+        // console.log(favorite_response.product_id)
+        // console.log(favorite_response.favorite)
         let submit = form.find('button')
-        console.log(fav.val())
+        // console.log(fav.val())
         if (wachlist){
           form.parent(".prodbox").remove()
         }

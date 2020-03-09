@@ -155,7 +155,6 @@ def detail(request, product_id):
 
 def load_favorite(request):
     """View loading or deleting favorite row and returning a json response to ajax"""
-    print(request.POST)
     user = request.POST['user']
     substitute_id = request.POST['substitute']
     favorite = request.POST['favorite']

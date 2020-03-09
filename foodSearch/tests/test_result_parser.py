@@ -206,12 +206,12 @@ class FilterFoundSubstitutesTestCase(TestCase):
                                 substitute=prod4,
                                 initial_search_product=query_prod)
         parser = ResultsParser(query_prod.id, current_user)
-        self.assertEqual(parser.results_infos, [{prod3: False}, # yaourt False
-                                                {prod4: True}, # tarte citron bio sans sucre True
-                                                {prod6: False}, # tarte pomme allégée False
-                                                {prod7: False}, # tarte poire False
-                                                {prod8: False}, # charlotte pomme citron False
-                                                {prod9: False}, # roulé au citron False
+        self.assertEqual(parser.results_infos, [{prod3: "unsaved"}, # yaourt False
+                                                {prod4: "saved"}, # tarte citron bio sans sucre True
+                                                {prod6: "unsaved"}, # tarte pomme allégée False
+                                                {prod7: "unsaved"}, # tarte poire False
+                                                {prod8: "unsaved"}, # charlotte pomme citron False
+                                                {prod9: "unsaved"}, # roulé au citron False
                                                 ])
 
     def test_paginator(self):
@@ -224,4 +224,4 @@ class FilterFoundSubstitutesTestCase(TestCase):
                                 substitute=prod4,
                                 initial_search_product=query_prod)
         parser = ResultsParser(query_prod.id, current_user)
-        self.assertEqual(parser.paginator(1)[0], {prod3:False})
+        self.assertEqual(parser.paginator(1)[0], {prod3:"unsaved"})

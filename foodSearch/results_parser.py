@@ -135,11 +135,11 @@ class ResultsParser:
         for result in self.relevant_results_queryset:
             if self.current_user.is_authenticated:
                 if Favorite.objects.filter(substitute=result, user=self.current_user).exists():
-                    results_infos.append({result: True})
+                    results_infos.append({result: "saved"})
                 else:
-                    results_infos.append({result: False})
+                    results_infos.append({result: "unsaved"})
             else:
-                results_infos.append({result: False})
+                results_infos.append({result: "unsaved"})
         return results_infos
 
     def paginator(self, page):

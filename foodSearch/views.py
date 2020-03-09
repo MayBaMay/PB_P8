@@ -148,28 +148,27 @@ def results(request, product_id):
 def detail(request, product_id):
     """View rendering detail page with product informations detail"""
     product = Product.objects.get(id=product_id)
-    found_categories = Category.objects.filter(products__name=product.name)
     context = {
-        'product':product,
-        'found_categories':found_categories
+        'product':product
     }
     return render(request, 'foodSearch/detail.html', context)
 
 def load_favorite(request):
     """View loading or deleting favorite row and returning a json response to ajax"""
+    print(request.POST)
     user = request.POST['user']
     substitute_id = request.POST['substitute']
     favorite = request.POST['favorite']
     product_id = request.POST['product']
 
     current_user = User.objects.get(id=user)
-    if favorite == 'True':
+    if favorite == "saved":
         # delete favorite
         try:
             substitute = Product.objects.get(id=substitute_id)
             product = Product.objects.get(id=product_id)
             Favorite.objects.get(user=current_user, substitute=substitute).delete()
-            favorite = False
+            favorite = "unsaved"
         except:
             print('ERROR DELETE')
     else:
@@ -180,7 +179,7 @@ def load_favorite(request):
             Favorite.objects.create(user=current_user,
                                     substitute=substitute,
                                     initial_search_product=product)
-            favorite = True
+            favorite = "saved"
         except:
             print('ERROR SAVE')
 

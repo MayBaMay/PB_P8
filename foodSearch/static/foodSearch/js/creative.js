@@ -148,6 +148,7 @@
   $('.favoriteForm').submit(function(e){
     let form = $(this)
     let wachlist = $(this).hasClass("wachlist")
+    let fav = $(this).children('input[name$="favorite"]')
     e.preventDefault();
     $.ajax({
       url: "/load_favorite/", // the file to call
@@ -161,15 +162,18 @@
         console.log(favorite_response.product_id)
         console.log(favorite_response.favorite)
         let submit = form.find('button')
+        console.log(fav.val())
         if (wachlist){
           form.parent(".prodbox").remove()
         }
         else{
-          if(favorite_response.favorite == true){
+          if(favorite_response.favorite == "saved"){
           submit.html("<span class='fas fa-floppy-o'></span> Retirer ce produit de mes favoris")
+          fav.val("saved")
           }
         else{
           submit.html("<span class='fas fa-floppy-o'></span> Sauvegarder")
+          fav.val("unsaved")
           }
         }
 
@@ -187,8 +191,6 @@
   $('.searchForm').on('submit', function(e){
     initLoader();
   });
-
-
 
 })(jQuery); // End of use strict
 

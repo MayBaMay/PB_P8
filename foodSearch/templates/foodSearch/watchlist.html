@@ -29,7 +29,7 @@
             <form id="{{ favorite.substitute.id }}" class="favoriteForm wachlist" method="post">{% csrf_token %}
               <input type="hidden" name="user" value="{{ user.id }}">
               <input type="hidden" name="substitute" value="{{ favorite.substitute.id }}">
-              <input type="hidden" name="favorite" value="True">
+              <input type="hidden" name="favorite" value="saved">
               <input type="hidden" name="product" value="{{ favorite.initial_search_product.id }}">
 
               <button type="submit" class="btn btn-link text-white"><span class='fas fa-floppy-o'></span> Retirer ce produit de mes favoris</button>

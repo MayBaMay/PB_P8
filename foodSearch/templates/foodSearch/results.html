@@ -52,7 +52,7 @@
                     <input type="hidden" name="substitute" value="{{ substitute.id }}">
                     <input type="hidden" name="favorite" value="{{ favorite }}">
                     <input type="hidden" name="product" value="{{ product.id }}">
-                    {% if favorite %}
+                    {% if favorite == "saved" %}
                       <button type="submit" class="btn btn-link text-white"><span class='fas fa-floppy-o'></span> Retirer ce produit de mes favoris</button>
                     {% else %}
                       <button type="submit" class="btn btn-link text-white"><span class='fas fa-floppy-o'></span> Sauvegarder</button>

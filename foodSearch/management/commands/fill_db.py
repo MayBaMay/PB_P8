@@ -27,9 +27,9 @@ class InitDB:
 
     def __init__(self):
         self.tps = []
-        self.initial_page = 1
-        self.page = 1 # page counter
-        self.total_pages = 1000 # number of page wanted from the api
+        self.initial_page = 0
+        self.page = 0 # page counter
+        self.last_page = 0 # number of page wanted from the api
 
     @staticmethod
     def reset_db():
@@ -50,14 +50,14 @@ class InitDB:
             print('upper_unaccent error')
             return sentence
 
-    def load_datas(self, page, total_pages):
+    def load_datas(self, page, last_page):
         """method loading datas from api in the database"""
 
         self.initial_page = page
         self.page = page # page counter
-        self.total_pages = total_pages # number of page wanted from the api
+        self.last_page = last_page # number of page wanted from the api
 
-        while self.page <= self.total_pages:
+        while self.page <= self.last_page:
             print("\n")
             print("loading page "+ str(self.page))
             start_time = time.time()
@@ -193,7 +193,7 @@ class Command(BaseCommand):
             --- Temps moyen d'execution : {} secondes par page ---\n"""
                        .format(datetime.datetime.now(),
                                database.initial_page,
-                               database.total_pages,
+                               database.last_page,
                                Product.objects.count(),
                                Product.objects.count()-products,
                                Category.objects.count(),

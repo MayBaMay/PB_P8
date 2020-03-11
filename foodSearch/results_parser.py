@@ -33,7 +33,6 @@ class ResultsParser:
             self.paginate = True
         else:
             self.paginate = False
-        print(round((time.time() - start_time), 1))
 
     def products_same_categories(self):
         """
@@ -116,7 +115,7 @@ class ResultsParser:
 
     def get_results_queryset(self):
         """
-        This method get queryset of the products obtained with
+        This method get queryset of the products obtained with[]
         get_most_relevant_products method
         """
         q_objects = Q()

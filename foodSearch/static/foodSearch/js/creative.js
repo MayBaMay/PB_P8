@@ -188,14 +188,8 @@ $.ajaxSetup({
       })
       .done(function(data) {
         var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
-        // console.log(csrftoken)
         let favorite_response = jQuery.parseJSON(data);
-        // console.log(favorite_response);
-        // console.log(favorite_response.substitute_id)
-        // console.log(favorite_response.product_id)
-        // console.log(favorite_response.favorite)
         let submit = form.find('button')
-        // console.log(fav.val())
         if (wachlist){
           form.parent(".prodbox").remove()
         }

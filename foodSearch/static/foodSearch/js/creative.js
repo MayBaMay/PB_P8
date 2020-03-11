@@ -158,6 +158,7 @@ $.ajaxSetup({
         if (register_response.user == "success"){
           document.location.reload(true);
           $('#modalRegister').modal('hide');
+          initLoader();
         }
         else if (register_response.user == "already in DB") {
           $('#username-error').css('display', 'block');

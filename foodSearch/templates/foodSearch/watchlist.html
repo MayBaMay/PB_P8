@@ -15,17 +15,28 @@
       <div class="row">
         {% for favorite in watchlistpage %}
         <div class="col-md-4 text-center mt-5 prodbox">
-            <a href="/detail/{{ favorite.substitute.id}}/" title="Alternative à {{ favorite.initial_search_product.name }} {{ favorite.initial_search_product.brands }} (Nutriscore {{ favorite.initial_search_product.nutrition_grade_fr|upper}})">
-              <div class="img_prod" style="background-color: #e8a75d">
-                <img
-                  class="image-color-theme img-responsive"
-                  src="{{ favorite.substitute.image_small_url }}"
-                  alt="product image"
-                  />
-              </div>
+
+          <div class="img_prod row ml-3 mr-3">
+            <a href="/detail/{{ favorite.substitute.id}}/" class="m-auto" title="Alternative à {{ favorite.initial_search_product.name }} {{ favorite.initial_search_product.brands }} (Nutriscore {{ favorite.initial_search_product.nutrition_grade_fr|upper}})">
+              <img
+                class="image-color-theme img-responsive"
+                src="{{ favorite.substitute.image_small_url }}"
+                alt="product image"
+                />
+            </a>
+          </div>
+
+          <div class="row justify-content-center">
+            <a href="/detail/{{ substitute.id }}/" title="En savoir plus sur ce produit">
               <h3 class="h4 mb-2 text-white">{{ favorite.substitute.name }}</h3>
             </a>
+          </div>
+
+          <div class="row justify-content-center">
             <a href="/detail/{{ favorite.substitute.id }}/">En savoir plus sur ce produit</a><br>
+          </div>
+
+          <div class="row justify-content-center">
             <form id="{{ favorite.substitute.id }}" class="favoriteForm wachlist" method="post">{% csrf_token %}
               <input type="hidden" name="user" value="{{ user.id }}">
               <input type="hidden" name="substitute" value="{{ favorite.substitute.id }}">
@@ -34,6 +45,7 @@
 
               <button type="submit" class="btn btn-link text-white"><span class='fas fa-floppy-o'></span> Retirer ce produit de mes favoris</button>
             </form>
+          </div>
 
             <span class="grade upimg {{ favorite.substitute.nutrition_grade_fr }}">{{ favorite.substitute.nutrition_grade_fr }}</span>
         </div>

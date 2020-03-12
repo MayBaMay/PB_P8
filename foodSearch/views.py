@@ -47,9 +47,7 @@ def login_view(request):
     """Login view returning json response to ajax"""
     response_data = {}
     username = request.POST['username']
-    print('Data ajax :', username)
     password = request.POST['password']
-    print('Data ajax :', password)
     try:
         user = User.objects.get(username=username)
         if user.password == password:

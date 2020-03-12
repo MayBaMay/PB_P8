@@ -192,7 +192,7 @@ $.ajaxSetup({
         let favorite_response = jQuery.parseJSON(data);
         let submit = form.find('button');
         if (wachlist){
-          form.parent(".prodbox").remove();
+          form.parent(".row").parent(".prodbox").remove();
         }
         else{
           if(favorite_response.favorite == "saved"){

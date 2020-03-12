@@ -77,5 +77,5 @@ This app tries to correspond to the specifications. Some features, specified as 
 * For now, user can't change his password or ask for an other one if he lost it
 * It could be interesting for user to be able to save product as favorite from detail product page (not into site visuals provided)
 * This app only compares products with nutriscore, it would be relevant to add criterias as organic, components...
-* The user profile is as specified almost empty, we could add more informations on the user
+* The user profile is, as specified almost empty, we could add more informations on the user
 * We could add a research input in the favorite page.

@@ -23,7 +23,8 @@ if os.environ.get('ENV') == 'PRODUCTION':
 else:
     DEBUG = True
     ALLOWED_HOSTS = []
-    SECRET_KEY = '7l*om2l-k#b0ec)e(5_3+z)m4p%9fgh3p*t$(f93hgxjaftr@6'
+
+SECRET_KEY = os.environ.get('SECRET_KEY', '7l*om2l-k#b0ec)e(5_3+z)m4p%9fgh3p*t$(f93hgxjaftr@6')
 
 # Application definition
 

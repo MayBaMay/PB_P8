@@ -37,15 +37,26 @@
         {% for element in result %}
           {% for substitute, favorite in element.items %}
             <div class="col-md-4 text-center mt-5">
-                <a href="/detail/{{ substitute.id }}/" title="En savoir plus sur ce produit">
-                  <div class="img_prod" style="background-color: #e8a75d">
+
+              <div class="img_prod row ml-3 mr-3">
+                <a href="/detail/{{ substitute.id }}/" class="m-auto" title="En savoir plus sur ce produit">
                     <img
-                      class="image-color-theme img-responsive" src="{{ substitute.image_small_url }}" alt="image produit"/>
-                  </div>
+                      class="image-color-theme img-responsive" src="{{ substitute.image_small_url }}" alt="image produit"
+                    />
+                </a>
+              </div>
+
+              <div class="row justify-content-center">
+                <a href="/detail/{{ substitute.id }}/" title="En savoir plus sur ce produit">
                   <h3 class="h4 mb-2 text-white">{{ substitute.name }}</h3>
                 </a>
-                <a href="/detail/{{ product.id }}/">En savoir plus sur ce produit</a><br>
+              </div>
 
+              <div class="row justify-content-center">
+                <a href="/detail/{{ product.id }}/">En savoir plus sur ce produit</a><br>
+              </div>
+
+              <div class="row justify-content-center">
                 {% if user.is_authenticated %}
                   <form id="{{ substitute.id }}" class="favoriteForm" method="post">{% csrf_token %}
                     <input type="hidden" name="user" value="{{ user.id }}">
@@ -63,8 +74,9 @@
                     <span class='fas fa-floppy-o'></span> Sauvegarder
                   </a>
                 {% endif %}
+              </div>
 
-                  <span class="grade upimg {{ substitute.nutrition_grade_fr }}">{{ substitute.nutrition_grade_fr }}</span>
+              <span class="grade upimg {{ substitute.nutrition_grade_fr }}">{{ substitute.nutrition_grade_fr }}</span>
 
             </div>
           {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}

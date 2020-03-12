@@ -137,7 +137,7 @@ def results(request, product_id):
         'product':parser.product,
         'result': parser.paginator(page),
         'page':page,
-        "paginate": True
+        "paginate": parser.paginate
     }
     return render(request, 'foodSearch/results.html', context)
 

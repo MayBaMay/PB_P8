@@ -51,7 +51,7 @@ class ResultsParser:
 
         # get 3 most specifics categories of the product (last 3)
         if nb_found_categories > 3:
-            specific_categories = found_categories[nb_found_categories-2: nb_found_categories]
+            specific_categories = found_categories[nb_found_categories-3: nb_found_categories]
         else:
             specific_categories = found_categories
 

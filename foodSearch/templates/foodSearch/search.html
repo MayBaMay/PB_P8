@@ -18,20 +18,32 @@
       <div class="row">
         {% for product in found_products %}
           <div class="col-md-4 text-center mt-5">
-              <a href="/results/{{ product.id }}/" class="load" title="chercher un substitut">
-                <div class="img_prod" style="background-color: #e8a75d">
+
+            <div class="img_prod row ml-3 mr-3">
+              <a href="/results/{{ product.id }}/" class="load m-auto" title="chercher un substitut">
                   <img
                     class="image-color-theme img-responsive"
                     src="{{ product.image_small_url }}"
                     alt="product img"
                     />
-                </div>
+              </a>
+            </div>
+
+            <div class="row justify-content-center">
+              <a href="/results/{{ product.id }}/" class="load m-auto" title="chercher un substitut">
                 <h3 class="h4 mb-2 text-white">{{ product.name }}</h3>
               </a>
-              <a href="/detail/{{ product.id }}/">En savoir plus sur ce produit</a><br>
-              <a href="/results/{{ product.id }}/" class="text-white load">Chercher un substitut</a>
+            </div>
 
-              <span class="grade upimg {{ product.nutrition_grade_fr }}">{{ product.nutrition_grade_fr }}</span>
+            <div class="row justify-content-center">
+              <a href="/detail/{{ product.id }}/">En savoir plus sur ce produit</a><br>
+            </div>
+
+            <div class="row justify-content-center">
+              <a href="/results/{{ product.id }}/" class="text-white load">Chercher un substitut</a>
+            </div>
+            <span class="grade upimg {{ product.nutrition_grade_fr }}">{{ product.nutrition_grade_fr }}</span>
+
           </div>
           {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
       {% endfor %}

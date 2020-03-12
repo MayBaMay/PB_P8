@@ -9775,6 +9775,11 @@ header.masthead h1 {
   opacity: 1;
 }
 
+.img_prod{
+  min-height: 200px;
+  background-color: #e8a75d;
+}
+
 .grade{
   border-radius: 50%;
   text-transform: uppercase;
@@ -9786,7 +9791,7 @@ header.masthead h1 {
 .upimg{
   position: absolute;
   top: -10px;
-  right: -10px;
+  right: 7px;
 }
 
 .pagination{
@@ -9859,12 +9864,10 @@ header.masthead h1 {
   .error-txt{
     font-size: 15px;
   }
-
 }
 
 @media (max-width: 992px) {
   .prod_infos{
       margin-top: 5rem;
   }
-
 }

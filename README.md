@@ -1,5 +1,5 @@
-# PUR BEURRE - OPENCLASSROOM PYTHON - PROJECT #8
-This open source project was created for the OpenClassRoom's Python developer course (Project 8/13)).
+# PUR BEURRE - OPENCLASSROOMS PYTHON - PROJECT #8
+This open source project was created for the OpenClassRooms' Python developer course (Project 8/13)).
 It is a DJANGO application integrating a back-end part based on Python 3.7 and a front-end part developed with HTML5, CSS3 and JavaScript using Bootsrap.
 
 Ask the application a product name, select one of the products to confirm your choice and it will give you a list of similar products with a better nutriscore.
@@ -16,7 +16,7 @@ This project was conceived with postgresql, but we can use an other db engine.
 (with postgresql)<br/>
 `createdb <your database name>`
 
-#### STEP 2: Create your virtualenv in this path: Projet OpenClassRoom/Projet-8-Pur-Beurre
+#### STEP 2: Create your virtualenv
 (on mac and linux)<br/>
 `cd PB_P8`<br/>
 `virtualenv env -p python3`<br/>

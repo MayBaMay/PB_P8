@@ -106,7 +106,6 @@ $.ajaxSetup({
     $('.no-user-error').css('display', 'none');
     $('.password-error').css('display', 'none');
     e.preventDefault();
-    console.log($(this).serialize())
     $.ajax({
       url: "/login/", // the file to call
       type: "POST", // GET or POST
@@ -121,16 +120,16 @@ $.ajaxSetup({
         else if (login_response.user == "password wrong") {
           $('.password-error').css('display', 'block');
           submitBtn.prop('disabled', false);
-          hideLoader()
+          hideLoader();
            }
         else{
           $('.no-user-error').css('display', 'block');
           document.getElementById(formId).reset();
-          hideLoader()
+          hideLoader();
         }
       }
     })
-  })
+  });
 
   $('#disconnection').click(function(){
     $('#modalLogOut').modal('show');
@@ -159,6 +158,7 @@ $.ajaxSetup({
         if (register_response.user == "success"){
           document.location.reload(true);
           $('#modalRegister').modal('hide');
+          initLoader();
         }
         else if (register_response.user == "already in DB") {
           $('#username-error').css('display', 'block');
@@ -169,43 +169,44 @@ $.ajaxSetup({
         }
       }
     })
-  })
+  });
 
   $('.NotConnected').click(function(){
+    console.log('notconnected');
     $('#modalNotConnected').modal('show');
   });
 
   // SAVE FAVORITE
   $('.favoriteForm').submit(function(e){
-    let form = $(this)
-    let wachlist = $(this).hasClass("wachlist")
-    let fav = $(this).children('input[name$="favorite"]')
+    let form = $(this);
+    let wachlist = $(this).hasClass("wachlist");
+    let fav = $(this).children('input[name$="favorite"]');
     e.preventDefault();
     $.ajax({
       url: "/load_favorite/", // the file to call
       type: "POST", // GET or POST
       data: $(this).serialize(),
-      })
+    })
       .done(function(data) {
         var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
         let favorite_response = jQuery.parseJSON(data);
-        let submit = form.find('button')
+        let submit = form.find('button');
         if (wachlist){
-          form.parent(".prodbox").remove()
+          form.parent(".prodbox").remove();
         }
         else{
           if(favorite_response.favorite == "saved"){
-          submit.html("<span class='fas fa-floppy-o'></span> Retirer ce produit de mes favoris")
-          fav.val("saved")
+          submit.html("<span class='fas fa-floppy-o'></span> Retirer ce produit de mes favoris");
+          fav.val("saved");
           }
         else{
-          submit.html("<span class='fas fa-floppy-o'></span> Sauvegarder")
-          fav.val("unsaved")
+          submit.html("<span class='fas fa-floppy-o'></span> Sauvegarder");
+          fav.val("unsaved");
           }
         }
 
-      })
     })
+  });
 
   $('.return').on('click', function(e){
     window.location.replace(document.referrer);

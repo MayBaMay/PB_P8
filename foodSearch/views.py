@@ -47,16 +47,14 @@ def login_view(request):
     """Login view returning json response to ajax"""
     response_data = {}
     username = request.POST['username']
+    print('Data ajax :', username)
     password = request.POST['password']
+    print('Data ajax :', password)
     try:
-        get_user = User.objects.get(username=username)
-        if get_user.check_password(password):
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                response_data = {'user':"success"}
-            else:
-                response_data = {'user':"user unknown"}
+        user = User.objects.get(username=username)
+        if user.password == password:
+            login(request, user)
+            response_data = {'user':"success"}
         else:
             response_data = {'user':"password wrong"}
     except User.DoesNotExist:

@@ -74,7 +74,7 @@ class RegisterPageTestCase(StaticLiveServerTestCase):
         """tests on login view"""
         User.objects.create(username="Test",
                             email="userinDB@test.com",
-                            password="password")
+                            password="secret")
         self.selenium.get('%s%s' % (self.live_server_url, '/'))
         self.selenium.find_element_by_css_selector("#connect").click()
         signin_modal = self.selenium.find_element_by_css_selector("#modalLogIn")
@@ -82,7 +82,7 @@ class RegisterPageTestCase(StaticLiveServerTestCase):
         username_input = self.selenium.find_element_by_css_selector("#login-username")
         username_input.send_keys('Test')
         password_input = self.selenium.find_element_by_css_selector("#login-password")
-        password_input.send_keys('password')
+        password_input.send_keys('secret')
         self.selenium.find_element_by_css_selector("#signin-Submit").click()
 
         self.assertEqual(User.objects.filter(username="Test").exists(), True)

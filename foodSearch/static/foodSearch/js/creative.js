@@ -112,6 +112,7 @@ $.ajaxSetup({
       data: $(this).serialize(), // get the form data
       success: function(data){
         let login_response = jQuery.parseJSON(data);
+        console.log(login_response.user)
         // console.log(login_response);
         if (login_response.user == "success"){
           document.location.reload(true);
@@ -232,4 +233,9 @@ function initLoader(){
   loader.append(createLoader());
   borderLoader.append(loader);
   $('body').append(borderLoader);
+}
+
+function hideLoader(){
+  let borderLoader = $('<div id="borderLoader"></div>');
+  borderLoader.remove();
 }

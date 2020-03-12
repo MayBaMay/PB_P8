@@ -9686,6 +9686,9 @@ hr.light {
   #mainNav.navbar-scrolled .navbar-nav .nav-item .fa-carrot:hover{
     content: url("../img/noun_Carrot_orange.png");
   }
+  .nav-title{
+    display: none !important;
+  }
 }
 
 header {

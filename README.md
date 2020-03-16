@@ -71,6 +71,7 @@ With your usual browser, use the application on url http://127.0.0.1:8000/
 ## Find the project online
 
 This project can be tested on url https://pbp8.herokuapp.com/
+NB: Due to django database size limitation, the number of products may be limited to 1000 products in the breakfast category.
 
 ## Next Steps
 This app tries to correspond to the specifications. Some features, specified as not required, have not been developped:

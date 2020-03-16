@@ -122,7 +122,7 @@ class ProceedResearchTestCase(TestCase):
         self.assertTemplateUsed(response, 'foodSearch/search.html')
         self.assertEqual(self.prod in response.context['found_products'], True)
 
-    def test_result_get(self):
+    def test_results_get(self):
         """test result view"""
         response = self.client.get(reverse('foodSearch:results', args=[self.prod2.id]))
         self.assertEqual(response.status_code, 200)

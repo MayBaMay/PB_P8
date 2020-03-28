@@ -17,11 +17,14 @@ import dj_database_url
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-DEBUG = True
+if os.environ.get('ENV') == 'PRODUCTION':
+    DEBUG = False
+    ALLOWED_HOSTS = ['pbp8.herokuapp.com']
+else:
+    DEBUG = True
+    ALLOWED_HOSTS = []
 
-ALLOWED_HOSTS = ['104.248.91.96']
-
-SECRET_KEY = '7l*om2l-k#b0ec)e(5_3+z)m4p%9fgh3p*t$(f93hgxjaftr@6'
+SECRET_KEY = os.environ.get('SECRET_KEY', '7l*om2l-k#b0ec)e(5_3+z)m4p%9fgh3p*t$(f93hgxjaftr@6')
 
 # Application definition
 
@@ -132,3 +135,15 @@ SITE_URL = 'http://127.0.0.1:8000'
 INTERNAL_IPS = ['127.0.0.1']
 
 LOGOUT_REDIRECT_URL = '/'
+
+if os.environ.get('ENV') == 'PRODUCTION':
+    PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+    STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+    STATICFILES_DIRS = (
+        os.path.join(PROJECT_ROOT, 'static'),
+    )
+
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+    db_from_env = dj_database_url.config(conn_max_age=500)
+    DATABASES['default'].update(db_from_env)

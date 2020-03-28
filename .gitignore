@@ -6,3 +6,4 @@ geckodriver.log
 .cache/
 .pytest_cache
 .coverage
+pur_beurre_project/settings/production.py

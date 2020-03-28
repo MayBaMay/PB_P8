@@ -23,13 +23,15 @@ This project was conceived with postgresql, but we can use an other db engine.
 `source env/bin/activate`<br/>
 `pip install -r requirements.txt`<br/>
 
-#### STEP 3 : Setting up the database in pur_beurre_project/settings.py
+#### STEP 3 : Create a setting file in pur_beurre_project/settings/local.py
 ```
-DATABASES = {
+LOCAL_SECRET_KEY = '<your secretkey>'
+
+LOCAL_DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': '<your database name>',
-        'USER': '<your username>',
+        'USER': '<your database username>',
         'PASSWORD': '',
         'HOST': '',
         'PORT': '5432',

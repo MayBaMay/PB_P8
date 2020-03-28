@@ -23,9 +23,9 @@ This project was conceived with postgresql, but we can use an other db engine.
 `source env/bin/activate`<br/>
 `pip install -r requirements.txt`<br/>
 
-#### STEP 3 : Create a setting file in pur_beurre_project/settings/local.py
+#### STEP 3 : Create a setting file pur_beurre_project/settings/local.py
 ```
-LOCAL_SECRET_KEY = '<your secretkey>'
+LOCAL_SECRET_KEY = '<your secret key>'
 
 LOCAL_DATABASES = {
     'default': {
@@ -73,7 +73,7 @@ With your usual browser, use the application on url http://127.0.0.1:8000/
 ## Find the project online
 
 This project can be tested on url https://pbp8.herokuapp.com/<br/>
-NB: Due to django database size limitation, the number of products may be limited to 1000 products from breakfasts category.
+NB: Due to django database size limitation, the number of products may be limited to a few products from breakfasts category
 
 ## Next Steps
 This app tries to correspond to the specifications. Some features, specified as not required, have not been developped:
